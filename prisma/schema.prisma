@@ -1,0 +1,267 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+  shadowDatabaseUrl = env("SHADOW_DATABASE_URL")
+}
+
+// ═══════════════════════════════════════════════════════════════════════════
+// User & Authentication
+// ═══════════════════════════════════════════════════════════════════════════
+
+model User {
+  id              String    @id @default(cuid())
+  email           String    @unique
+  name            String?
+  passwordHash    String?
+
+  // Subscription/role
+  role            String    @default("user") // "user" | "admin"
+  subscriptionTier String  @default("free") // "free" | "pro" | "institutional"
+
+  // Preferences
+  defaultCurrency String    @default("USD")
+  timezone        String    @default("UTC")
+  theme           String    @default("light") // "light" | "dark"
+
+  // Relations
+  accounts        Account[]
+  sessions        Session[]
+
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+
+  @@index([email])
+}
+
+model Session {
+  id              String    @id @default(cuid())
+  userId          String
+  user            User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  token           String    @unique
+  expiresAt       DateTime
+
+  createdAt       DateTime  @default(now())
+
+  @@index([userId])
+  @@index([token])
+}
+
+// ═══════════════════════════════════════════════════════════════════════════
+// Account Management (Myfxbook & MQL5)
+// ═══════════════════════════════════════════════════════════════════════════
+
+model Account {
+  id              String    @id @default(cuid())
+  userId          String
+  user            User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  // Source (Myfxbook or MQL5)
+  source          String    // "myfxbook" | "mql5"
+  externalId      String    // Myfxbook account ID or MQL5 signal ID
+  name            String    // Account nickname
+  isActive        Boolean   @default(true)
+
+  // Latest metrics (cached snapshot)
+  balance         Float     @default(0)
+  equity          Float     @default(0)
+  freeMargin      Float     @default(0)
+  usedMargin      Float     @default(0)
+
+  // Performance stats
+  totalGain       Float     @default(0)    // Total return %
+  totalTrades     Int       @default(0)
+  winRate         Float     @default(0)    // Win %
+  profitFactor    Float     @default(0)
+  drawdown        Float     @default(0)    // Current equity DD
+  maxDD           Float     @default(0)    // Historical max DD
+
+  // Sync status
+  lastSyncedAt    DateTime?
+  nextSyncAt      DateTime  @default(now())
+  syncStatus      String    @default("pending") // "pending" | "syncing" | "success" | "error"
+  syncError       String?
+
+  // Auth tokens (encrypted in production)
+  myfxbookToken   String?
+  refreshToken    String?
+
+  // Configuration
+  syncInterval    Int       @default(5)    // Minutes
+
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+
+  // Relations
+  trades          Trade[]
+  snapshots       PortfolioSnapshot[]
+  metadata        AccountMetadata?
+
+  @@unique([userId, source, externalId])
+  @@index([userId])
+  @@index([source])
+  @@index([lastSyncedAt])
+}
+
+model AccountMetadata {
+  id              String    @id @default(cuid())
+  accountId       String    @unique
+  account         Account   @relation(fields: [accountId], references: [id], onDelete: Cascade)
+
+  // Strategy classification
+  strategyName    String?
+  riskLevel       String?   // "low" | "medium" | "high"
+  description     String?
+
+  // Broker info
+  brokerName      String?
+  leverage        Float?
+  commission      Float?
+
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+}
+
+// ═══════════════════════════════════════════════════════════════════════════
+// Trade History
+// ═══════════════════════════════════════════════════════════════════════════
+
+model Trade {
+  id              String    @id @default(cuid())
+  accountId       String
+  account         Account   @relation(fields: [accountId], references: [id], onDelete: Cascade)
+
+  externalId      String    // Trade ID from Myfxbook/MQL5
+  symbol          String    // Trading pair (EURUSD, GBPUSD, etc.)
+  direction       String    // "BUY" | "SELL"
+  entryPrice      Float
+  exitPrice       Float?
+  entryTime       DateTime
+  closeTime       DateTime?
+
+  volume          Float     // Lot size
+  profitLoss      Float
+  profitPercent   Float
+  commission      Float     @default(0)
+  swaps           Float     @default(0)
+
+  // Categorization (for attribution)
+  strategyType    String?   // "Trend" | "MeanReversion" | "Scalp" | "Grid"
+  duration        String?   // "Scalp" | "Swing" | "LongTerm"
+  marketCondition String?   // "Trending" | "Ranging" | "Volatile"
+
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+
+  @@unique([accountId, externalId])
+  @@index([accountId])
+  @@index([symbol])
+  @@index([entryTime])
+  @@index([closeTime])
+}
+
+// ═══════════════════════════════════════════════════════════════════════════
+// Portfolio Snapshots (Daily aggregates for charting)
+// ═══════════════════════════════════════════════════════════════════════════
+
+model PortfolioSnapshot {
+  id              String    @id @default(cuid())
+  accountId       String
+  account         Account   @relation(fields: [accountId], references: [id], onDelete: Cascade)
+
+  timestamp       DateTime  // Snapshot time
+  date            String    // YYYY-MM-DD for queries
+
+  // Portfolio metrics at this time
+  balance         Float
+  equity          Float
+  drawdown        Float
+  totalReturn     Float
+
+  // Aggregated stats
+  totalTrades     Int
+  winRate         Float
+  profitFactor    Float
+
+  // Monthly metrics (for heatmap)
+  monthlyReturn   Float?
+  monthlyDrawdown Float?
+  monthStart      DateTime?
+  monthEnd        DateTime?
+
+  createdAt       DateTime  @default(now())
+
+  @@unique([accountId, timestamp])
+  @@index([accountId])
+  @@index([date])
+  @@index([timestamp])
+}
+
+// ═══════════════════════════════════════════════════════════════════════════
+// Analytics Cache (Store expensive calculations)
+// ═══════════════════════════════════════════════════════════════════════════
+
+model AnalyticsCache {
+  id              String    @id @default(cuid())
+  accountId       String
+
+  metricType      String    // "sharpe" | "sortino" | "var" | "cvar" | "attribution"
+  timeframe       String    // "30d" | "90d" | "ytd" | "all"
+
+  // Store computed value as JSON
+  value           Json
+
+  expiresAt       DateTime
+
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+
+  @@unique([accountId, metricType, timeframe])
+  @@index([accountId])
+  @@index([expiresAt])
+}
+
+// ═══════════════════════════════════════════════════════════════════════════
+// Correlation Data (Strategy correlation snapshots)
+// ═══════════════════════════════════════════════════════════════════════════
+
+model CorrelationSnapshot {
+  id              String    @id @default(cuid())
+
+  // Correlation matrix between strategies
+  strategies      String[]  // Array of strategy names
+  matrix          Float[][]  // Correlation matrix as 2D array (JSON)
+
+  timestamp       DateTime  @default(now())
+  expiresAt       DateTime
+
+  @@index([expiresAt])
+}
+
+// ═══════════════════════════════════════════════════════════════════════════
+// Audit Log (Security & Compliance)
+// ═══════════════════════════════════════════════════════════════════════════
+
+model AuditLog {
+  id              String    @id @default(cuid())
+  userId          String
+  action          String    // "LOGIN" | "SYNC" | "EXPORT" | "CONFIG_CHANGE"
+  resource        String?   // "Account" | "Trade" | "Report"
+  resourceId      String?
+  details         Json?
+  ipAddress       String?
+  userAgent       String?
+
+  createdAt       DateTime  @default(now())
+
+  @@index([userId])
+  @@index([action])
+  @@index([createdAt])
+}
