@@ -186,7 +186,7 @@ export const BASE = [
     ss: 'https://icmarkets.signalstart.com/analysis/tol-langit-etf/285680',
     zulu: 'https://www.zulutrade.com/trader/430869/trading',
     platform: 'MT5',
-    gain: '-20.36%',
+    gain: '+39.66%',
     win: '80.00%',
     pf: '1.39',
     mo: '-7.31%',
