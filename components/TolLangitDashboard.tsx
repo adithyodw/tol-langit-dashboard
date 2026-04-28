@@ -888,9 +888,13 @@ export default function TolLangitDashboard() {
 
   const fetchLive = useCallback(async () => {
     setLoading(true);
-    setMsg('Retrieving live data from MQL5…');
+    setMsg('Retrieving live data from MyFXBook…');
     try {
-      const res = await fetch('/api/refresh', { method: 'POST' });
+      let res = await fetch('/api/myfxbook/sync', { method: 'GET' });
+      if (!res.ok) {
+        setMsg('MyFXBook unavailable — falling back to MQL5 search…');
+        res = await fetch('/api/refresh', { method: 'POST' });
+      }
       if (!res.ok) throw new Error(`HTTP ${res.status}`);
       const data = await res.json();
       if (data.strategies) {
