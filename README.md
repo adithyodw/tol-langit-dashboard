@@ -1,70 +1,123 @@
-# Getting Started with Create React App
+# TOL LANGIT Capital — Institutional Trading Analytics Dashboard
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Live algorithmic strategy dashboard for **TOL LANGIT Capital**, tracking four systematic trading strategies across MT4 and MT5 platforms. All data is sourced from independently verified live accounts on MQL5, MyFXBook, IC Markets SignalStart, and ZuluTrade.
 
-## Available Scripts
+**Manager:** Adithyo Dewangga Wijaya · Singapore  
+**Active Since:** January 2021  
+**Platform:** Next.js 14 · TypeScript · PostgreSQL
 
-In the project directory, you can run:
+---
 
-### `npm start`
+## Strategies (as of April 2026)
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+### TOL LANGIT V10 — LOW RISK
+> 5+ year live track record · MT4 · Fully Automated
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+| Metric | Value |
+|---|---|
+| Total Gain | +1,447.47% |
+| Monthly Gain | +2.65% |
+| Annual CAGR | ~67.1% p.a. |
+| Profit Factor | 2.73 |
+| Win Rate | 81.50% |
+| Max Balance DD | 10.18% |
+| Max Equity DD | 72.94% |
+| Total Trades | 4,519 |
+| Duration | ~5 Years 3 Months |
 
-### `npm test`
+Annual returns: 2021 +110.41% · 2022 +63.02% · 2023 +39.16% · 2024 +57.74%
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+Links: [MQL5](https://www.mql5.com/en/signals/1083101) · [MyFXBook](https://www.myfxbook.com/members/adithyodw/tol-langit-v10/8671765) · [SignalStart](https://icmarkets.signalstart.com/analysis/tol-langit-v10/232541) · [ZuluTrade](https://www.zulutrade.com/trader/417743/trading)
 
-### `npm run build`
+---
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+### TOL LANGIT V10 HIGH RISK — HIGH RISK
+> 13-month live track record · MT4 · Aggressive Grid
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+| Metric | Value |
+|---|---|
+| Total Gain | +957.48% |
+| Monthly Gain | +14.31% |
+| Annual Forecast | ~173.58% p.a. |
+| Profit Factor | 2.49 |
+| Win Rate | 93.84% |
+| Max Balance DD | 17.74% |
+| Max Equity DD | 95.28% |
+| Total Trades | 715 |
+| Duration | ~13 Months |
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+Links: [MQL5](https://www.mql5.com/en/signals/2296225) · [MyFXBook](https://www.myfxbook.com/members/adithyodw/tol-langit-v10-high-risk/11424740) · [SignalStart](https://icmarkets.signalstart.com/analysis/tol-langit-high-risk/278500)
 
-### `npm run eject`
+---
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+### TOL LANGIT ETF — HIGH RISK
+> 4-month live track record · MT5 · No Grid · Forex + Gold
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+| Metric | Value |
+|---|---|
+| Abs. Gain (MyFXBook) | +39.66% |
+| Monthly Gain | -7.31% |
+| Profit Factor | 1.39 |
+| Win Rate | 80.00% |
+| Max Balance DD | 85.66% |
+| Max Equity DD | 64.01% |
+| Total Trades | 515 |
+| Duration | ~4 Months |
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+Links: [MQL5](https://www.mql5.com/en/signals/2353105) · [MyFXBook](https://www.myfxbook.com/members/adithyodw/tol-langit-etf/11891377) · [SignalStart](https://icmarkets.signalstart.com/analysis/tol-langit-etf/285680) · [ZuluTrade](https://www.zulutrade.com/trader/430869/trading)
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+---
 
-## Learn More
+### TOL LANGIT ETF GOLD MR — MEDIUM RISK
+> 10-week live track record · MT5 · No Grid · Gold Specialist
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+| Metric | Value |
+|---|---|
+| Total Gain | +100.77% |
+| Monthly Gain | +117.92% |
+| Profit Factor | 1.80 |
+| Win Rate | 77.81% |
+| Max Balance DD | 40.32% |
+| Max Equity DD | 29.21% |
+| Total Trades | 320 |
+| Duration | ~2 Months |
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+Primary instruments: XAUUSD (262 deals) · AUDCAD (58 deals)
 
-### Code Splitting
+Links: [MQL5](https://www.mql5.com/en/signals/2360336) · [MyFXBook](https://www.myfxbook.com/members/adithyodw/tol-langit-etf-mr/12023120)
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+---
 
-### Analyzing the Bundle Size
+## Tech Stack
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+- **Framework:** Next.js 14 (App Router)
+- **Language:** TypeScript
+- **Database:** PostgreSQL (via Prisma)
+- **API Integrations:** MQL5 Signals API, MyFXBook API, IC Markets SignalStart
+- **Styling:** CSS Modules + Design tokens
+- **Fonts:** Playfair Display · IBM Plex Sans · IBM Plex Mono
+- **Deployment:** Vercel
 
-### Making a Progressive Web App
+## Development
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+```bash
+npm install
+cp .env.example .env.local
+# Add your API keys to .env.local
+npm run dev
+```
 
-### Advanced Configuration
+Open [http://localhost:3000](http://localhost:3000).
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+## Environment Variables
 
-### Deployment
+See `.env.example` for required keys:
+- `MYFXBOOK_EMAIL` / `MYFXBOOK_PASSWORD`
+- `DATABASE_URL`
+- `ANTHROPIC_API_KEY`
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+## Links
 
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+- Manager profile: [MQL5](https://www.mql5.com/en/users/adithyodw) · [MyFXBook](https://www.myfxbook.com/members/adithyodw) · [LinkedIn](https://sg.linkedin.com/in/adithyodewangga)
+- Broker: [IC Markets](https://icmarkets.com/?camp=49934)
+- Telegram: [t.me/tol_langit](https://t.me/tol_langit)
