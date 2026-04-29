@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useCallback, useRef } from 'react';
 import { BASE, MANAGER, IC_MARKETS } from '@/lib/utils/constants';
+import SimulationSection from './SimulationSection';
 
 /* ─── Design tokens ─────────────────────────────────────────────────────── */
 const C = {
@@ -218,7 +219,7 @@ const Ann = () => (
 
 const Nav = () => {
   const [open, setOpen] = useState(false);
-  const links:[string,string][] = [['#about','Manager'],['#strategies','Strategies'],['#factsheets','Factsheets'],['#copy-trading','Copy Trading'],['#comparison','Analysis'],['#performance','Performance'],['#broker','Broker'],['#disclosures','Disclosures']];
+  const links:[string,string][] = [['#about','Manager'],['#strategies','Strategies'],['#factsheets','Factsheets'],['#copy-trading','Copy Trading'],['#comparison','Analysis'],['#simulation','Simulator'],['#broker','Broker'],['#disclosures','Disclosures']];
   return (
     <nav style={{background:C.navy,borderBottom:`1px solid ${C.ruleDark}`,position:'sticky',top:0,zIndex:100}}>
       <div className="tl-nav-in" style={{maxWidth:1280,margin:'0 auto',padding:'0 40px',height:64,display:'flex',alignItems:'center',justifyContent:'space-between'}}>
@@ -382,52 +383,96 @@ const About = () => (
   </div>
 );
 
-const Cards = ({S}:{S:Strategy[]}) => (
-  <div className="sp" style={{padding:'72px 40px',background:C.offWhite}} id="strategies">
-    <div style={{maxWidth:1280,margin:'0 auto'}}>
-      <div className="sh-flex" style={{display:'flex',alignItems:'flex-end',justifyContent:'space-between',marginBottom:40,paddingBottom:20,borderBottom:`1px solid ${C.rule}`}}>
-        <div><SL c="Live Signal Suite"/><ST c="Four Verified Algorithmic Strategies"/></div>
-        <SN c="All figures reflect verified real-money results from live MQL5 and MyFXBook accounts."/>
+const StrategyCard = ({s}:{s:Strategy}) => (
+  <div style={{background:C.white,padding:24,display:'flex',flexDirection:'column',height:'100%'}}>
+    <div style={{marginBottom:16}}>
+      <div style={{display:'flex',alignItems:'flex-start',justifyContent:'space-between',marginBottom:10}}>
+        <span style={{fontFamily:MONO,fontSize:10,fontWeight:700,color:C.muted,letterSpacing:1}}>{s.ticker}</span>
+        <RBadge s={s}/>
       </div>
-      <div className="tl-4col" style={{display:'grid',gridTemplateColumns:'repeat(4,1fr)',gap:1,background:C.rule,border:`1px solid ${C.rule}`}}>
-        {S.map(s=>(
-          <div key={s.id} style={{background:C.white,padding:24,display:'flex',flexDirection:'column'}}>
-            <div style={{marginBottom:16}}>
-              <div style={{display:'flex',alignItems:'flex-start',justifyContent:'space-between',marginBottom:10}}>
-                <span style={{fontFamily:MONO,fontSize:10,fontWeight:700,color:C.muted,letterSpacing:1}}>{s.ticker}</span>
-                <RBadge s={s}/>
-              </div>
-              <div style={{fontFamily:SERIF,fontSize:14,fontWeight:600,color:C.navy,lineHeight:1.3,marginBottom:6}}>{s.name}</div>
-              <div style={{display:'flex',alignItems:'center',gap:4}}>
-                <div style={{fontFamily:MONO,fontSize:26,fontWeight:700,color:C.goldBright}}>{s.gain}</div>
-                <Tooltip tip={TIPS.totalRet}/>
-              </div>
-              <div style={{fontSize:10,color:C.label,marginTop:3}}>{s.durS}</div>
-            </div>
-            <div style={{display:'grid',gridTemplateColumns:'1fr 1fr',gap:8,marginBottom:14,borderTop:`1px solid ${C.rule}`,paddingTop:14}}>
-              {([
-                {l:'Win Rate',v:s.win,c:C.positive,tip:TIPS.winRate},
-                {l:'Profit Factor',v:s.pf,c:C.navy,tip:TIPS.pf},
-                {l:'Balance DD',v:s.ddBal,c:s.ddBalC==='neg'?C.negative:s.ddBalC==='pos'?C.positive:C.amber,tip:TIPS.balDD},
-                {l:'Monthly',v:s.mo,c:C.positive,tip:TIPS.mo},
-              ]).map((m,i)=>(
-                <div key={i} style={{background:C.offWhite,padding:'9px 10px'}}>
-                  <MetaLabel label={m.l} tip={m.tip}/>
-                  <div style={{fontFamily:MONO,fontSize:13,fontWeight:700,color:m.c}}>{m.v}</div>
-                </div>
-              ))}
-            </div>
-            <div style={{background:C.navy,padding:'10px 12px',marginBottom:12,flex:1}}>
-              <div style={{fontSize:9,letterSpacing:1,textTransform:'uppercase',color:C.gold,marginBottom:3}}>Use Case</div>
-              <div style={{fontSize:11,fontWeight:600,color:C.white}}>{s.useCase}</div>
-            </div>
-            <Chips s={s}/>
-          </div>
-        ))}
+      <div style={{fontFamily:SERIF,fontSize:14,fontWeight:600,color:C.navy,lineHeight:1.3,marginBottom:6}}>{s.name}</div>
+      <div style={{display:'flex',alignItems:'center',gap:4}}>
+        <div style={{fontFamily:MONO,fontSize:26,fontWeight:700,color:C.goldBright}}>{s.gain}</div>
+        <Tooltip tip={TIPS.totalRet}/>
       </div>
+      <div style={{fontSize:10,color:C.label,marginTop:3}}>{s.durS}</div>
     </div>
+    <div style={{display:'grid',gridTemplateColumns:'1fr 1fr',gap:8,marginBottom:14,borderTop:`1px solid ${C.rule}`,paddingTop:14}}>
+      {([
+        {l:'Win Rate',v:s.win,c:C.positive,tip:TIPS.winRate},
+        {l:'Profit Factor',v:s.pf,c:C.navy,tip:TIPS.pf},
+        {l:'Balance DD',v:s.ddBal,c:s.ddBalC==='neg'?C.negative:s.ddBalC==='pos'?C.positive:C.amber,tip:TIPS.balDD},
+        {l:'Monthly',v:s.mo,c:C.positive,tip:TIPS.mo},
+      ]).map((m,i)=>(
+        <div key={i} style={{background:C.offWhite,padding:'9px 10px'}}>
+          <MetaLabel label={m.l} tip={m.tip}/>
+          <div style={{fontFamily:MONO,fontSize:13,fontWeight:700,color:m.c}}>{m.v}</div>
+        </div>
+      ))}
+    </div>
+    <div style={{background:C.navy,padding:'10px 12px',marginBottom:12,flex:1}}>
+      <div style={{fontSize:9,letterSpacing:1,textTransform:'uppercase',color:C.gold,marginBottom:3}}>Use Case</div>
+      <div style={{fontSize:11,fontWeight:600,color:C.white}}>{s.useCase}</div>
+    </div>
+    <Chips s={s}/>
   </div>
 );
+
+const Cards = ({S}:{S:Strategy[]}) => {
+  const [mobIdx, setMobIdx] = useState(0);
+  return (
+    <div className="sp" style={{padding:'72px 40px',background:C.offWhite}} id="strategies">
+      <div style={{maxWidth:1280,margin:'0 auto'}}>
+        <div className="sh-flex" style={{display:'flex',alignItems:'flex-end',justifyContent:'space-between',marginBottom:40,paddingBottom:20,borderBottom:`1px solid ${C.rule}`}}>
+          <div><SL c="Live Signal Suite"/><ST c="Four Verified Algorithmic Strategies"/></div>
+          <SN c="All figures reflect verified real-money results from live MQL5 and MyFXBook accounts."/>
+        </div>
+
+        {/* Desktop: 4-column grid */}
+        <div className="tl-4col" style={{display:'grid',gridTemplateColumns:'repeat(4,1fr)',gap:1,background:C.rule,border:`1px solid ${C.rule}`}}>
+          {S.map(s=><StrategyCard key={s.id} s={s}/>)}
+        </div>
+
+        {/* Mobile: tab switcher */}
+        <div className="tl-cards-mob">
+          <div style={{display:'flex',gap:4,marginBottom:16,flexWrap:'wrap'}}>
+            {S.map((st,i)=>(
+              <button key={st.id} className={`tl-tab${mobIdx===i?' on':''}`}
+                style={{flex:1,justifyContent:'center',minWidth:'calc(50% - 4px)'}}
+                onClick={()=>setMobIdx(i)}>
+                <span style={{fontSize:9,display:'block',opacity:.7,marginBottom:1}}>{st.ticker}</span>
+                {st.short}
+              </button>
+            ))}
+          </div>
+          {/* Dots indicator */}
+          <div style={{display:'flex',justifyContent:'center',gap:6,marginBottom:16}}>
+            {S.map((_,i)=>(
+              <button key={i} onClick={()=>setMobIdx(i)} style={{
+                width:i===mobIdx?20:6,height:6,borderRadius:3,
+                background:i===mobIdx?C.gold:'rgba(0,18,51,.2)',
+                border:'none',cursor:'pointer',padding:0,transition:'all .25s',
+              }}/>
+            ))}
+          </div>
+          <div style={{border:`1px solid ${C.rule}`}}>
+            <StrategyCard s={S[mobIdx]}/>
+          </div>
+          <div style={{display:'flex',gap:8,marginTop:12}}>
+            <button onClick={()=>setMobIdx(i=>Math.max(0,i-1))} disabled={mobIdx===0}
+              style={{flex:1,height:44,background:C.white,border:`1px solid ${C.rule}`,color:C.navy,fontFamily:MONO,fontSize:11,cursor:'pointer',opacity:mobIdx===0?.35:1,transition:'opacity .2s'}}>
+              ← PREV
+            </button>
+            <button onClick={()=>setMobIdx(i=>Math.min(S.length-1,i+1))} disabled={mobIdx===S.length-1}
+              style={{flex:1,height:44,background:C.navy,border:`1px solid ${C.navy}`,color:C.goldBright,fontFamily:MONO,fontSize:11,cursor:'pointer',opacity:mobIdx===S.length-1?.35:1,transition:'opacity .2s'}}>
+              NEXT →
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
 
 const Factsheets = ({S}:{S:Strategy[]}) => {
   const [act, setAct] = useState(0);
@@ -934,6 +979,7 @@ export default function TolLangitDashboard() {
       <CopyTrading S={S}/>
       <Comparison S={S}/>
       <AnnPerf/>
+      <SimulationSection/>
       <Broker/>
       <Disclosures/>
       <Footer lastUpd={lastUpd}/>
