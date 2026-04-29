@@ -87,6 +87,8 @@ html {
   scroll-behavior: smooth;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
+  max-width: 100%;
 }
 
 body {
@@ -96,6 +98,9 @@ body {
   color: var(--color-body);
   background-color: var(--color-white);
   min-height: 100vh;
+  overflow-x: hidden;
+  max-width: 100%;
+  -webkit-text-size-adjust: 100%;
 }
 
 a {
@@ -642,4 +647,133 @@ button {
   .tl-hero { padding: 36px 14px 32px !important; }
   .tl-perf-years { grid-template-columns: 1fr !important; }
   .tl-hero-stat-val { font-size: 20px !important; }
+}
+
+/* ─── Missing layout classes ─────────────────────────────────────────────── */
+
+/* Desktop nav — hidden on mobile */
+.d-768 { display: flex; }
+@media (max-width: 768px) {
+  .d-768 { display: none !important; }
+}
+
+/* About section 2-col layout */
+.tl-2col {
+  display: grid;
+  grid-template-columns: 280px 1fr;
+  gap: 60px;
+  align-items: start;
+}
+@media (max-width: 900px) {
+  .tl-2col { grid-template-columns: 1fr !important; gap: 36px !important; }
+}
+
+/* Verification strip responsive padding */
+.tl-vstrip { padding: 20px 40px; }
+@media (max-width: 1024px) { .tl-vstrip { padding: 20px 28px !important; } }
+@media (max-width: 768px)  { .tl-vstrip { padding: 16px 20px !important; } }
+@media (max-width: 480px)  { .tl-vstrip { padding: 14px 16px !important; } }
+
+/* Horizontal scroll container for wide tables */
+.tl-scroll {
+  overflow-x: auto;
+  overflow-y: hidden;
+  -webkit-overflow-scrolling: touch;
+  /* Ensure it doesn't break out of its parent */
+  max-width: 100%;
+}
+/* Prevent table from forcing page-wide overflow */
+.tl-scroll table { min-width: 600px; }
+@media (max-width: 768px) {
+  .tl-scroll table { min-width: 520px; }
+}
+
+/* Factsheet header flex */
+.tl-fs-header { display: flex; align-items: flex-start; justify-content: space-between; gap: 16px; flex-wrap: wrap; }
+
+/* ─── Comprehensive mobile fixes ─────────────────────────────────────────── */
+
+/* Ensure nothing bleeds past viewport */
+* { max-width: 100%; }
+img, svg, video { max-width: 100%; height: auto; }
+/* But allow layout containers to stay as-is */
+div, section, nav, header, footer, main { max-width: none; }
+
+@media (max-width: 768px) {
+  /* Nav */
+  .tl-nav-in { padding: 0 16px !important; }
+
+  /* Hero */
+  .tl-hero { padding: 48px 16px 44px !important; }
+  .tl-hero-stats { flex-direction: column !important; gap: 0 !important; }
+  .tl-hero-stat {
+    border-right: none !important;
+    margin-right: 0 !important;
+    padding-right: 0 !important;
+    padding-bottom: 20px !important;
+    border-bottom: 1px solid rgba(255,255,255,.1) !important;
+    min-width: 0 !important;
+    flex: none !important;
+    width: 100% !important;
+  }
+  .tl-hero-stat:last-child { border-bottom: none !important; padding-bottom: 0 !important; }
+
+  /* Section padding */
+  .sp { padding: 44px 16px !important; }
+
+  /* Verification badges — stack vertically */
+  .tl-vbadges { flex-direction: column !important; gap: 10px !important; align-items: flex-start !important; }
+  .tl-vsep { display: none !important; }
+
+  /* About section */
+  .tl-2col { grid-template-columns: 1fr !important; gap: 28px !important; }
+
+  /* Comparison table — allow horizontal scroll, cap heading cells */
+  .tl-scroll { border: 1px solid #ddd8cc; }
+
+  /* Factsheet tabs */
+  .tl-tab-wrap { flex-wrap: wrap !important; gap: 6px !important; }
+  .tl-tab { min-width: calc(50% - 4px) !important; justify-content: center !important; }
+
+  /* Float button — tighter on mobile */
+  .tl-float { bottom: 16px !important; right: 12px !important; gap: 6px !important; }
+
+  /* Refresh button full-width on very small screens */
+  .tl-rfrsh { font-size: 10px !important; padding: 0 14px !important; letter-spacing: .5px !important; }
+
+  /* Copy trading cards */
+  .tl-ct-card { padding: 20px 16px !important; }
+  .tl-ct-grid { grid-template-columns: 1fr !important; }
+
+  /* Section headers */
+  .sh-flex { flex-direction: column !important; align-items: flex-start !important; gap: 12px !important; }
+  .sh-note { text-align: left !important; max-width: none !important; }
+
+  /* Footer */
+  .footer-in { padding: 40px 16px 24px !important; }
+
+  /* Performance */
+  .tl-perf-inner { grid-template-columns: 1fr !important; }
+  .tl-perf-years { grid-template-columns: repeat(2, 1fr) !important; }
+}
+
+@media (max-width: 480px) {
+  .sp { padding: 36px 14px !important; }
+  .tl-hero { padding: 40px 14px 36px !important; }
+  .tl-hero h1 { font-size: clamp(26px, 8vw, 40px) !important; }
+  .tl-facts { grid-template-columns: 1fr !important; }
+  .tl-tab { min-width: 0 !important; width: auto !important; }
+  .tl-tip-box { left: 0 !important; right: 0 !important; transform: none !important; width: auto !important; max-width: calc(100vw - 28px) !important; }
+  .tl-tip-box::after { left: 12px !important; transform: none !important; }
+  .tl-ann-text { display: none !important; }
+  .tl-ct-btn { font-size: 11px !important; padding: 12px 14px !important; }
+  .footer-in { padding: 36px 14px 20px !important; }
+}
+
+@media (max-width: 375px) {
+  .sp { padding: 28px 12px !important; }
+  .tl-hero { padding: 32px 12px 28px !important; }
+  .tl-hero-stat-val { font-size: 20px !important; }
+  .tl-perf-years { grid-template-columns: 1fr !important; }
+  .tl-nav-in { padding: 0 12px !important; }
 }

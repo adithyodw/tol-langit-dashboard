@@ -229,7 +229,7 @@ const Nav = () => {
             <div style={{fontSize:9.5,letterSpacing:2,textTransform:'uppercase',color:C.gold,fontWeight:400,marginTop:1}}>Algorithmic Capital</div>
           </div>
         </div>
-        <div className="d-768" style={{display:'flex',alignItems:'center',gap:24}}>
+        <div className="d-768" style={{alignItems:'center',gap:24}}>
           {links.map(([h,l])=>(<a key={h} href={h} className="tl-navlink">{l}</a>))}
           <a href={MANAGER.github} target="_blank" rel="noreferrer" className="tl-navlink tl-navcta">
             <Ic n="github" size={12}/>GitHub
@@ -276,7 +276,7 @@ const Hero = ({loading,S}:{loading:boolean;S:Strategy[]}) => {
             {l:'Flagship Balance DD',v:f.ddBal,s:'Maximum Drawdown by Balance',g:true},
             {l:'Execution Broker',v:'IC Markets',s:'ASIC Regulated · 1:500 Leverage',sm:true},
           ] as {l:string;v:string;s:string;g?:boolean;sm?:boolean}[]).map((st,i,arr)=>(
-            <div key={i} className="tl-hero-stat" style={{flex:1,minWidth:140,paddingRight:40,borderRight:i<arr.length-1?`1px solid rgba(255,255,255,.08)`:'none',marginRight:i<arr.length-1?40:0}}>
+            <div key={i} className="tl-hero-stat" style={{flex:1,minWidth:0,paddingRight:40,borderRight:i<arr.length-1?`1px solid rgba(255,255,255,.08)`:'none',marginRight:i<arr.length-1?40:0}}>
               <div style={{fontSize:9.5,letterSpacing:2,textTransform:'uppercase',color:'rgba(255,255,255,.35)',marginBottom:8,fontWeight:500}}>{st.l}</div>
               <div className="tl-hero-stat-val" style={{fontFamily:MONO,fontSize:st.sm?16:26,fontWeight:600,color:st.g?C.goldBright:C.white,lineHeight:1,marginBottom:4,paddingTop:st.sm?5:0}}>
                 {loading&&!st.sm&&i!==1&&i!==2?<span style={{opacity:.3}}>—</span>:st.v}
@@ -297,7 +297,7 @@ const Hero = ({loading,S}:{loading:boolean;S:Strategy[]}) => {
 };
 
 const VStrip = ({lastUpd,loading}:{lastUpd:string;loading:boolean}) => (
-  <div style={{background:'#000e28',padding:'20px 40px'}}>
+  <div className="tl-vstrip" style={{background:'#000e28'}}>
     <div style={{maxWidth:1280,margin:'0 auto',display:'flex',alignItems:'center',justifyContent:'space-between',flexWrap:'wrap',gap:16}}>
       <div className="tl-vbadges" style={{display:'flex',alignItems:'center',gap:20,flexWrap:'wrap'}}>
         {['Independently Verified · MQL5','Independently Verified · MyFXBook','ASIC Regulated · IC Markets Tier 1','Open Access · No Lock-In'].map((t,i)=>(
@@ -325,7 +325,7 @@ const About = () => (
         <div><SL c="Strategy Manager"/><ST c="Investment Manager Profile"/></div>
         <SN c="All trading accounts are publicly accessible 24/5. Complete data transparency — no proprietary black boxes, no simulated results."/>
       </div>
-      <div className="tl-2col" style={{display:'grid',gridTemplateColumns:'280px 1fr',gap:60,alignItems:'start'}}>
+      <div className="tl-2col">
         <div>
           <div style={{border:`1px solid ${C.rule}`,padding:28,textAlign:'center'}}>
             <div style={{width:88,height:88,borderRadius:'50%',background:C.navy,margin:'0 auto 16px',border:`2px solid ${C.rule}`,overflow:'hidden',display:'flex',alignItems:'center',justifyContent:'center'}}>
