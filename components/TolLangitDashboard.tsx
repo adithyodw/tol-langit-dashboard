@@ -438,9 +438,9 @@ const Cards = ({S}:{S:Strategy[]}) => {
           <div style={{display:'flex',gap:4,marginBottom:16,flexWrap:'wrap'}}>
             {S.map((st,i)=>(
               <button key={st.id} className={`tl-tab${mobIdx===i?' on':''}`}
-                style={{flex:1,justifyContent:'center',minWidth:'calc(50% - 4px)'}}
+                style={{flex:1,flexDirection:'column',alignItems:'center',justifyContent:'center',minWidth:'calc(50% - 4px)',textAlign:'center'}}
                 onClick={()=>setMobIdx(i)}>
-                <span style={{fontSize:9,display:'block',opacity:.7,marginBottom:1}}>{st.ticker}</span>
+                <span style={{fontSize:9,display:'block',opacity:.7,marginBottom:2,letterSpacing:'0.04em'}}>{st.ticker}</span>
                 {st.short}
               </button>
             ))}
