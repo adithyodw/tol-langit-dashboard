@@ -11,8 +11,8 @@ const SERIF = "'Playfair Display', Georgia, serif";
 const MONO  = "'IBM Plex Mono', 'Courier New', monospace";
 const SANS  = "'IBM Plex Sans', system-ui, sans-serif";
 
-/* ─── Month index helpers (0 = Jan 2021, 63 = Apr 2026) ─────────────────── */
-const TOTAL_MONTHS = 64;
+/* ─── Month index helpers (0 = Jan 2021, 64 = May 2026 terminal) ────────── */
+const TOTAL_MONTHS = 65;
 function monthIndex(year: number, month: number): number { return (year - 2021) * 12 + month; }
 function monthLabel(idx: number): string {
   const y = 2021 + Math.floor(idx / 12);
@@ -41,11 +41,15 @@ const SERIES: Record<string, (number | null)[]> = (() => {
     ...Array(12).fill(mRate(1.3916)),
     ...Array(12).fill(mRate(1.5774)),
     ...Array(16).fill(mRate(Math.pow(154747 / 75297, 12 / 16))),
+    1.0, // May 2026 terminal (no data yet)
   ];
   const tlv10   = buildSeries(0, v10Rates);
-  const v10hr   = buildSeries(monthIndex(2025, 2), Array(14).fill(mRate(Math.pow(10.5748, 12 / 13))));
-  const etf     = buildSeries(monthIndex(2026, 0), Array(4).fill(mRate(Math.pow(1.3966, 12 / 3))));
-  const etfgold = buildSeries(monthIndex(2026, 1), Array(3).fill(mRate(Math.pow(2.0077, 12 / 2))));
+  // V10 HR: inception Mar 2025, +957.48% over 14 months to Apr 2026
+  const v10hr   = buildSeries(monthIndex(2025, 2), [...Array(14).fill(mRate(Math.pow(10.5748, 12 / 13))), 1.0]);
+  // ETF: actual monthly returns Jan–Apr 2026 (Jan +105.59%, Feb +18.05%, Mar −78.06%, Apr +107.79%)
+  const etf     = buildSeries(monthIndex(2026, 0), [2.0559, 1.1805, 0.2194, 2.0779, 1.0]);
+  // ETF Gold MR: actual monthly returns Feb–Apr 2026 (Feb +24.87%, Mar −17.96%, Apr +190.23%)
+  const etfgold = buildSeries(monthIndex(2026, 1), [1.2487, 0.8204, 2.9023, 1.0]);
 
   function bench(af: Record<number, number>, tail: number): (number | null)[] {
     return buildSeries(0, [
@@ -71,8 +75,8 @@ const SERIES: Record<string, (number | null)[]> = (() => {
 const TL_ASSETS = [
   { key:'tlv10',   label:'TLV10 · Low Risk',   short:'TLV10',    color:'#d4b254', group:'tl', note:'Inception Jan 2021 · +1,447% verified' },
   { key:'v10hr',   label:'V10 HR · High Risk',  short:'V10 HR',   color:'#f87171', group:'tl', note:'Inception Mar 2025 · +958% verified' },
-  { key:'etf',     label:'ETF · High Risk',      short:'TLETF',    color:'#60a5fa', group:'tl', note:'Inception Jan 2026 · +39.66% abs gain' },
-  { key:'etfgold', label:'ETF Gold MR · Med',   short:'ETF Gold', color:'#34d399', group:'tl', note:'Inception Feb 2026 · +100.77% verified' },
+  { key:'etf',     label:'ETF · High Risk',      short:'TLETF',    color:'#60a5fa', group:'tl', note:'Inception Jan 2026 · +10.62% net gain (Apr 2026)' },
+  { key:'etfgold', label:'ETF Gold MR · Med',   short:'ETF Gold', color:'#34d399', group:'tl', note:'Inception Feb 2026 · +197.33% verified (Apr 2026)' },
 ];
 const BENCH_ASSETS = [
   { key:'btc',    label:'Bitcoin (BTC)',  short:'BTC',    color:'#f7931a', group:'bench', note:'Spot BTC/USD price return' },
