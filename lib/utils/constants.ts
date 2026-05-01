@@ -185,7 +185,7 @@ export const BASE = [
     ss: 'https://icmarkets.signalstart.com/analysis/tol-langit-etf/285680',
     zulu: 'https://www.zulutrade.com/trader/430869/trading',
     platform: 'MT5',
-    gain: '+12.86%',
+    gain: '+62.04%',
     win: '80.19%',
     pf: '1.74',
     mo: '+108.09%',
@@ -216,7 +216,7 @@ export const BASE = [
     gridT: 'green',
     rorLvl: 'HIGH — VOLATILE RECOVERY',
     rorC: COLORS.negative,
-    rorD: 'A 5-month live track record (Jan–May 2026) demonstrating extreme volatility: +105.59% in January, +18.05% in February, a severe −78.06% drawdown in March, +108.09% in April, and +1.88% (partial) in May. Net gain of +12.86% reflects significant capital flows ($21.9k deposits, $18.9k withdrawals). Maximum balance drawdown of 70.72% remains materially elevated. Profit factor improved to 1.74. Sharpe ratio of 0.11 indicates return is disproportionate to volatility risk. Recovery confirmed and holding into May — continued active monitoring required.',
+    rorD: 'A 5-month live track record (Jan–May 2026) demonstrating extreme volatility: +105.59% in January, +18.05% in February, a severe −78.06% drawdown in March, +108.09% in April, and +1.88% (partial) in May. Absolute gain of +62.04% (MyFXBook Abs. Gain, not adjusted for deposits/withdrawals). Maximum balance drawdown of 70.72% remains materially elevated. Profit factor improved to 1.74. Sharpe ratio of 0.11 indicates return is disproportionate to volatility risk. Recovery confirmed and holding into May — continued active monitoring required.',
     useCase: 'High-Risk Gold-Forex Satellite',
     useCaseD:
       "Demonstrated volatile but recovering equity curve. The April 2026 recovery of +108.09% following a −78.06% March drawdown confirms the strategy's recovery mechanics, with May 2026 adding +1.88% (partial). Profit factor improved to 1.74 over 5 months. Not suitable as a primary allocation until balance drawdown stabilises materially below 30%. The AI-verified hybrid model and absence of grid mechanics maintain structural advantage over grid-based strategies.",
@@ -231,7 +231,7 @@ export const BASE = [
     annRet: [
       {
         y: '2026',
-        v: '+12.86% Gain',
+        v: '+62.04% Abs. Gain',
         n: 'Jan +105.59% · Feb +18.05% · Mar −78.06% · Apr +108.09% · May +1.88%',
       },
     ],
@@ -291,6 +291,8 @@ export const BASE = [
     ddB: 'Maximum balance drawdown of 39.17% is moderate for a gold-specialist strategy. Current drawdown is 30.1% as of May 2, 2026 — up from 8.69% on April 30, reflecting intra-period May volatility. No grid mechanics means drawdown is structurally contained. Equity exposure from near-intraday hold times is well-managed.',
     corrN:
       'XAU/USD-dominated exposure. Minimal correlation to V10 forex grid strategies. Moderate correlation with TOL LANGIT ETF — do not pair these as a diversification hedge for gold exposure.',
-    annRet: [{ y: '2026', v: '+207.3% YTD', n: 'Feb +24.87% · Mar −17.96% · Apr +191.15% · May +3.03%' }],
+    annRet: [
+      { y: '2026', v: '+207.3% YTD', n: 'Feb +24.87% · Mar −17.96% · Apr +191.15% · May +3.03%' },
+    ],
   },
 ];

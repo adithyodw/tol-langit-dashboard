@@ -71,9 +71,7 @@ const SERIES: Record<string, (number | null)[]> = (() => {
     1.0, // Jun 2026 terminal
   ]);
   // ETF: actual monthly returns Jan–May 2026 (Jan +105.59%, Feb +18.05%, Mar −78.06%, Apr +108.09%, May +1.88% partial)
-  const etf = buildSeries(monthIndex(2026, 0), [
-    2.1059, 1.1805, 0.2194, 2.0809, 1.0188, 1.0,
-  ]);
+  const etf = buildSeries(monthIndex(2026, 0), [2.1059, 1.1805, 0.2194, 2.0809, 1.0188, 1.0]);
   // ETF Gold MR: actual monthly returns Feb–May 2026 (Feb +24.87%, Mar −17.96%, Apr +191.15%, May +3.03% partial)
   const etfgold = buildSeries(monthIndex(2026, 1), [1.2487, 0.8204, 2.9115, 1.0303, 1.0]);
 
@@ -121,7 +119,7 @@ const TL_ASSETS = [
     short: 'TLETF',
     color: '#60a5fa',
     group: 'tl',
-    note: 'Inception Jan 2026 · +12.86% gain (May 2026)',
+    note: 'Inception Jan 2026 · +62.04% abs gain (May 2026)',
   },
   {
     key: 'etfgold',
