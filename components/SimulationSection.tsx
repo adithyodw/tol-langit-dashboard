@@ -26,8 +26,8 @@ const SERIF = "'Playfair Display', Georgia, serif";
 const MONO = "'IBM Plex Mono', 'Courier New', monospace";
 const SANS = "'IBM Plex Sans', system-ui, sans-serif";
 
-/* ─── Month index helpers (0 = Jan 2021, 64 = May 2026 terminal) ────────── */
-const TOTAL_MONTHS = 65;
+/* ─── Month index helpers (0 = Jan 2021, 65 = Jun 2026 terminal) ────────── */
+const TOTAL_MONTHS = 66;
 function monthIndex(year: number, month: number): number {
   return (year - 2021) * 12 + month;
 }
@@ -61,17 +61,21 @@ const SERIES: Record<string, (number | null)[]> = (() => {
     ...Array(12).fill(mRate(1.5774)),
     ...Array(16).fill(mRate(Math.pow(154747 / 75297, 12 / 16))),
     1.0, // May 2026 terminal (no data yet)
+    1.0, // Jun 2026 terminal (new)
   ];
   const tlv10 = buildSeries(0, v10Rates);
   // V10 HR: inception Mar 2025, +957.48% over 14 months to Apr 2026
   const v10hr = buildSeries(monthIndex(2025, 2), [
     ...Array(14).fill(mRate(Math.pow(10.5748, 12 / 13))),
-    1.0,
+    1.0, // May 2026 terminal
+    1.0, // Jun 2026 terminal
   ]);
-  // ETF: Abs. Gain +41.39% over 4 months (Jan–Apr 2026), MQL5 signal 2353105
-  const etf = buildSeries(monthIndex(2026, 0), [...Array(4).fill(mRate(Math.pow(1.4139, 12 / 4))), 1.0]);
-  // ETF Gold MR: actual monthly returns Feb–Apr 2026 (Feb +24.87%, Mar −17.96%, Apr +190.23%)
-  const etfgold = buildSeries(monthIndex(2026, 1), [1.2487, 0.8204, 2.9023, 1.0]);
+  // ETF: actual monthly returns Jan–May 2026 (Jan +105.59%, Feb +18.05%, Mar −78.06%, Apr +108.09%, May +1.88% partial)
+  const etf = buildSeries(monthIndex(2026, 0), [
+    2.1059, 1.1805, 0.2194, 2.0809, 1.0188, 1.0,
+  ]);
+  // ETF Gold MR: actual monthly returns Feb–May 2026 (Feb +24.87%, Mar −17.96%, Apr +191.15%, May +3.03% partial)
+  const etfgold = buildSeries(monthIndex(2026, 1), [1.2487, 0.8204, 2.9115, 1.0303, 1.0]);
 
   function bench(af: Record<number, number>, tail: number): (number | null)[] {
     return buildSeries(0, [
@@ -117,7 +121,7 @@ const TL_ASSETS = [
     short: 'TLETF',
     color: '#60a5fa',
     group: 'tl',
-    note: 'Inception Jan 2026 · +41.39% abs gain (Apr 2026)',
+    note: 'Inception Jan 2026 · +12.86% gain (May 2026)',
   },
   {
     key: 'etfgold',
@@ -125,7 +129,7 @@ const TL_ASSETS = [
     short: 'ETF Gold',
     color: '#34d399',
     group: 'tl',
-    note: 'Inception Feb 2026 · +197.33% verified (Apr 2026)',
+    note: 'Inception Feb 2026 · +207.3% verified (May 2026)',
   },
 ];
 const BENCH_ASSETS = [
@@ -190,14 +194,14 @@ const ALL_ASSETS = [...TL_ASSETS, ...BENCH_ASSETS];
 const AMOUNTS = [1000, 5000, 10000, 25000, 50000, 100000];
 
 /* ─── Period presets ─────────────────────────────────────────────────────── */
-// idx: 0=Jan2021, 64=May2026 terminal (Apr 2026 end). YTD=Jan2026(60). 1Y=May2025(52). 2Y=May2024(40). 3Y=May2023(28). 5Y=May2021(4).
+// idx: 0=Jan2021, 65=Jun2026 terminal (May 2026 end). YTD=Jan2026(60). 1Y=May2025(52). 2Y=May2024(40). 3Y=May2023(28). 5Y=May2021(4).
 const PRESETS = [
-  { label: 'YTD', start: 60, end: 64 },
-  { label: '1Y', start: 52, end: 64 },
-  { label: '2Y', start: 40, end: 64 },
-  { label: '3Y', start: 28, end: 64 },
-  { label: '5Y', start: 4, end: 64 },
-  { label: 'MAX', start: 0, end: 64 },
+  { label: 'YTD', start: 60, end: 65 },
+  { label: '1Y', start: 52, end: 65 },
+  { label: '2Y', start: 40, end: 65 },
+  { label: '3Y', start: 28, end: 65 },
+  { label: '5Y', start: 4, end: 65 },
+  { label: 'MAX', start: 0, end: 65 },
 ];
 const DEFAULT_PRESET = 5; // MAX
 
