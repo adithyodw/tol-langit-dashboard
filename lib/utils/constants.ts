@@ -185,7 +185,7 @@ export const BASE = [
     ss: 'https://icmarkets.signalstart.com/analysis/tol-langit-etf/285680',
     zulu: 'https://www.zulutrade.com/trader/430869/trading',
     platform: 'MT5',
-    gain: '+10.62%',
+    gain: '+41.39%',
     win: '80.00%',
     pf: '1.69',
     mo: '+107.79%',
@@ -219,7 +219,7 @@ export const BASE = [
     rorD: 'A 4-month live track record (Jan–Apr 2026) demonstrating extreme volatility: +105.59% in January, +18.05% in February, a severe −78.06% drawdown in March, and a remarkable +107.79% recovery in April. Net gain of +10.62% reflects significant capital flows ($21.9k deposits, $18.9k withdrawals). Maximum balance drawdown of 70.72% remains materially elevated. Profit factor has improved to 1.69. Sharpe ratio of 0.10 indicates return is disproportionate to volatility risk. Recovery confirmed — continued active monitoring required.',
     useCase: 'High-Risk Gold-Forex Satellite',
     useCaseD:
-      'Demonstrated volatile but recovering equity curve. The April 2026 recovery of +107.79% following a −78.06% March drawdown confirms the strategy\'s recovery mechanics. Profit factor improved to 1.69 over 4 months. Not suitable as a primary allocation until balance drawdown stabilises materially below 30%. The AI-verified hybrid model and absence of grid mechanics maintain structural advantage over grid-based strategies.',
+      "Demonstrated volatile but recovering equity curve. The April 2026 recovery of +107.79% following a −78.06% March drawdown confirms the strategy's recovery mechanics. Profit factor improved to 1.69 over 4 months. Not suitable as a primary allocation until balance drawdown stabilises materially below 30%. The AI-verified hybrid model and absence of grid mechanics maintain structural advantage over grid-based strategies.",
     inv: 'Aggressive · High-Tolerance · Active Monitor',
     invN: 'Only for investors with explicit tolerance for deep drawdown. Drawdown recovery is underway but maximum balance drawdown of 70.72% remains elevated. Monitor monthly and reassess at the 6-month milestone.',
     alloc:
@@ -229,7 +229,7 @@ export const BASE = [
     corrN:
       'Low correlation to V10 forex strategies due to gold and MT5 exposure. Provides genuine diversification but currently impairs portfolio risk-adjusted returns.',
     annRet: [
-      { y: '2026', v: '+10.62% YTD', n: 'Jan +105.59% · Feb +18.05% · Mar −78.06% · Apr +107.79%' },
+      { y: '2026', v: '+41.39% Abs. Gain', n: 'Jan +105.59% · Feb +18.05% · Mar −78.06% · Apr +107.79%' },
     ],
   },
   {
@@ -287,8 +287,6 @@ export const BASE = [
     ddB: 'Maximum balance drawdown of 39.17% is moderate for a gold-specialist strategy. Current drawdown is 8.69% — the account is near its equity peak as of April 30, 2026. No grid mechanics means drawdown is structurally contained. Equity exposure from near-intraday hold times is well-managed.',
     corrN:
       'XAU/USD-dominated exposure. Minimal correlation to V10 forex grid strategies. Moderate correlation with TOL LANGIT ETF — do not pair these as a diversification hedge for gold exposure.',
-    annRet: [
-      { y: '2026', v: '+197.33% YTD', n: 'Feb +24.87% · Mar −17.96% · Apr +190.23%' },
-    ],
+    annRet: [{ y: '2026', v: '+197.33% YTD', n: 'Feb +24.87% · Mar −17.96% · Apr +190.23%' }],
   },
 ];
