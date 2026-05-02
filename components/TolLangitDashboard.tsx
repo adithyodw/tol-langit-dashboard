@@ -3001,10 +3001,10 @@ const Footer = ({ lastUpd }: { lastUpd: string }) => (
 );
 
 /* ─── Root dashboard component ───────────────────────────────────────────── */
-const INTERVAL = 15 * 60 * 1000;
+const INTERVAL = 6 * 60 * 60 * 1000;
 
 const getDeviceDate = () =>
-  new Date().toLocaleDateString('en-US', { month: 'long', year: 'numeric' });
+  new Date().toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' });
 
 export default function TolLangitDashboard() {
   const [S, setS] = useState<Strategy[]>(BASE);

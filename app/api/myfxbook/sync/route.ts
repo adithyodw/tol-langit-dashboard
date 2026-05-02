@@ -1,15 +1,10 @@
 export const dynamic = 'force-dynamic';
 
 import { NextResponse } from 'next/server';
-import {
-  getSession,
-  getAccounts,
-  mapAccount,
-  ACCOUNT_MAP,
-} from '@/lib/api-clients/myfxbook-live';
+import { getSession, getAccounts, mapAccount, ACCOUNT_MAP } from '@/lib/api-clients/myfxbook-live';
 
 export async function GET() {
-  const email    = process.env.MYFXBOOK_EMAIL;
+  const email = process.env.MYFXBOOK_EMAIL;
   const password = process.env.MYFXBOOK_PASSWORD;
 
   if (!email || !password) {
@@ -17,7 +12,7 @@ export async function GET() {
   }
 
   try {
-    const session  = await getSession(email, password);
+    const session = await getSession(email, password);
     const accounts = await getAccounts(session);
 
     const strategies: Record<string, ReturnType<typeof mapAccount>> = {};
@@ -30,7 +25,7 @@ export async function GET() {
 
     return NextResponse.json({
       strategies,
-      updatedAt: new Date().toLocaleDateString('en-US', { month: 'long', year: 'numeric' }),
+      updatedAt: new Date().toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' }),
     });
   } catch (err) {
     const msg = err instanceof Error ? err.message : 'Unknown error';
