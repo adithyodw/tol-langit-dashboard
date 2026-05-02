@@ -219,7 +219,7 @@ const Ann = () => (
 
 const Nav = () => {
   const [open, setOpen] = useState(false);
-  const links:[string,string][] = [['#about','Manager'],['#strategies','Strategies'],['#factsheets','Factsheets'],['#copy-trading','Copy Trading'],['#comparison','Analysis'],['#simulation','Simulator'],['#broker','Broker'],['#disclosures','Disclosures']];
+  const links:[string,string][] = [['#about','Manager'],['#strategies','Strategies'],['#factsheets','Factsheets'],['#live-feed','Live Feed'],['#copy-trading','Copy Trading'],['#comparison','Analysis'],['#simulation','Simulator'],['#broker','Broker'],['#disclosures','Disclosures']];
   return (
     <nav style={{background:C.navy,borderBottom:`1px solid ${C.ruleDark}`,position:'sticky',top:0,zIndex:100}}>
       <div className="tl-nav-in" style={{maxWidth:1280,margin:'0 auto',padding:'0 40px',height:64,display:'flex',alignItems:'center',justifyContent:'space-between'}}>
@@ -578,6 +578,297 @@ const Factsheets = ({S}:{S:Strategy[]}) => {
             </div>
           </div>
         </div>
+      </div>
+    </div>
+  );
+};
+
+/* ── MyFXBook OID map (extracted from myfx URLs) ───────────────────────── */
+const MYFX_OID: Record<string, string> = {
+  v10:     '8671765',
+  v10hr:   '11424740',
+  etf:     '11891377',
+  etfgold: '12023120',
+};
+
+/* ── Confirmed MQL5 widget embed tokens (obtained from MQL5 "Get Widget") ── */
+const MQL5_WIDGET: Record<string, string> = {
+  etfgold: '7bss',
+};
+
+const OPEN_TRADES_CSS = [
+  '*{box-sizing:border-box;margin:0;padding:0;}',
+  'body{background:#000e28;color:rgba(255,255,255,.65);',
+  "font-family:'IBM Plex Sans',system-ui,sans-serif;font-size:12px;padding:14px;}",
+  'a{color:#b89a3e;text-decoration:none;}',
+  'table{width:100%;border-collapse:collapse;font-size:11px;}',
+  'th{padding:8px 10px;background:rgba(255,255,255,.04);color:rgba(255,255,255,.35);',
+  'font-weight:500;letter-spacing:.8px;text-transform:uppercase;font-size:9px;',
+  'border-bottom:1px solid rgba(255,255,255,.1);text-align:left;}',
+  'td{padding:8px 10px;border-bottom:1px solid rgba(255,255,255,.06);}',
+  '.pos{color:#34d399;font-weight:600;}.neg{color:#f87171;font-weight:600;}',
+].join('');
+
+const makeOpenTradesSrc = (oid: string) =>
+  `<!DOCTYPE html><html><head><meta charset="utf-8"><style>${OPEN_TRADES_CSS}</style></head><body>` +
+  `<div><script class="powered" type="text/javascript" ` +
+  `src="https://widgets.myfxbook.com/scripts/fxOpenTrades.js?oid=${oid}&link=1"></script></div>` +
+  `<script type="text/javascript">if(typeof showOpenTradesWidget==="function"){showOpenTradesWidget()}</script>` +
+  `</body></html>`;
+
+const LiveFeed = ({ S }: { S: Strategy[] }) => {
+  const [act, setAct] = useState(0);
+  const s = S[act];
+  const oid   = MYFX_OID[s.id] ?? null;
+  const token = MQL5_WIDGET[s.id] ?? null;
+
+  return (
+    <div className="sp" style={{ padding: '72px 40px', background: C.navy }} id="live-feed">
+      <div style={{ maxWidth: 1280, margin: '0 auto' }}>
+
+        {/* ── Section header ─────────────────────────────────────────────── */}
+        <div className="sh-flex" style={{ display: 'flex', alignItems: 'flex-end', justifyContent: 'space-between', marginBottom: 32, paddingBottom: 20, borderBottom: `1px solid ${C.ruleDark}` }}>
+          <div>
+            <div style={{ fontSize: 10, letterSpacing: 3, textTransform: 'uppercase', color: C.gold, marginBottom: 8, fontWeight: 500 }}>Live Performance Feed</div>
+            <div style={{ fontFamily: SERIF, fontSize: 'clamp(22px,3vw,28px)', fontWeight: 500, color: C.white, lineHeight: 1.2 }}>Real-Time Signal Widgets</div>
+          </div>
+          <div style={{ fontSize: 12, color: 'rgba(255,255,255,.35)', textAlign: 'right', maxWidth: 340, lineHeight: 1.6 }} className="sh-note">
+            Live widgets sourced directly from MQL5 and MyFXBook. Data refreshes in real time as trades execute.
+          </div>
+        </div>
+
+        {/* ── Strategy tabs ──────────────────────────────────────────────── */}
+        <div className="tl-tab-wrap" style={{ display: 'flex', gap: 6, flexWrap: 'wrap', marginBottom: 28 }}>
+          {S.map((st, i) => (
+            <button key={st.id}
+              className={`tl-tab${act === i ? ' on' : ''}`}
+              style={act !== i ? { borderColor: 'rgba(255,255,255,.15)', color: 'rgba(255,255,255,.4)' } : {}}
+              onClick={() => setAct(i)}
+            >
+              {st.short}
+            </button>
+          ))}
+        </div>
+
+        <div key={s.id} className="tl-fu">
+
+          {/* ── Strategy identity bar ────────────────────────────────────── */}
+          <div style={{ background: 'rgba(255,255,255,.04)', border: `1px solid ${C.ruleDark}`, padding: '18px 22px', marginBottom: 1, display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: 16 }}>
+            <div>
+              <div style={{ fontFamily: MONO, fontSize: 10, color: C.gold, letterSpacing: 1, marginBottom: 4 }}>{s.ticker} · {s.platform} · IC Markets{oid ? ` · Account #${oid}` : ''}</div>
+              <div style={{ fontFamily: SERIF, fontSize: 'clamp(15px,2vw,18px)', fontWeight: 600, color: C.white }}>{s.name}</div>
+            </div>
+            <div style={{ display: 'flex', alignItems: 'center', gap: 20, flexWrap: 'wrap' }}>
+              {([
+                { l: 'Total Return', v: s.gain,  c: C.goldBright },
+                { l: 'Win Rate',     v: s.win,   c: C.white },
+                { l: 'Profit Factor',v: s.pf,    c: C.white },
+                { l: 'Balance DD',   v: s.ddBal, c: '#fbbf24' },
+              ] as {l:string;v:string;c:string}[]).map((m, i) => (
+                <div key={i} style={{ textAlign: 'right' }}>
+                  <div style={{ fontSize: 9, letterSpacing: 1, textTransform: 'uppercase', color: 'rgba(255,255,255,.3)', marginBottom: 3 }}>{m.l}</div>
+                  <div style={{ fontFamily: MONO, fontSize: 15, fontWeight: 700, color: m.c }}>{m.v}</div>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* ── Widget 3-column grid ─────────────────────────────────────── */}
+          <div className="tl-live-widgets" style={{ background: C.ruleDark, marginBottom: 1 }}>
+
+            {/* Col 1 — MQL5 signal widget or subscribe CTA */}
+            <div style={{ background: '#000e28', padding: '24px 20px', display: 'flex', flexDirection: 'column', gap: 14 }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+                <div style={{ width: 24, height: 24, background: 'rgba(184,154,62,.1)', border: `1px solid rgba(184,154,62,.2)`, display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
+                  <Ic n="activity" size={12} color={C.gold}/>
+                </div>
+                <div style={{ fontSize: 9, letterSpacing: 2, textTransform: 'uppercase', color: C.gold, fontWeight: 600 }}>MQL5 Signal</div>
+              </div>
+
+              {token ? (
+                <div style={{ display: 'flex', justifyContent: 'center' }}>
+                  <iframe
+                    frameBorder={0}
+                    width={220}
+                    height={140}
+                    src={`https://www.mql5.com/en/signals/widget/signal/${token}?fw=react`}
+                    title={`${s.name} — MQL5 Signal Widget`}
+                    style={{ display: 'block' }}
+                  />
+                </div>
+              ) : (
+                <div style={{ flex: 1, display: 'flex', flexDirection: 'column', justifyContent: 'center', gap: 10 }}>
+                  <div style={{ display: 'flex', alignItems: 'flex-start', gap: 8, padding: '14px', border: `1px solid rgba(184,154,62,.15)`, background: 'rgba(184,154,62,.04)' }}>
+                    <Ic n="check_circle" size={13} color={C.gold} sx={{ flexShrink: 0, marginTop: 1 }}/>
+                    <div style={{ fontSize: 11, color: 'rgba(255,255,255,.45)', lineHeight: 1.6 }}>
+                      Signal verified and active on MQL5. Subscribe directly via MetaTrader to auto-copy trades.
+                    </div>
+                  </div>
+                  <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 8 }}>
+                    {([
+                      { l: 'Track Record', v: s.durS.split(' · ')[0] },
+                      { l: 'Total Trades', v: s.trades },
+                      { l: 'Win Rate',     v: s.win },
+                      { l: 'Avg / Week',   v: String(s.tpw) },
+                    ]).map((m, i) => (
+                      <div key={i} style={{ background: 'rgba(255,255,255,.03)', padding: '8px 10px', border: `1px solid rgba(255,255,255,.06)` }}>
+                        <div style={{ fontSize: 8.5, color: 'rgba(255,255,255,.3)', letterSpacing: 1, textTransform: 'uppercase', marginBottom: 3 }}>{m.l}</div>
+                        <div style={{ fontFamily: MONO, fontSize: 12, fontWeight: 600, color: C.white }}>{m.v}</div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
+
+              <div style={{ fontSize: 10.5, color: 'rgba(255,255,255,.28)', lineHeight: 1.6 }}>
+                {token
+                  ? 'Live subscriber count, trade history, and performance metrics from MQL5.'
+                  : 'Subscribe via MetaTrader\'s built-in signal service — no third-party software required.'}
+              </div>
+              <a href={s.mql5} target="_blank" rel="noreferrer" className="tl-ct-btn" style={{ fontSize: 10 }}>
+                <span>SUBSCRIBE ON MQL5</span>
+                <Ic n="ext_link" size={10} color={C.navy}/>
+              </a>
+            </div>
+
+            {/* Col 2 — MyFXBook type=6 performance overview */}
+            <div style={{ background: '#000e28', padding: '24px 20px', display: 'flex', flexDirection: 'column', gap: 14 }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+                <div style={{ width: 24, height: 24, background: 'rgba(184,154,62,.1)', border: `1px solid rgba(184,154,62,.2)`, display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
+                  <Ic n="bar_chart" size={12} color={C.gold}/>
+                </div>
+                <div style={{ fontSize: 9, letterSpacing: 2, textTransform: 'uppercase', color: C.gold, fontWeight: 600 }}>Performance Overview · MyFXBook</div>
+              </div>
+              <a
+                href={s.myfx ?? '#'}
+                target="_blank" rel="noreferrer noopener"
+                style={{ display: 'flex', justifyContent: 'center', flex: 1, border: `1px solid rgba(255,255,255,.06)`, minHeight: 100 }}
+              >
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                  alt={`${s.name} — MyFXBook Performance Widget`}
+                  src={`https://widget.myfxbook.com/widget/widget.png?accountOid=${oid}&type=6`}
+                  style={{ width: '100%', height: 'auto', display: 'block' }}
+                />
+              </a>
+              <div style={{ fontSize: 10.5, color: 'rgba(255,255,255,.28)', lineHeight: 1.6 }}>
+                Independently verified gain, equity curve, and drawdown chart — updates on every trade close.
+              </div>
+              {s.myfx && (
+                <a href={s.myfx} target="_blank" rel="noreferrer"
+                  style={{ display: 'inline-flex', alignItems: 'center', gap: 6, fontSize: 10, color: C.gold, fontFamily: MONO, letterSpacing: .5, textDecoration: 'none', opacity: .7 }}>
+                  VIEW FULL ACCOUNT <Ic n="ext_link" size={9} color={C.gold}/>
+                </a>
+              )}
+            </div>
+
+            {/* Col 3 — MyFXBook type=4 statistics badge */}
+            <div style={{ background: '#000e28', padding: '24px 20px', display: 'flex', flexDirection: 'column', gap: 14 }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+                <div style={{ width: 24, height: 24, background: 'rgba(184,154,62,.1)', border: `1px solid rgba(184,154,62,.2)`, display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
+                  <Ic n="pie_chart" size={12} color={C.gold}/>
+                </div>
+                <div style={{ fontSize: 9, letterSpacing: 2, textTransform: 'uppercase', color: C.gold, fontWeight: 600 }}>Account Statistics · MyFXBook</div>
+              </div>
+              <a
+                href={s.myfx ?? '#'}
+                target="_blank" rel="noreferrer noopener"
+                style={{ display: 'flex', justifyContent: 'center', flex: 1, border: `1px solid rgba(255,255,255,.06)`, minHeight: 100 }}
+              >
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                  alt={`${s.name} — MyFXBook Statistics Widget`}
+                  src={`https://widget.myfxbook.com/widget/widget.png?accountOid=${oid}&type=4`}
+                  style={{ width: '100%', height: 'auto', display: 'block' }}
+                />
+              </a>
+              <div style={{ fontSize: 10.5, color: 'rgba(255,255,255,.28)', lineHeight: 1.6 }}>
+                Live stats badge — profit factor, win rate, trades, and drawdown. Sourced from MyFXBook verified data.
+              </div>
+              {s.myfx && (
+                <a href={s.myfx} target="_blank" rel="noreferrer"
+                  style={{ display: 'inline-flex', alignItems: 'center', gap: 6, fontSize: 10, color: C.gold, fontFamily: MONO, letterSpacing: .5, textDecoration: 'none', opacity: .7 }}>
+                  VIEW FULL ACCOUNT <Ic n="ext_link" size={9} color={C.gold}/>
+                </a>
+              )}
+            </div>
+          </div>
+
+          {/* ── Open trades — full width ─────────────────────────────────── */}
+          {oid && (
+            <div style={{ background: '#000e28', border: `1px solid ${C.ruleDark}` }}>
+              <div style={{ padding: '14px 20px', borderBottom: `1px solid ${C.ruleDark}`, display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: 12 }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
+                  <div style={{ width: 28, height: 28, background: 'rgba(184,154,62,.08)', border: `1px solid rgba(184,154,62,.18)`, display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
+                    <Ic n="layers" size={13} color={C.gold}/>
+                  </div>
+                  <div>
+                    <div style={{ fontSize: 9.5, letterSpacing: 2, textTransform: 'uppercase', color: C.gold, fontWeight: 600 }}>Open Positions</div>
+                    <div style={{ fontSize: 10.5, color: 'rgba(255,255,255,.28)', marginTop: 2 }}>
+                      Real-time open trades · Account #{oid} · Powered by MyFXBook
+                    </div>
+                  </div>
+                </div>
+                {s.myfx && (
+                  <a href={s.myfx} target="_blank" rel="noreferrer"
+                    style={{ display: 'inline-flex', alignItems: 'center', gap: 6, padding: '7px 16px', background: 'rgba(184,154,62,.08)', border: `1px solid rgba(184,154,62,.22)`, color: C.gold, fontSize: 10, fontFamily: MONO, letterSpacing: .5, textDecoration: 'none', flexShrink: 0 }}
+                  >
+                    VIEW ACCOUNT <Ic n="ext_link" size={10} color={C.gold}/>
+                  </a>
+                )}
+              </div>
+              <iframe
+                srcDoc={makeOpenTradesSrc(oid)}
+                style={{ width: '100%', height: 260, border: 'none', display: 'block' }}
+                title={`${s.name} — Open Trades`}
+              />
+            </div>
+          )}
+
+          {/* ── External copy-trading platform links ─────────────────────── */}
+          {(s.ss || s.zulu) && (
+            <div style={{ marginTop: 1, display: 'flex', gap: 1, background: C.ruleDark, flexWrap: 'wrap' }}>
+              {s.ss && (
+                <a href={s.ss} target="_blank" rel="noreferrer" className="tl-live-extlink"
+                  style={{ flex: 1, minWidth: 200, display: 'flex', alignItems: 'center', gap: 12, padding: '15px 20px', background: '#000e28', textDecoration: 'none' }}>
+                  <div style={{ width: 24, height: 24, background: 'rgba(184,154,62,.1)', border: `1px solid rgba(184,154,62,.18)`, display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
+                    <Ic n="zap" size={11} color={C.gold}/>
+                  </div>
+                  <div style={{ flex: 1 }}>
+                    <div style={{ fontSize: 9, letterSpacing: 1.5, textTransform: 'uppercase', color: 'rgba(255,255,255,.3)', marginBottom: 2 }}>SignalStart · IC Markets Certified</div>
+                    <div style={{ fontSize: 12, color: 'rgba(255,255,255,.6)', fontWeight: 500 }}>Copy with advanced risk controls &amp; equity stop-loss</div>
+                  </div>
+                  <Ic n="ext_link" size={11} color="rgba(255,255,255,.22)" sx={{ flexShrink: 0 }}/>
+                </a>
+              )}
+              {s.zulu && (
+                <a href={s.zulu} target="_blank" rel="noreferrer" className="tl-live-extlink"
+                  style={{ flex: 1, minWidth: 200, display: 'flex', alignItems: 'center', gap: 12, padding: '15px 20px', background: '#000e28', textDecoration: 'none' }}>
+                  <div style={{ width: 24, height: 24, background: 'rgba(184,154,62,.1)', border: `1px solid rgba(184,154,62,.18)`, display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
+                    <Ic n="users" size={11} color={C.gold}/>
+                  </div>
+                  <div style={{ flex: 1 }}>
+                    <div style={{ fontSize: 9, letterSpacing: 1.5, textTransform: 'uppercase', color: 'rgba(255,255,255,.3)', marginBottom: 2 }}>ZuluTrade · Global Social Trading</div>
+                    <div style={{ fontSize: 12, color: 'rgba(255,255,255,.6)', fontWeight: 500 }}>Copy via ZuluTrade with lot-size scaling &amp; risk scoring</div>
+                  </div>
+                  <Ic n="ext_link" size={11} color="rgba(255,255,255,.22)" sx={{ flexShrink: 0 }}/>
+                </a>
+              )}
+            </div>
+          )}
+        </div>
+
+        {/* ── Footnote ───────────────────────────────────────────────────── */}
+        <div style={{ marginTop: 14, display: 'flex', alignItems: 'flex-start', gap: 10, padding: '12px 18px', border: `1px solid rgba(184,154,62,.12)`, background: 'rgba(184,154,62,.03)' }}>
+          <Ic n="info" size={12} color="rgba(255,255,255,.2)" sx={{ flexShrink: 0, marginTop: 1 }}/>
+          <p style={{ fontSize: 11, color: 'rgba(255,255,255,.22)', lineHeight: 1.65, margin: 0 }}>
+            Widget data served directly from MQL5 and MyFXBook and updates as trades execute. Figures may differ marginally from factsheet data due to update cadence. All data independently verifiable at{' '}
+            {s.myfx && <><a href={s.myfx} target="_blank" rel="noreferrer" style={{ color: C.gold }}>myfxbook.com</a> and{' '}</>}
+            <a href={s.mql5} target="_blank" rel="noreferrer" style={{ color: C.gold }}>mql5.com</a>.
+            {' '}Past performance does not guarantee future results.
+          </p>
+        </div>
+
       </div>
     </div>
   );
@@ -976,6 +1267,7 @@ export default function TolLangitDashboard() {
       <About/>
       <Cards S={S}/>
       <Factsheets S={S}/>
+      <LiveFeed S={S}/>
       <CopyTrading S={S}/>
       <Comparison S={S}/>
       <AnnPerf/>
