@@ -4,7 +4,6 @@ import { NextResponse } from 'next/server';
 import {
   getSession,
   getAccounts,
-  getHistory,
   mapAccount,
   ACCOUNT_MAP,
 } from '@/lib/api-clients/myfxbook-live';
@@ -26,9 +25,7 @@ export async function GET() {
     for (const acct of accounts) {
       const key = ACCOUNT_MAP[acct.id];
       if (!key) continue;
-
-      const history = await getHistory(session, acct.id);
-      strategies[key] = mapAccount(acct, history);
+      strategies[key] = mapAccount(acct);
     }
 
     return NextResponse.json({

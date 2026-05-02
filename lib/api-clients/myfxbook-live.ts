@@ -8,11 +8,11 @@
  * the same cold-start lifecycle.
  */
 
-const BASE = 'https://www.myfxbook.com/api';
+const BASE_URL = 'https://www.myfxbook.com/api';
 
 /* ─── Session cache (module-scoped, survives warm invocations) ───────────── */
 let cachedSession: string | null = null;
-let sessionExpiry = 0; // epoch ms
+let sessionExpiry = 0;
 
 function sessionValid() {
   return !!cachedSession && Date.now() < sessionExpiry;
@@ -24,17 +24,18 @@ export interface MyfxAccount {
   name: string;
   accountId: number;
   description: string;
-  gain: number;          // total gain %
-  absGain: number;       // absolute gain % (deposits-adjusted)
-  daily: number;         // avg daily %
-  monthly: number;       // avg monthly %
-  drawdown: number;      // max balance drawdown %
+  gain: number;          // non-deposit-adjusted total gain %
+  absGain: number;       // deposit-adjusted absolute gain %
+  daily: number;
+  monthly: number;       // average monthly gain %
+  drawdown: number;      // max drawdown % (equity DD for grid, balance DD for non-grid)
   deposits: number;
   withdrawals: number;
+  interest: number;
   profit: number;
   balance: number;
   equity: number;
-  equityPercent: number;
+  equityPercent: number; // equity as % of balance (100 = flat, <100 = floating loss)
   demo: boolean;
   lastUpdateDate: string;
   creationDate: string;
@@ -45,42 +46,33 @@ export interface MyfxAccount {
   currency: string;
   profitFactor: number;
   pips: number;
+  portfolio: string;
+  server: { name: string };
 }
 
-export interface MyfxHistoryTrade {
-  openTime: string;
-  closeTime: string;
-  symbol: string;
-  action: string;      // '0' buy / '1' sell
-  sizing: { type: string; value: string };
-  openPrice: number;
-  closePrice: number;
-  tp: number;
-  sl: number;
-  comment: string;
-  pips: number;
-  profit: number;
-  interest: number;
-  commission: number;
-}
-
-/* ─── Mapped strategy data shape ─────────────────────────────────────────── */
+/* ─── Mapped live strategy fields (overlaid on BASE hardcoded data) ──────── */
 export interface LiveStrategyData {
-  gain: string;
-  mo: string;
-  ddBal: string;
-  pf: string;
-  trades: string;
-  wins: string;
-  losses: string;
-  win: string;
+  gain: string;    // total or absolute gain %
+  mo: string;      // average monthly gain %
+  pf: string;      // profit factor
+  ddBal?: string;  // max balance drawdown — updated for non-grid strategies
+  ddEq?: string;   // max equity drawdown  — updated for grid strategies
   lastUpd: string;
 }
 
-/* ─── Core API calls ─────────────────────────────────────────────────────── */
+/*
+ * Strategy classification:
+ *   Grid strategies (V10, V10 HIGH RISK): MFB `drawdown` = max equity DD
+ *   Non-grid strategies (ETF, ETF MR):    MFB `drawdown` = max balance DD
+ *
+ * Only ETF uses absGain (per product spec); all others use gain.
+ */
+const GRID_IDS     = new Set([8671765, 11424740]);
+const ABS_GAIN_IDS = new Set([11891377]);
 
+/* ─── Core API helper ────────────────────────────────────────────────────── */
 async function get<T>(path: string, params: Record<string, string>): Promise<T> {
-  const url = new URL(`${BASE}/${path}`);
+  const url = new URL(`${BASE_URL}/${path}`);
   Object.entries(params).forEach(([k, v]) => url.searchParams.set(k, v));
 
   const res = await fetch(url.toString(), {
@@ -90,14 +82,15 @@ async function get<T>(path: string, params: Record<string, string>): Promise<T> 
 
   if (!res.ok) throw new Error(`MyFXBook HTTP ${res.status} on ${path}`);
   const json = await res.json();
-  if (json.error) throw new Error(`MyFXBook error: ${json.message ?? 'unknown'}`);
+  if (json.error) throw new Error(`MyFXBook API error: ${json.message ?? 'unknown'}`);
   return json as T;
 }
 
+/* ─── Auth ───────────────────────────────────────────────────────────────── */
 export async function login(email: string, password: string): Promise<string> {
   const data = await get<{ session: string }>('login.json', { email, password });
   cachedSession = data.session;
-  sessionExpiry = Date.now() + 90 * 60 * 1000; // 90 min TTL (sessions last ~2 hr)
+  sessionExpiry = Date.now() + 90 * 60 * 1000; // 90-min TTL
   return data.session;
 }
 
@@ -106,27 +99,14 @@ export async function getSession(email: string, password: string): Promise<strin
   return login(email, password);
 }
 
+/* ─── Data endpoints ─────────────────────────────────────────────────────── */
 export async function getAccounts(session: string): Promise<MyfxAccount[]> {
   const data = await get<{ accounts: MyfxAccount[] }>('get-my-accounts.json', { session });
   return data.accounts;
 }
 
-export async function getHistory(
-  session: string,
-  accountId: number,
-): Promise<MyfxHistoryTrade[]> {
-  const data = await get<{ history: MyfxHistoryTrade[] }>('get-history.json', {
-    session,
-    id: String(accountId),
-    start: '2020-01-01',
-    end: new Date().toISOString().split('T')[0],
-  });
-  return data.history ?? [];
-}
-
-/* ─── Map raw account + history → dashboard format ──────────────────────── */
-
-function fmt(n: number, decimals = 2): string {
+/* ─── Formatters ─────────────────────────────────────────────────────────── */
+function fmtGain(n: number, decimals = 2): string {
   const s = Math.abs(n).toFixed(decimals);
   return n >= 0 ? `+${s}%` : `-${s}%`;
 }
@@ -135,29 +115,28 @@ function fmtDd(n: number): string {
   return `${Math.abs(n).toFixed(2)}%`;
 }
 
-export function mapAccount(
-  acct: MyfxAccount,
-  history: MyfxHistoryTrade[],
-): LiveStrategyData {
-  const wins   = history.filter(t => t.profit > 0).length;
-  const losses = history.filter(t => t.profit <= 0).length;
-  const total  = wins + losses;
-  const winRate = total > 0 ? ((wins / total) * 100).toFixed(2) + '%' : '—';
+/* ─── Map raw account → dashboard overlay ───────────────────────────────── */
+export function mapAccount(acct: MyfxAccount): LiveStrategyData {
+  const gainValue = ABS_GAIN_IDS.has(acct.id) ? acct.absGain : acct.gain;
+  const isGrid    = GRID_IDS.has(acct.id);
 
-  return {
-    gain:   fmt(acct.gain),
-    mo:     fmt(acct.monthly),
-    ddBal:  fmtDd(acct.drawdown),
-    pf:     acct.profitFactor.toFixed(2),
-    trades: total > 0 ? total.toLocaleString() : '—',
-    wins:   wins > 0  ? wins.toLocaleString()  : '—',
-    losses: losses > 0 ? losses.toLocaleString() : '—',
-    win:    winRate,
+  const base: LiveStrategyData = {
+    gain:    fmtGain(gainValue),
+    mo:      fmtGain(acct.monthly),
+    pf:      acct.profitFactor.toFixed(2),
     lastUpd: new Date().toLocaleDateString('en-US', { month: 'long', year: 'numeric' }),
   };
+
+  if (isGrid) {
+    base.ddEq  = fmtDd(acct.drawdown);   // grid: API drawdown = max equity DD
+  } else {
+    base.ddBal = fmtDd(acct.drawdown);   // non-grid: API drawdown = max balance DD
+  }
+
+  return base;
 }
 
-/* ─── Account ID → strategy key mapping ─────────────────────────────────── */
+/* ─── Account ID → strategy key ─────────────────────────────────────────── */
 export const ACCOUNT_MAP: Record<number, string> = {
   8671765:  'v10',
   11424740: 'v10hr',
