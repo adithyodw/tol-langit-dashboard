@@ -660,20 +660,6 @@ button {
   .tl-cards-mob { display: block !important; }
 }
 
-/* ─── Live Feed widgets grid ─────────────────────────────────────────────── */
-.tl-live-widgets {
-  display: grid;
-  grid-template-columns: 252px 1fr 1fr;
-  gap: 1px;
-}
-@media (max-width: 1024px) {
-  .tl-live-widgets { grid-template-columns: 1fr 1fr !important; }
-}
-@media (max-width: 640px) {
-  .tl-live-widgets { grid-template-columns: 1fr !important; }
-}
-.tl-live-extlink:hover { background: rgba(184,154,62,.06) !important; }
-
 /* ─── Simulation section grid ────────────────────────────────────────────── */
 .sim-section { background: #001d4a; }
 .sim-grid {
