@@ -24,11 +24,11 @@ export interface MyfxAccount {
   name: string;
   accountId: number;
   description: string;
-  gain: number;          // non-deposit-adjusted total gain %
-  absGain: number;       // deposit-adjusted absolute gain %
+  gain: number; // non-deposit-adjusted total gain %
+  absGain: number; // deposit-adjusted absolute gain %
   daily: number;
-  monthly: number;       // average monthly gain %
-  drawdown: number;      // max drawdown % (equity DD for grid, balance DD for non-grid)
+  monthly: number; // average monthly gain %
+  drawdown: number; // max drawdown % (equity DD for grid, balance DD for non-grid)
   deposits: number;
   withdrawals: number;
   interest: number;
@@ -52,11 +52,11 @@ export interface MyfxAccount {
 
 /* ─── Mapped live strategy fields (overlaid on BASE hardcoded data) ──────── */
 export interface LiveStrategyData {
-  gain: string;    // total or absolute gain %
-  mo: string;      // average monthly gain %
-  pf: string;      // profit factor
-  ddBal?: string;  // max balance drawdown — updated for non-grid strategies
-  ddEq?: string;   // max equity drawdown  — updated for grid strategies
+  gain: string; // total or absolute gain %
+  mo: string; // average monthly gain %
+  pf: string; // profit factor
+  ddBal?: string; // max balance drawdown — updated for non-grid strategies
+  ddEq?: string; // max equity drawdown  — updated for grid strategies
   lastUpd: string;
 }
 
@@ -67,7 +67,7 @@ export interface LiveStrategyData {
  *
  * Only ETF uses absGain (per product spec); all others use gain.
  */
-const GRID_IDS     = new Set([8671765, 11424740]);
+const GRID_IDS = new Set([8671765, 11424740]);
 const ABS_GAIN_IDS = new Set([11891377]);
 
 /* ─── Core API helper ────────────────────────────────────────────────────── */
@@ -89,9 +89,11 @@ async function get<T>(path: string, params: Record<string, string>): Promise<T> 
 /* ─── Auth ───────────────────────────────────────────────────────────────── */
 export async function login(email: string, password: string): Promise<string> {
   const data = await get<{ session: string }>('login.json', { email, password });
-  cachedSession = data.session;
+  // MyFXBook returns the session URL-encoded inside the JSON body.
+  // Decode it so searchParams.set() doesn't double-encode % characters.
+  cachedSession = decodeURIComponent(data.session);
   sessionExpiry = Date.now() + 90 * 60 * 1000; // 90-min TTL
-  return data.session;
+  return cachedSession;
 }
 
 export async function getSession(email: string, password: string): Promise<string> {
@@ -118,19 +120,19 @@ function fmtDd(n: number): string {
 /* ─── Map raw account → dashboard overlay ───────────────────────────────── */
 export function mapAccount(acct: MyfxAccount): LiveStrategyData {
   const gainValue = ABS_GAIN_IDS.has(acct.id) ? acct.absGain : acct.gain;
-  const isGrid    = GRID_IDS.has(acct.id);
+  const isGrid = GRID_IDS.has(acct.id);
 
   const base: LiveStrategyData = {
-    gain:    fmtGain(gainValue),
-    mo:      fmtGain(acct.monthly),
-    pf:      acct.profitFactor.toFixed(2),
+    gain: fmtGain(gainValue),
+    mo: fmtGain(acct.monthly),
+    pf: acct.profitFactor.toFixed(2),
     lastUpd: new Date().toLocaleDateString('en-US', { month: 'long', year: 'numeric' }),
   };
 
   if (isGrid) {
-    base.ddEq  = fmtDd(acct.drawdown);   // grid: API drawdown = max equity DD
+    base.ddEq = fmtDd(acct.drawdown); // grid: API drawdown = max equity DD
   } else {
-    base.ddBal = fmtDd(acct.drawdown);   // non-grid: API drawdown = max balance DD
+    base.ddBal = fmtDd(acct.drawdown); // non-grid: API drawdown = max balance DD
   }
 
   return base;
@@ -138,7 +140,7 @@ export function mapAccount(acct: MyfxAccount): LiveStrategyData {
 
 /* ─── Account ID → strategy key ─────────────────────────────────────────── */
 export const ACCOUNT_MAP: Record<number, string> = {
-  8671765:  'v10',
+  8671765: 'v10',
   11424740: 'v10hr',
   11891377: 'etf',
   12023120: 'etfgold',

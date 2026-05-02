@@ -3031,36 +3031,34 @@ export default function TolLangitDashboard() {
     setLoading(true);
     setMsg('Retrieving live data from MyFXBook…');
     try {
-      let res = await fetch('/api/myfxbook/sync', { method: 'GET' });
-      if (!res.ok) {
-        setMsg('MyFXBook unavailable — falling back to MQL5 search…');
-        res = await fetch('/api/refresh', { method: 'POST' });
-      }
-      if (!res.ok) throw new Error(`HTTP ${res.status}`);
+      const res = await fetch('/api/myfxbook/sync', { method: 'GET' });
       const data = await res.json();
+      if (!res.ok || data.error) {
+        throw new Error(data.error ?? `HTTP ${res.status}`);
+      }
       if (data.strategies) {
-        const MAP: Record<string, number> = { v10: 0, v10hr: 1, etf: 2, etfgold: 3 };
+        const KEY_ORDER = ['v10', 'v10hr', 'etf', 'etfgold'];
         setS(
           BASE.map((s, idx) => {
-            const key = Object.keys(MAP)[idx];
-            const lv = data.strategies[key];
+            const lv = data.strategies[KEY_ORDER[idx]];
             return lv ? { ...s, ...lv } : s;
           })
         );
       }
       const ts: string = data.updatedAt ?? getDeviceDate();
       setApiDate(ts);
-      setMsg(`Data refreshed — ${ts}`);
-    } catch {
-      setApiDate(null);
-      setMsg('Using verified cached data');
+      setMsg(`Live data updated — ${ts}`);
+    } catch (err) {
+      const msg = err instanceof Error ? err.message : 'Unknown error';
+      setMsg(`Update failed: ${msg}`);
     } finally {
       setLoading(false);
-      setTimeout(() => setMsg(''), 4000);
+      setTimeout(() => setMsg(''), 6000);
     }
   }, []);
 
   useEffect(() => {
+    fetchLive();
     timerRef.current = setInterval(fetchLive, INTERVAL);
     return () => {
       if (timerRef.current) clearInterval(timerRef.current);
