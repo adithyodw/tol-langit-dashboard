@@ -486,22 +486,30 @@ export default function GuidePage() {
         .tlg-brand-subtitle { display: block; }
         .tlg-nav-back-label { display: inline; }
 
+        /* Prevent flex child overflow — critical for mobile */
+        .tlg-step-body   { min-width: 0; }
+
+        /* Email block addresses always break onto their own lines */
+        .tlg-email-addrs { display: flex; flex-direction: column; gap: 4px; margin-top: 4px; }
+        .tlg-email-addr  { word-break: break-all; overflow-wrap: anywhere; }
+
         @media (max-width: 767px) {
-          .tlg-nav         { padding: 0 16px !important; }
-          .tlg-nav-right   { gap: 10px !important; }
-          .tlg-hero        { padding: 36px 20px 44px !important; }
-          .tlg-steps       { padding: 36px 20px !important; }
-          .tlg-step-badge  { width: 44px !important; }
-          .tlg-step-body   { padding-left: 14px !important; }
-          .tlg-detail-row  {
+          .tlg-nav           { padding: 0 16px !important; }
+          .tlg-nav-right     { gap: 10px !important; }
+          .tlg-hero          { padding: 36px 20px 44px !important; }
+          .tlg-steps         { padding: 36px 20px !important; }
+          .tlg-step-badge    { width: 44px !important; }
+          .tlg-step-body     { padding-left: 14px !important; }
+          .tlg-email-block   { padding: 14px 14px !important; }
+          .tlg-detail-row    {
             flex-direction: column !important;
             align-items: flex-start !important;
             gap: 3px !important;
             padding: 10px 14px !important;
           }
-          .tlg-detail-label { min-width: unset !important; }
-          .tlg-faq         { padding: 40px 20px !important; }
-          .tlg-footer      { padding: 24px 16px !important; }
+          .tlg-detail-label  { min-width: unset !important; }
+          .tlg-faq           { padding: 40px 20px !important; }
+          .tlg-footer        { padding: 24px 16px !important; }
         }
 
         @media (max-width: 479px) {
@@ -906,12 +914,14 @@ export default function GuidePage() {
                   {/* Email block */}
                   {step.email_block && (
                     <div
+                      className="tlg-email-block"
                       style={{
                         background: C.white,
                         border: `1px solid ${C.rule}`,
                         borderLeft: `3px solid ${C.gold}`,
                         padding: '20px 24px',
                         marginBottom: 20,
+                        overflow: 'hidden',
                       }}
                     >
                       <div style={{ marginBottom: 14 }}>
@@ -933,12 +943,12 @@ export default function GuidePage() {
                           {lang === 'en' ? 'Email Request Template' : 'Template Email Permintaan'}
                         </div>
                         <div style={{ marginBottom: 8 }}>
-                          <span style={{ fontSize: 11, color: C.muted, fontFamily: MONO }}>
-                            To:{' '}
-                          </span>
-                          {step.email_block.to.map((addr, ai) => (
-                            <span key={ai} style={{ marginRight: 12 }}>
+                          <span style={{ fontSize: 11, color: C.muted, fontFamily: MONO }}>To:</span>
+                          <div className="tlg-email-addrs">
+                            {step.email_block.to.map((addr, ai) => (
                               <a
+                                key={ai}
+                                className="tlg-email-addr"
                                 href={`mailto:${addr}?subject=${encodeURIComponent(step.email_block!.subject)}`}
                                 style={{
                                   fontSize: 12.5,
@@ -950,17 +960,17 @@ export default function GuidePage() {
                               >
                                 {addr}
                               </a>
-                            </span>
-                          ))}
+                            ))}
+                          </div>
                         </div>
                         {step.email_block.cc && step.email_block.cc.length > 0 && (
                           <div style={{ marginBottom: 8 }}>
-                            <span style={{ fontSize: 11, color: C.muted, fontFamily: MONO }}>
-                              Cc:{' '}
-                            </span>
-                            {step.email_block.cc.map((addr, ai) => (
-                              <span key={ai} style={{ marginRight: 12 }}>
+                            <span style={{ fontSize: 11, color: C.muted, fontFamily: MONO }}>Cc:</span>
+                            <div className="tlg-email-addrs">
+                              {step.email_block.cc.map((addr, ai) => (
                                 <a
+                                  key={ai}
+                                  className="tlg-email-addr"
                                   href={`mailto:${addr}`}
                                   style={{
                                     fontSize: 12.5,
@@ -972,15 +982,15 @@ export default function GuidePage() {
                                 >
                                   {addr}
                                 </a>
-                              </span>
-                            ))}
+                              ))}
+                            </div>
                           </div>
                         )}
                         <div style={{ marginBottom: 12 }}>
                           <span style={{ fontSize: 11, color: C.muted, fontFamily: MONO }}>
                             Subject:{' '}
                           </span>
-                          <span style={{ fontSize: 12.5, color: C.body, fontFamily: MONO }}>
+                          <span style={{ fontSize: 12.5, color: C.body, fontFamily: MONO, wordBreak: 'break-word', overflowWrap: 'anywhere' }}>
                             {step.email_block.subject}
                           </span>
                         </div>
@@ -994,7 +1004,10 @@ export default function GuidePage() {
                             margin: 0,
                             lineHeight: 1.65,
                             whiteSpace: 'pre-wrap',
+                            wordBreak: 'break-word',
+                            overflowWrap: 'anywhere',
                             border: `1px solid ${C.rule}`,
+                            maxWidth: '100%',
                           }}
                         >
                           {step.email_block.body}
