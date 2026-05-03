@@ -33,10 +33,12 @@ const CONTENT = {
   en: {
     nav_back: '← Back to Dashboard',
     ann: 'This guide is intended for prospective subscribers of TOL LANGIT algorithmic trading signals.',
-    hero_eyebrow: 'Subscription Guide',
-    hero_title: 'How to Subscribe to TOL LANGIT Signals',
+    hero_eyebrow: 'Connection Guide',
+    hero_title: 'How to Connect Directly to My Google Cloud Server',
     hero_subtitle:
-      'A complete onboarding walkthrough for new subscribers. Follow each step in sequence to ensure correct configuration of your copy-trading account.',
+      'A complete onboarding walkthrough for new subscribers. Follow each step in sequence to ensure correct configuration of your direct server connection.',
+    hero_note:
+      'Copying signals through a third-party relay introduces latency, wider effective spreads, and slower execution speed. For fast-moving instruments such as gold (XAUUSD), this degradation can materially affect trade outcomes. Connecting your MT5 account directly to the Google Cloud VPS eliminates this relay and ensures fills at the originating execution price.',
     steps: [
       {
         n: '01',
@@ -74,6 +76,7 @@ const CONTENT = {
         note: 'Once linked, TOL LANGIT receives a commission of USD $0.25 per lot from IC Markets. Additionally, subscribers benefit from a rebate of USD $1.00 per lot on all trades executed through the signal. This rebate is credited directly to your trading account.',
         email_block: {
           to: ['partners.apac@icmarkets.com', 'support@icmarkets.com'],
+          cc: ['adithyo.wijaya@gmail.com'],
           subject: 'Request to Link Account to IB Partner ID 49934',
           body: 'Dear IC Markets Support,\n\nI would like to request the linking of my IC Markets trading account [YOUR ACCOUNT NUMBER] to Introducing Broker Partner ID 49934.\n\nPlease confirm once the linkage has been completed.\n\nThank you.',
         },
@@ -98,7 +101,10 @@ const CONTENT = {
         note: 'Your MT5 Master Password is transmitted only for the purpose of signal subscription on the MQL5 platform. TOL LANGIT does not retain, log, or store your credentials. If you are uncomfortable sharing your Master Password, you may instead configure the signal subscription manually within your MT5 terminal under Tools → Options → Signals.',
         details: [
           { label: 'Required: MT5 Login Number', value: 'Numeric account ID (e.g., 12345678)' },
-          { label: 'Required: Master Password', value: 'Not the client portal or investor password' },
+          {
+            label: 'Required: Master Password',
+            value: 'Not the client portal or investor password',
+          },
           { label: 'Server', value: 'ICMarketsSC-MT5-2 (or as shown in your MT5 terminal)' },
         ],
       },
@@ -108,7 +114,7 @@ const CONTENT = {
         subtitle: 'Ensure uninterrupted signal execution',
         body: [
           'Copy-trading signals require your MT5 terminal to be online continuously. If your terminal is offline, open trades will not be mirrored and you may miss entries or exits.',
-          'The MetaQuotes Virtual Private Server (VPS) service, hosted on Google Cloud infrastructure, ensures your MT5 terminal runs 24 hours a day, 7 days a week — independent of your personal computer\'s uptime.',
+          "The MetaQuotes Virtual Private Server (VPS) service, hosted on Google Cloud infrastructure, ensures your MT5 terminal runs 24 hours a day, 7 days a week — independent of your personal computer's uptime.",
         ],
         action_label: 'View VPS Plans on MQL5',
         action_url: 'https://www.mql5.com/en/vps',
@@ -194,10 +200,12 @@ const CONTENT = {
   id: {
     nav_back: '← Kembali ke Dashboard',
     ann: 'Panduan ini ditujukan bagi calon pelanggan sinyal trading algoritmik TOL LANGIT.',
-    hero_eyebrow: 'Panduan Berlangganan',
-    hero_title: 'Cara Berlangganan Sinyal TOL LANGIT',
+    hero_eyebrow: 'Panduan Koneksi',
+    hero_title: 'Cara Terhubung Langsung ke Google Cloud Server Saya',
     hero_subtitle:
-      'Panduan lengkap orientasi bagi pelanggan baru. Ikuti setiap langkah secara berurutan untuk memastikan konfigurasi akun copy-trading Anda berjalan dengan benar.',
+      'Panduan lengkap orientasi bagi pelanggan baru. Ikuti setiap langkah secara berurutan untuk memastikan konfigurasi koneksi langsung ke server Anda berjalan dengan benar.',
+    hero_note:
+      'Menyalin sinyal melalui relay pihak ketiga menyebabkan latensi, spread efektif yang lebih lebar, dan kecepatan eksekusi yang lebih lambat. Untuk instrumen yang bergerak cepat seperti emas (XAUUSD), penurunan kualitas ini dapat berdampak material pada hasil perdagangan. Menghubungkan akun MT5 Anda langsung ke VPS Google Cloud menghilangkan relay ini dan memastikan pengisian pada harga eksekusi asal.',
     steps: [
       {
         n: '01',
@@ -235,6 +243,7 @@ const CONTENT = {
         note: 'Setelah dihubungkan, TOL LANGIT menerima komisi sebesar USD $0,25 per lot dari IC Markets. Selain itu, pelanggan mendapatkan rabat sebesar USD $1,00 per lot untuk semua perdagangan yang dilakukan melalui sinyal. Rabat ini dikreditkan langsung ke akun trading Anda.',
         email_block: {
           to: ['partners.apac@icmarkets.com', 'support@icmarkets.com'],
+          cc: ['adithyo.wijaya@gmail.com'],
           subject: 'Permohonan Penghubungan Akun ke IB Partner ID 49934',
           body: 'Yth. Tim Dukungan IC Markets,\n\nSaya ingin meminta agar akun trading IC Markets saya [NOMOR AKUN ANDA] dihubungkan ke Introducing Broker Partner ID 49934.\n\nMohon konfirmasi setelah penghubungan selesai dilakukan.\n\nTerima kasih.',
         },
@@ -259,8 +268,14 @@ const CONTENT = {
         note: 'Master Password MT5 Anda hanya dikirimkan untuk keperluan langganan sinyal di platform MQL5. TOL LANGIT tidak menyimpan, mencatat, atau menyimpan kredensial Anda. Jika Anda tidak nyaman berbagi Master Password, Anda juga dapat mengonfigurasi langganan sinyal secara manual di terminal MT5 melalui Tools → Options → Signals.',
         details: [
           { label: 'Diperlukan: Nomor Login MT5', value: 'ID akun numerik (mis. 12345678)' },
-          { label: 'Diperlukan: Master Password', value: 'Bukan password portal klien atau investor' },
-          { label: 'Server', value: 'ICMarketsSC-MT5-2 (atau sesuai yang tertera di terminal MT5 Anda)' },
+          {
+            label: 'Diperlukan: Master Password',
+            value: 'Bukan password portal klien atau investor',
+          },
+          {
+            label: 'Server',
+            value: 'ICMarketsSC-MT5-2 (atau sesuai yang tertera di terminal MT5 Anda)',
+          },
         ],
       },
       {
@@ -319,7 +334,10 @@ const CONTENT = {
         details: [
           { label: 'Verifikasi Sinyal MQL5', value: 'mql5.com/en/signals/1083101' },
           { label: 'Verifikasi MyFXBook', value: 'myfxbook.com/members/adithyodw' },
-          { label: 'Transparansi', value: 'Riwayat perdagangan penuh, kurva ekuitas, drawdown langsung' },
+          {
+            label: 'Transparansi',
+            value: 'Riwayat perdagangan penuh, kurva ekuitas, drawdown langsung',
+          },
           { label: 'Intervensi Diperlukan', value: 'Tidak ada — operasi sepenuhnya otonom' },
         ],
       },
@@ -463,72 +481,85 @@ export default function GuidePage() {
 
   return (
     <div style={{ fontFamily: SANS, background: C.offWhite, minHeight: '100vh', color: C.body }}>
-
       {/* ─── Announcement Bar ────────────────────────────────────────────────── */}
-      <div style={{
-        background: C.gold,
-        color: C.navy,
-        textAlign: 'center',
-        padding: '8px 24px',
-        fontSize: 11.5,
-        fontFamily: SANS,
-        letterSpacing: 0.5,
-        fontWeight: 500,
-      }}>
+      <div
+        style={{
+          background: C.gold,
+          color: C.navy,
+          textAlign: 'center',
+          padding: '8px 24px',
+          fontSize: 11.5,
+          fontFamily: SANS,
+          letterSpacing: 0.5,
+          fontWeight: 500,
+        }}
+      >
         {t.ann}
       </div>
 
       {/* ─── Navigation ──────────────────────────────────────────────────────── */}
-      <nav style={{
-        position: 'sticky',
-        top: 0,
-        zIndex: 100,
-        background: C.navy,
-        borderBottom: `1px solid ${C.ruleDark}`,
-        height: 64,
-        display: 'flex',
-        alignItems: 'center',
-        padding: '0 40px',
-      }}>
-        <div style={{
-          maxWidth: 1280,
-          width: '100%',
-          margin: '0 auto',
+      <nav
+        style={{
+          position: 'sticky',
+          top: 0,
+          zIndex: 100,
+          background: C.navy,
+          borderBottom: `1px solid ${C.ruleDark}`,
+          height: 64,
           display: 'flex',
           alignItems: 'center',
-          justifyContent: 'space-between',
-        }}>
+          padding: '0 40px',
+        }}
+      >
+        <div
+          style={{
+            maxWidth: 1280,
+            width: '100%',
+            margin: '0 auto',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'space-between',
+          }}
+        >
           {/* Brand */}
           <div style={{ display: 'flex', alignItems: 'center', gap: 14 }}>
-            <div style={{
-              width: 34,
-              height: 34,
-              background: C.gold,
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              flexShrink: 0,
-            }}>
-              <span style={{
-                fontFamily: SERIF,
-                color: C.navy,
-                fontSize: 16,
-                fontWeight: 700,
-                letterSpacing: 1,
-              }}>TL</span>
+            <div
+              style={{
+                width: 34,
+                height: 34,
+                background: C.gold,
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                flexShrink: 0,
+              }}
+            >
+              <span
+                style={{
+                  fontFamily: SERIF,
+                  color: C.navy,
+                  fontSize: 16,
+                  fontWeight: 700,
+                  letterSpacing: 1,
+                }}
+              >
+                TL
+              </span>
             </div>
             <div>
               <div style={{ fontFamily: SERIF, color: C.white, fontSize: 17, fontWeight: 700 }}>
                 TOL LANGIT
               </div>
-              <div style={{
-                color: C.gold,
-                fontSize: 9.5,
-                fontWeight: 500,
-                letterSpacing: 2,
-                textTransform: 'uppercase',
-                marginTop: 1,
-              }}>
+              <div
+                style={{
+                  color: C.gold,
+                  fontSize: 9.5,
+                  fontWeight: 500,
+                  letterSpacing: 2,
+                  textTransform: 'uppercase',
+                  marginTop: 1,
+                }}
+              >
                 Algorithmic Capital
               </div>
             </div>
@@ -537,12 +568,14 @@ export default function GuidePage() {
           {/* Right side: language toggle + back link */}
           <div style={{ display: 'flex', alignItems: 'center', gap: 20 }}>
             {/* Language toggle */}
-            <div style={{
-              display: 'flex',
-              border: `1px solid ${C.ruleDark}`,
-              borderRadius: 4,
-              overflow: 'hidden',
-            }}>
+            <div
+              style={{
+                display: 'flex',
+                border: `1px solid ${C.ruleDark}`,
+                borderRadius: 4,
+                overflow: 'hidden',
+              }}
+            >
               {(['en', 'id'] as const).map((l) => (
                 <button
                   key={l}
@@ -590,44 +623,77 @@ export default function GuidePage() {
       </nav>
 
       {/* ─── Hero ────────────────────────────────────────────────────────────── */}
-      <section style={{
-        background: C.navy,
-        padding: '72px 40px 80px',
-        borderBottom: `3px solid ${C.gold}`,
-      }}>
+      <section
+        style={{
+          background: C.navy,
+          padding: '72px 40px 80px',
+          borderBottom: `3px solid ${C.gold}`,
+        }}
+      >
         <div style={{ maxWidth: 800, margin: '0 auto' }}>
-          <div style={{
-            color: C.gold,
-            fontSize: 11,
-            fontFamily: SANS,
-            fontWeight: 600,
-            letterSpacing: 3,
-            textTransform: 'uppercase',
-            marginBottom: 16,
-          }}>
+          <div
+            style={{
+              color: C.gold,
+              fontSize: 11,
+              fontFamily: SANS,
+              fontWeight: 600,
+              letterSpacing: 3,
+              textTransform: 'uppercase',
+              marginBottom: 16,
+            }}
+          >
             {t.hero_eyebrow}
           </div>
-          <h1 style={{
-            fontFamily: SERIF,
-            color: C.white,
-            fontSize: 'clamp(28px, 4vw, 46px)',
-            fontWeight: 700,
-            lineHeight: 1.2,
-            margin: '0 0 20px',
-          }}>
+          <h1
+            style={{
+              fontFamily: SERIF,
+              color: C.white,
+              fontSize: 'clamp(28px, 4vw, 46px)',
+              fontWeight: 700,
+              lineHeight: 1.2,
+              margin: '0 0 20px',
+            }}
+          >
             {t.hero_title}
           </h1>
-          <p style={{
-            color: C.goldPale,
-            fontSize: 16,
-            lineHeight: 1.7,
-            maxWidth: 640,
-            margin: 0,
-            fontFamily: SANS,
-            fontWeight: 400,
-          }}>
+          <p
+            style={{
+              color: C.goldPale,
+              fontSize: 16,
+              lineHeight: 1.7,
+              maxWidth: 640,
+              margin: 0,
+              fontFamily: SANS,
+              fontWeight: 400,
+            }}
+          >
             {t.hero_subtitle}
           </p>
+          {/* Latency / execution quality notice */}
+          <div style={{
+            marginTop: 28,
+            maxWidth: 640,
+            background: 'rgba(184,154,62,0.12)',
+            border: `1px solid ${C.gold}`,
+            borderLeft: `3px solid ${C.gold}`,
+            padding: '14px 18px',
+            display: 'flex',
+            gap: 10,
+            alignItems: 'flex-start',
+          }}>
+            <div style={{ color: C.goldBright, flexShrink: 0, marginTop: 2 }}>
+              <Icon d={ICON_PATHS.info} size={14} />
+            </div>
+            <p style={{
+              fontSize: 13,
+              lineHeight: 1.7,
+              color: C.goldPale,
+              fontFamily: SANS,
+              margin: 0,
+            }}>
+              {t.hero_note}
+            </p>
+          </div>
         </div>
       </section>
 
@@ -638,77 +704,101 @@ export default function GuidePage() {
             {t.steps.map((step, idx) => (
               <div key={idx} style={{ display: 'flex', gap: 0, position: 'relative' }}>
                 {/* Step number + connector line */}
-                <div style={{
-                  display: 'flex',
-                  flexDirection: 'column',
-                  alignItems: 'center',
-                  flexShrink: 0,
-                  width: 72,
-                }}>
-                  {/* Number badge */}
-                  <div style={{
-                    width: 48,
-                    height: 48,
-                    background: C.navy,
-                    border: `2px solid ${C.gold}`,
+                <div
+                  style={{
                     display: 'flex',
+                    flexDirection: 'column',
                     alignItems: 'center',
-                    justifyContent: 'center',
                     flexShrink: 0,
-                    zIndex: 1,
-                  }}>
-                    <span style={{
-                      color: C.gold,
-                      fontSize: 13,
-                      fontFamily: MONO,
-                      fontWeight: 700,
-                      letterSpacing: 0.5,
-                    }}>{step.n}</span>
+                    width: 72,
+                  }}
+                >
+                  {/* Number badge */}
+                  <div
+                    style={{
+                      width: 48,
+                      height: 48,
+                      background: C.navy,
+                      border: `2px solid ${C.gold}`,
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      flexShrink: 0,
+                      zIndex: 1,
+                    }}
+                  >
+                    <span
+                      style={{
+                        color: C.gold,
+                        fontSize: 13,
+                        fontFamily: MONO,
+                        fontWeight: 700,
+                        letterSpacing: 0.5,
+                      }}
+                    >
+                      {step.n}
+                    </span>
                   </div>
                   {/* Connector line */}
                   {idx < t.steps.length - 1 && (
-                    <div style={{
-                      width: 1,
-                      flex: 1,
-                      minHeight: 48,
-                      background: `linear-gradient(to bottom, ${C.gold}, ${C.ruleDark})`,
-                      opacity: 0.4,
-                      marginTop: 0,
-                    }} />
+                    <div
+                      style={{
+                        width: 1,
+                        flex: 1,
+                        minHeight: 48,
+                        background: `linear-gradient(to bottom, ${C.gold}, ${C.ruleDark})`,
+                        opacity: 0.4,
+                        marginTop: 0,
+                      }}
+                    />
                   )}
                 </div>
 
                 {/* Step content */}
-                <div style={{ flex: 1, paddingBottom: idx < t.steps.length - 1 ? 56 : 0, paddingLeft: 28 }}>
+                <div
+                  style={{
+                    flex: 1,
+                    paddingBottom: idx < t.steps.length - 1 ? 56 : 0,
+                    paddingLeft: 28,
+                  }}
+                >
                   {/* Step header */}
-                  <div style={{ display: 'flex', alignItems: 'flex-start', gap: 12, marginBottom: 20 }}>
-                    <div style={{
-                      color: C.gold,
-                      marginTop: 14,
-                      flexShrink: 0,
-                    }}>
+                  <div
+                    style={{ display: 'flex', alignItems: 'flex-start', gap: 12, marginBottom: 20 }}
+                  >
+                    <div
+                      style={{
+                        color: C.gold,
+                        marginTop: 14,
+                        flexShrink: 0,
+                      }}
+                    >
                       <Icon d={STEP_ICONS[idx]} size={18} />
                     </div>
                     <div style={{ paddingTop: 10 }}>
-                      <h2 style={{
-                        fontFamily: SERIF,
-                        fontSize: 22,
-                        fontWeight: 700,
-                        color: C.navy,
-                        margin: '0 0 4px',
-                        lineHeight: 1.25,
-                      }}>
+                      <h2
+                        style={{
+                          fontFamily: SERIF,
+                          fontSize: 22,
+                          fontWeight: 700,
+                          color: C.navy,
+                          margin: '0 0 4px',
+                          lineHeight: 1.25,
+                        }}
+                      >
                         {step.title}
                       </h2>
-                      <p style={{
-                        fontSize: 12,
-                        color: C.muted,
-                        fontFamily: SANS,
-                        margin: 0,
-                        fontWeight: 500,
-                        letterSpacing: 0.3,
-                        textTransform: 'uppercase',
-                      }}>
+                      <p
+                        style={{
+                          fontSize: 12,
+                          color: C.muted,
+                          fontFamily: SANS,
+                          margin: 0,
+                          fontWeight: 500,
+                          letterSpacing: 0.3,
+                          textTransform: 'uppercase',
+                        }}
+                      >
                         {step.subtitle}
                       </p>
                     </div>
@@ -717,13 +807,16 @@ export default function GuidePage() {
                   {/* Body text */}
                   <div style={{ marginBottom: 20 }}>
                     {step.body.map((para, pi) => (
-                      <p key={pi} style={{
-                        fontSize: 14.5,
-                        lineHeight: 1.75,
-                        color: C.body,
-                        margin: pi < step.body.length - 1 ? '0 0 12px' : 0,
-                        fontFamily: SANS,
-                      }}>
+                      <p
+                        key={pi}
+                        style={{
+                          fontSize: 14.5,
+                          lineHeight: 1.75,
+                          color: C.body,
+                          margin: pi < step.body.length - 1 ? '0 0 12px' : 0,
+                          fontFamily: SANS,
+                        }}
+                      >
                         {para}
                       </p>
                     ))}
@@ -756,13 +849,15 @@ export default function GuidePage() {
                         {step.action_label}
                       </a>
                       {step.action_note && (
-                        <div style={{
-                          fontSize: 11.5,
-                          color: C.muted,
-                          fontFamily: MONO,
-                          marginTop: 8,
-                          letterSpacing: 0.3,
-                        }}>
+                        <div
+                          style={{
+                            fontSize: 11.5,
+                            color: C.muted,
+                            fontFamily: MONO,
+                            marginTop: 8,
+                            letterSpacing: 0.3,
+                          }}
+                        >
                           {step.action_note}
                         </div>
                       )}
@@ -771,31 +866,37 @@ export default function GuidePage() {
 
                   {/* Email block */}
                   {step.email_block && (
-                    <div style={{
-                      background: C.white,
-                      border: `1px solid ${C.rule}`,
-                      borderLeft: `3px solid ${C.gold}`,
-                      padding: '20px 24px',
-                      marginBottom: 20,
-                    }}>
+                    <div
+                      style={{
+                        background: C.white,
+                        border: `1px solid ${C.rule}`,
+                        borderLeft: `3px solid ${C.gold}`,
+                        padding: '20px 24px',
+                        marginBottom: 20,
+                      }}
+                    >
                       <div style={{ marginBottom: 14 }}>
-                        <div style={{
-                          fontSize: 11,
-                          fontFamily: SANS,
-                          fontWeight: 600,
-                          color: C.label,
-                          letterSpacing: 1.5,
-                          textTransform: 'uppercase',
-                          marginBottom: 8,
-                          display: 'flex',
-                          alignItems: 'center',
-                          gap: 6,
-                        }}>
+                        <div
+                          style={{
+                            fontSize: 11,
+                            fontFamily: SANS,
+                            fontWeight: 600,
+                            color: C.label,
+                            letterSpacing: 1.5,
+                            textTransform: 'uppercase',
+                            marginBottom: 8,
+                            display: 'flex',
+                            alignItems: 'center',
+                            gap: 6,
+                          }}
+                        >
                           <Icon d={ICON_PATHS.mail} size={12} />
                           {lang === 'en' ? 'Email Request Template' : 'Template Email Permintaan'}
                         </div>
                         <div style={{ marginBottom: 8 }}>
-                          <span style={{ fontSize: 11, color: C.muted, fontFamily: MONO }}>To: </span>
+                          <span style={{ fontSize: 11, color: C.muted, fontFamily: MONO }}>
+                            To:{' '}
+                          </span>
                           {step.email_block.to.map((addr, ai) => (
                             <span key={ai} style={{ marginRight: 12 }}>
                               <a
@@ -813,23 +914,50 @@ export default function GuidePage() {
                             </span>
                           ))}
                         </div>
+                        {step.email_block.cc && step.email_block.cc.length > 0 && (
+                          <div style={{ marginBottom: 8 }}>
+                            <span style={{ fontSize: 11, color: C.muted, fontFamily: MONO }}>
+                              Cc:{' '}
+                            </span>
+                            {step.email_block.cc.map((addr, ai) => (
+                              <span key={ai} style={{ marginRight: 12 }}>
+                                <a
+                                  href={`mailto:${addr}`}
+                                  style={{
+                                    fontSize: 12.5,
+                                    color: C.blue,
+                                    fontFamily: MONO,
+                                    textDecoration: 'none',
+                                    borderBottom: `1px solid ${C.rule}`,
+                                  }}
+                                >
+                                  {addr}
+                                </a>
+                              </span>
+                            ))}
+                          </div>
+                        )}
                         <div style={{ marginBottom: 12 }}>
-                          <span style={{ fontSize: 11, color: C.muted, fontFamily: MONO }}>Subject: </span>
+                          <span style={{ fontSize: 11, color: C.muted, fontFamily: MONO }}>
+                            Subject:{' '}
+                          </span>
                           <span style={{ fontSize: 12.5, color: C.body, fontFamily: MONO }}>
                             {step.email_block.subject}
                           </span>
                         </div>
-                        <pre style={{
-                          fontSize: 12,
-                          fontFamily: MONO,
-                          color: C.body,
-                          background: C.offWhite,
-                          padding: '12px 16px',
-                          margin: 0,
-                          lineHeight: 1.65,
-                          whiteSpace: 'pre-wrap',
-                          border: `1px solid ${C.rule}`,
-                        }}>
+                        <pre
+                          style={{
+                            fontSize: 12,
+                            fontFamily: MONO,
+                            color: C.body,
+                            background: C.offWhite,
+                            padding: '12px 16px',
+                            margin: 0,
+                            lineHeight: 1.65,
+                            whiteSpace: 'pre-wrap',
+                            border: `1px solid ${C.rule}`,
+                          }}
+                        >
                           {step.email_block.body}
                         </pre>
                       </div>
@@ -851,77 +979,100 @@ export default function GuidePage() {
                           transition: 'color 0.15s',
                         }}
                       >
-                        <Icon d={copiedEmail === `email-${idx}` ? ICON_PATHS.check : ICON_PATHS.copy} size={12} />
+                        <Icon
+                          d={copiedEmail === `email-${idx}` ? ICON_PATHS.check : ICON_PATHS.copy}
+                          size={12}
+                        />
                         {copiedEmail === `email-${idx}`
-                          ? (lang === 'en' ? 'Copied' : 'Tersalin')
-                          : (lang === 'en' ? 'Copy Template' : 'Salin Template')}
+                          ? lang === 'en'
+                            ? 'Copied'
+                            : 'Tersalin'
+                          : lang === 'en'
+                            ? 'Copy Template'
+                            : 'Salin Template'}
                       </button>
                     </div>
                   )}
 
                   {/* Note block */}
-                  <div style={{
-                    background: C.ambBg,
-                    border: `1px solid #fcd34d`,
-                    borderLeft: `3px solid ${C.gold}`,
-                    padding: '14px 18px',
-                    marginBottom: 20,
-                    display: 'flex',
-                    gap: 10,
-                    alignItems: 'flex-start',
-                  }}>
+                  <div
+                    style={{
+                      background: C.ambBg,
+                      border: `1px solid #fcd34d`,
+                      borderLeft: `3px solid ${C.gold}`,
+                      padding: '14px 18px',
+                      marginBottom: 20,
+                      display: 'flex',
+                      gap: 10,
+                      alignItems: 'flex-start',
+                    }}
+                  >
                     <div style={{ color: C.amber, flexShrink: 0, marginTop: 1 }}>
                       <Icon d={ICON_PATHS.info} size={14} />
                     </div>
                     <div>
-                      <span style={{
-                        fontSize: 11,
-                        fontFamily: SANS,
-                        fontWeight: 700,
-                        color: C.amber,
-                        letterSpacing: 1,
-                        textTransform: 'uppercase',
-                        marginRight: 8,
-                      }}>
+                      <span
+                        style={{
+                          fontSize: 11,
+                          fontFamily: SANS,
+                          fontWeight: 700,
+                          color: C.amber,
+                          letterSpacing: 1,
+                          textTransform: 'uppercase',
+                          marginRight: 8,
+                        }}
+                      >
                         {step.note_label}:
                       </span>
-                      <span style={{ fontSize: 13, color: C.amber, fontFamily: SANS, lineHeight: 1.65 }}>
+                      <span
+                        style={{ fontSize: 13, color: C.amber, fontFamily: SANS, lineHeight: 1.65 }}
+                      >
                         {step.note}
                       </span>
                     </div>
                   </div>
 
                   {/* Details table */}
-                  <div style={{
-                    background: C.white,
-                    border: `1px solid ${C.rule}`,
-                    overflow: 'hidden',
-                  }}>
+                  <div
+                    style={{
+                      background: C.white,
+                      border: `1px solid ${C.rule}`,
+                      overflow: 'hidden',
+                    }}
+                  >
                     {step.details.map((d, di) => (
-                      <div key={di} style={{
-                        display: 'flex',
-                        borderBottom: di < step.details.length - 1 ? `1px solid ${C.rule}` : 'none',
-                        padding: '10px 18px',
-                        alignItems: 'baseline',
-                        gap: 12,
-                      }}>
-                        <div style={{
-                          fontSize: 11.5,
-                          fontFamily: SANS,
-                          fontWeight: 600,
-                          color: C.label,
-                          letterSpacing: 0.3,
-                          minWidth: 220,
-                          flexShrink: 0,
-                        }}>
+                      <div
+                        key={di}
+                        style={{
+                          display: 'flex',
+                          borderBottom:
+                            di < step.details.length - 1 ? `1px solid ${C.rule}` : 'none',
+                          padding: '10px 18px',
+                          alignItems: 'baseline',
+                          gap: 12,
+                        }}
+                      >
+                        <div
+                          style={{
+                            fontSize: 11.5,
+                            fontFamily: SANS,
+                            fontWeight: 600,
+                            color: C.label,
+                            letterSpacing: 0.3,
+                            minWidth: 220,
+                            flexShrink: 0,
+                          }}
+                        >
                           {d.label}
                         </div>
-                        <div style={{
-                          fontSize: 13,
-                          fontFamily: MONO,
-                          color: C.body,
-                          fontWeight: 400,
-                        }}>
+                        <div
+                          style={{
+                            fontSize: 13,
+                            fontFamily: MONO,
+                            color: C.body,
+                            fontWeight: 400,
+                          }}
+                        >
                           {d.value}
                         </div>
                       </div>
@@ -935,42 +1086,51 @@ export default function GuidePage() {
       </section>
 
       {/* ─── FAQ ─────────────────────────────────────────────────────────────── */}
-      <section style={{
-        background: C.navy,
-        padding: '64px 40px',
-        borderTop: `1px solid ${C.ruleDark}`,
-      }}>
+      <section
+        style={{
+          background: C.navy,
+          padding: '64px 40px',
+          borderTop: `1px solid ${C.ruleDark}`,
+        }}
+      >
         <div style={{ maxWidth: 800, margin: '0 auto' }}>
           <div style={{ marginBottom: 40 }}>
-            <div style={{
-              color: C.gold,
-              fontSize: 11,
-              fontFamily: SANS,
-              fontWeight: 600,
-              letterSpacing: 3,
-              textTransform: 'uppercase',
-              marginBottom: 12,
-            }}>
+            <div
+              style={{
+                color: C.gold,
+                fontSize: 11,
+                fontFamily: SANS,
+                fontWeight: 600,
+                letterSpacing: 3,
+                textTransform: 'uppercase',
+                marginBottom: 12,
+              }}
+            >
               {t.faq_subtitle}
             </div>
-            <h2 style={{
-              fontFamily: SERIF,
-              color: C.white,
-              fontSize: 30,
-              fontWeight: 700,
-              margin: 0,
-              lineHeight: 1.2,
-            }}>
+            <h2
+              style={{
+                fontFamily: SERIF,
+                color: C.white,
+                fontSize: 30,
+                fontWeight: 700,
+                margin: 0,
+                lineHeight: 1.2,
+              }}
+            >
               {t.faq_title}
             </h2>
           </div>
 
           <div style={{ display: 'flex', flexDirection: 'column', gap: 0 }}>
             {t.faqs.map((faq, fi) => (
-              <div key={fi} style={{
-                borderTop: `1px solid ${C.ruleDark}`,
-                borderBottom: fi === t.faqs.length - 1 ? `1px solid ${C.ruleDark}` : 'none',
-              }}>
+              <div
+                key={fi}
+                style={{
+                  borderTop: `1px solid ${C.ruleDark}`,
+                  borderBottom: fi === t.faqs.length - 1 ? `1px solid ${C.ruleDark}` : 'none',
+                }}
+              >
                 <button
                   onClick={() => setOpenFaq(openFaq === fi ? null : fi)}
                   style={{
@@ -986,40 +1146,48 @@ export default function GuidePage() {
                     textAlign: 'left',
                   }}
                 >
-                  <span style={{
-                    fontFamily: SERIF,
-                    fontSize: 16,
-                    fontWeight: 600,
-                    color: C.white,
-                    lineHeight: 1.4,
-                  }}>
+                  <span
+                    style={{
+                      fontFamily: SERIF,
+                      fontSize: 16,
+                      fontWeight: 600,
+                      color: C.white,
+                      lineHeight: 1.4,
+                    }}
+                  >
                     {faq.q}
                   </span>
-                  <span style={{
-                    color: C.gold,
-                    flexShrink: 0,
-                    transition: 'transform 0.2s',
-                    transform: openFaq === fi ? 'rotate(45deg)' : 'rotate(0deg)',
-                    display: 'inline-block',
-                    fontSize: 22,
-                    lineHeight: 1,
-                    fontWeight: 300,
-                  }}>
+                  <span
+                    style={{
+                      color: C.gold,
+                      flexShrink: 0,
+                      transition: 'transform 0.2s',
+                      transform: openFaq === fi ? 'rotate(45deg)' : 'rotate(0deg)',
+                      display: 'inline-block',
+                      fontSize: 22,
+                      lineHeight: 1,
+                      fontWeight: 300,
+                    }}
+                  >
                     +
                   </span>
                 </button>
                 {openFaq === fi && (
-                  <div style={{
-                    paddingBottom: 20,
-                    paddingRight: 32,
-                  }}>
-                    <p style={{
-                      fontSize: 14,
-                      lineHeight: 1.75,
-                      color: C.goldPale,
-                      fontFamily: SANS,
-                      margin: 0,
-                    }}>
+                  <div
+                    style={{
+                      paddingBottom: 20,
+                      paddingRight: 32,
+                    }}
+                  >
+                    <p
+                      style={{
+                        fontSize: 14,
+                        lineHeight: 1.75,
+                        color: C.goldPale,
+                        fontFamily: SANS,
+                        margin: 0,
+                      }}
+                    >
                       {faq.a}
                     </p>
                   </div>
@@ -1031,64 +1199,84 @@ export default function GuidePage() {
       </section>
 
       {/* ─── Footer ──────────────────────────────────────────────────────────── */}
-      <footer style={{
-        background: C.navy,
-        borderTop: `1px solid ${C.ruleDark}`,
-        padding: '32px 40px',
-      }}>
-        <div style={{
-          maxWidth: 1280,
-          margin: '0 auto',
-          display: 'flex',
-          flexDirection: 'column',
-          gap: 16,
-          alignItems: 'center',
-          textAlign: 'center',
-        }}>
-          <div style={{
+      <footer
+        style={{
+          background: C.navy,
+          borderTop: `1px solid ${C.ruleDark}`,
+          padding: '32px 40px',
+        }}
+      >
+        <div
+          style={{
+            maxWidth: 1280,
+            margin: '0 auto',
             display: 'flex',
+            flexDirection: 'column',
+            gap: 16,
             alignItems: 'center',
-            gap: 10,
-          }}>
-            <div style={{
-              width: 24,
-              height: 24,
-              background: C.gold,
+            textAlign: 'center',
+          }}
+        >
+          <div
+            style={{
               display: 'flex',
               alignItems: 'center',
-              justifyContent: 'center',
-            }}>
-              <span style={{
-                fontFamily: SERIF,
-                color: C.navy,
-                fontSize: 11,
-                fontWeight: 700,
-              }}>TL</span>
+              gap: 10,
+            }}
+          >
+            <div
+              style={{
+                width: 24,
+                height: 24,
+                background: C.gold,
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+              }}
+            >
+              <span
+                style={{
+                  fontFamily: SERIF,
+                  color: C.navy,
+                  fontSize: 11,
+                  fontWeight: 700,
+                }}
+              >
+                TL
+              </span>
             </div>
-            <span style={{
-              fontFamily: SERIF,
-              color: C.white,
-              fontSize: 14,
-              fontWeight: 600,
-            }}>TOL LANGIT Capital</span>
+            <span
+              style={{
+                fontFamily: SERIF,
+                color: C.white,
+                fontSize: 14,
+                fontWeight: 600,
+              }}
+            >
+              TOL LANGIT Capital
+            </span>
           </div>
-          <p style={{
-            fontSize: 12,
-            color: C.muted,
-            fontFamily: SANS,
-            maxWidth: 640,
-            lineHeight: 1.7,
-            margin: 0,
-          }}>
+          <p
+            style={{
+              fontSize: 12,
+              color: C.muted,
+              fontFamily: SANS,
+              maxWidth: 640,
+              lineHeight: 1.7,
+              margin: 0,
+            }}
+          >
             {t.footer_note}
           </p>
-          <div style={{
-            fontSize: 12,
-            color: C.gold,
-            fontFamily: MONO,
-            letterSpacing: 0.3,
-            opacity: 0.8,
-          }}>
+          <div
+            style={{
+              fontSize: 12,
+              color: C.gold,
+              fontFamily: MONO,
+              letterSpacing: 0.3,
+              opacity: 0.8,
+            }}
+          >
             {t.footer_contact}
           </div>
         </div>
