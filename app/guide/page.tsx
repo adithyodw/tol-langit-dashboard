@@ -32,27 +32,27 @@ const MONO = "'IBM Plex Mono', 'Courier New', monospace";
 const CONTENT = {
   en: {
     nav_back: '← Back to Dashboard',
-    ann: 'This guide is intended for prospective subscribers of TOL LANGIT algorithmic trading signals.',
-    hero_eyebrow: 'Connection Guide',
+    ann: 'This service is by invitation only. If you are viewing this page, it means you know me personally.',
+    hero_eyebrow: 'Direct Installation Guide',
     hero_title: 'How to Connect Directly to My Google Cloud Server',
     hero_subtitle:
-      'A complete onboarding walkthrough for new subscribers. Follow each step in sequence to ensure correct configuration of your direct server connection.',
+      'This guide is for installing your MT5 account directly on my Google Cloud server. Follow each step in sequence to complete the setup.',
     hero_note:
-      'Copying signals through a third-party relay introduces latency, wider effective spreads, and slower execution speed. For fast-moving instruments such as gold (XAUUSD), this degradation can materially affect trade outcomes. Connecting your MT5 account directly to the Google Cloud VPS eliminates this relay and ensures fills at the originating execution price.',
+      'This page is not for copy trading. It is for installing your MT5 account directly on my Google Cloud server and connecting it to the MQL5 VPS. This setup runs your own EA with AI capabilities directly on your account. It does not copy trades from my master account, and it is not a signal-copying service. I install the EA directly on your account. If you are viewing this page, it means you know me personally. This service is not publicly available and is offered only based on my own assessment.',
     steps: [
       {
         n: '01',
         title: 'Open an IC Markets MT5 RAW Account',
         subtitle: 'Register via the TOL LANGIT referral link',
         body: [
-          'TOL LANGIT signals are published exclusively on IC Markets, an ASIC-regulated broker. To subscribe, you must hold a live MT5 Raw Spread account with IC Markets.',
-          'Open your account using the referral link below. This ensures your account is correctly associated with our IB partner relationship, which is required for signal access and entitles you to commission rebates.',
+          'The EA runs on IC Markets, an ASIC-regulated broker. You must hold a live MT5 Raw Spread account with IC Markets for the installation to proceed.',
+          'Open your account using the referral link below. This ensures your account is correctly associated with our IB partner relationship, which entitles you to commission rebates.',
         ],
         action_label: 'Open IC Markets Account',
         action_url: 'https://icmarkets.com/?camp=49934',
         action_note: 'Partner ID: 49934 · IC Markets (ASIC)',
         note_label: 'Important',
-        note: 'Select MT5 as your trading platform and Raw Spread as your account type during registration. Standard and cTrader accounts are not compatible with the TOL LANGIT signal configuration.',
+        note: 'Select MT5 as your trading platform and Raw Spread as your account type during registration. Standard and cTrader accounts are not compatible with this EA configuration.',
         details: [
           { label: 'Broker', value: 'IC Markets (International Capital Markets Pty Ltd)' },
           { label: 'Regulation', value: 'ASIC (Australian Securities & Investments Commission)' },
@@ -73,7 +73,7 @@ const CONTENT = {
         action_url: null,
         action_note: null,
         note_label: 'IB Commission Structure',
-        note: 'Once linked, TOL LANGIT receives a commission of USD $0.25 per lot from IC Markets. Additionally, subscribers benefit from a rebate of USD $1.00 per lot on all trades executed through the signal. This rebate is credited directly to your trading account.',
+        note: 'Once linked, TOL LANGIT receives a commission of USD $0.25 per lot from IC Markets. Additionally, you benefit from a rebate of USD $1.00 per lot on all trades executed on your account. This rebate is credited directly to your trading account.',
         email_block: {
           to: ['partners.apac@icmarkets.com', 'support@icmarkets.com'],
           cc: ['adithyo.wijaya@gmail.com'],
@@ -82,45 +82,42 @@ const CONTENT = {
         },
         details: [
           { label: 'IB Commission (received by TOL LANGIT)', value: 'USD $0.25 / lot' },
-          { label: 'Subscriber Rebate', value: 'USD $1.00 / lot (credited to your account)' },
+          { label: 'Your Rebate', value: 'USD $1.00 / lot (credited to your account)' },
           { label: 'Processing Time', value: '1–3 business days' },
         ],
       },
       {
         n: '03',
         title: 'Submit Your MT5 Credentials',
-        subtitle: 'Provide your trading login for signal configuration',
+        subtitle: 'Provide your trading login for EA installation',
         body: [
-          'To configure copy-trading, you must provide your MT5 account login number and Master Password. This is distinct from your IC Markets client portal password.',
-          'Your Master Password grants trading access to your account. It is used by the signal provider to subscribe your account to the MQL5 signal. Never share your Investor (read-only) password as it cannot be used to configure signal subscriptions.',
+          'To install the EA on your account, you must provide your MT5 account login number and Master Password. This is distinct from your IC Markets client portal password.',
+          'Your Master Password grants trading access to your account. I use it to install and configure the EA directly on your MT5 account. Never share your Investor (read-only) password as it does not grant the access required for installation.',
         ],
         action_label: 'Contact via Telegram',
         action_url: 'https://t.me/tol_langit',
         action_note: 'Telegram: @tol_langit',
         note_label: 'Security Notice',
-        note: 'Your MT5 Master Password is transmitted only for the purpose of signal subscription on the MQL5 platform. TOL LANGIT does not retain, log, or store your credentials. If you are uncomfortable sharing your Master Password, you may instead configure the signal subscription manually within your MT5 terminal under Tools → Options → Signals.',
+        note: 'Your MT5 Master Password is used solely for EA installation on your account. I do not retain, log, or store your credentials beyond the installation process. Once the EA is installed and running, you may change your password at any time.',
         details: [
           { label: 'Required: MT5 Login Number', value: 'Numeric account ID (e.g., 12345678)' },
-          {
-            label: 'Required: Master Password',
-            value: 'Not the client portal or investor password',
-          },
+          { label: 'Required: Master Password', value: 'Not the client portal or investor password' },
           { label: 'Server', value: 'ICMarketsSC-MT5-2 (or as shown in your MT5 terminal)' },
         ],
       },
       {
         n: '04',
-        title: 'Subscribe to the MQL5 VPS (Recommended)',
-        subtitle: 'Ensure uninterrupted signal execution',
+        title: 'Subscribe to the MQL5 VPS',
+        subtitle: 'Required for the EA to run 24/7 on my server',
         body: [
-          'Copy-trading signals require your MT5 terminal to be online continuously. If your terminal is offline, open trades will not be mirrored and you may miss entries or exits.',
-          "The MetaQuotes Virtual Private Server (VPS) service, hosted on Google Cloud infrastructure, ensures your MT5 terminal runs 24 hours a day, 7 days a week — independent of your personal computer's uptime.",
+          'The EA must run continuously without interruption. The MQL5 VPS, hosted on Google Cloud infrastructure, is the environment where your MT5 terminal will be installed and the EA will operate — 24 hours a day, 7 days a week.',
+          'This is not optional. Without the VPS, the EA cannot run when your personal computer is offline, which would cause missed trades and incomplete execution.',
         ],
         action_label: 'View VPS Plans on MQL5',
         action_url: 'https://www.mql5.com/en/vps',
         action_note: 'Hosted on Google Cloud · MetaQuotes VPS',
-        note_label: 'Recommended',
-        note: 'The MQL5 VPS is the officially supported hosting environment for MT5 signal subscriptions. Third-party VPS providers may be used but require manual MT5 terminal installation and maintenance.',
+        note_label: 'Required',
+        note: 'The MQL5 VPS is the official hosting environment used for this installation. It runs on Google Cloud and provides a stable, low-latency environment for the EA. Third-party VPS providers are not recommended as they require separate configuration and are not managed by me.',
         details: [
           { label: 'Monthly Plan', value: 'USD $39 / month' },
           { label: 'Semi-Annual Plan', value: 'USD $65 / 6 months (approx. $10.83/mo)' },
@@ -132,9 +129,9 @@ const CONTENT = {
       {
         n: '05',
         title: 'Obtain Your MetaQuotes ID',
-        subtitle: 'Required for VPS and signal management',
+        subtitle: 'Required for VPS activation and account management',
         body: [
-          'Your MetaQuotes ID (MQID) is a unique identifier linked to your MT5 installation. It is required when activating the MQL5 VPS and for receiving signal notifications through the MetaQuotes messaging system.',
+          'Your MetaQuotes ID (MQID) is a unique identifier linked to your MT5 installation. It is required when activating the MQL5 VPS and for receiving account notifications through the MetaQuotes system.',
           'Retrieve your MetaQuotes ID directly from within your MT5 terminal.',
         ],
         action_label: null,
@@ -145,81 +142,81 @@ const CONTENT = {
         details: [
           { label: 'Location', value: 'MT5 Terminal → Tools → Options → Messages' },
           { label: 'Format', value: '9-digit numeric code' },
-          { label: 'Usage', value: 'VPS activation, signal notifications' },
+          { label: 'Usage', value: 'VPS activation, account notifications' },
         ],
       },
       {
         n: '06',
         title: 'Monitor Your Account',
-        subtitle: 'Full transparency via public third-party verification',
+        subtitle: 'Full transparency — your account, your trades',
         body: [
-          'All TOL LANGIT strategies are independently verified on two public platforms — MQL5 and MyFXBook. These platforms provide real-time equity curves, verified trade histories, drawdown metrics, and profit factor data.',
-          'You may monitor your copy-trading performance directly within your MT5 terminal or IC Markets client portal. All performance data shown on this dashboard is sourced directly from the live MyFXBook API.',
+          'Once the EA is installed, all trades execute directly on your own IC Markets account. You have full visibility at all times through your MT5 terminal and IC Markets client portal.',
+          'My trading performance is independently verified on MQL5 and MyFXBook, providing real-time equity curves, verified trade histories, drawdown metrics, and profit factor data. These reflect how the same EA performs on my own accounts.',
         ],
         action_label: null,
         action_url: null,
         action_note: null,
-        note_label: 'Passive Operation',
-        note: 'Once configured, the signal operates fully autonomously. No manual trade intervention is required or recommended. Position sizing, stop-loss levels, and trade management are determined exclusively by the originating algorithm.',
+        note_label: 'Fully Autonomous Operation',
+        note: 'Once installed, the EA operates without any manual intervention. Position sizing, stop-loss levels, and trade management are handled entirely by the algorithm. You do not need to monitor or manage trades actively.',
         details: [
-          { label: 'MQL5 Signal Verification', value: 'mql5.com/en/signals/2360336' },
+          { label: 'MQL5 Live Account', value: 'mql5.com/en/signals/2360336' },
           { label: 'MyFXBook Verification', value: 'myfxbook.com/members/adithyodw' },
-          { label: 'Transparency', value: 'Full trade history, equity curve, live drawdown' },
+          { label: 'Trade Execution', value: 'Directly on your own IC Markets account' },
           { label: 'Intervention Required', value: 'None — fully autonomous operation' },
         ],
       },
     ],
     faq_title: 'Frequently Asked Questions',
-    faq_subtitle: 'Common queries from prospective subscribers',
+    faq_subtitle: 'Common questions about the EA installation service',
     faqs: [
       {
         q: 'Do I retain full control of my trading account?',
-        a: 'Yes. You retain complete ownership and control of your IC Markets account at all times. The signal subscription grants read access to mirror trades; it does not grant withdrawal access or account ownership.',
+        a: 'Yes. You retain complete ownership and control of your IC Markets account at all times. The EA trades on your account but does not have withdrawal access. You can remove it at any time.',
       },
       {
         q: 'Is there a minimum deposit requirement?',
-        a: 'IC Markets requires a minimum deposit of USD $200 to open a Raw Spread account. However, for meaningful position sizing relative to the TOL LANGIT strategies, a balance of USD $1,000 or above is recommended.',
+        a: 'IC Markets requires a minimum deposit of USD $200 to open a Raw Spread account. However, for the EA to operate with appropriate position sizing, a balance of USD $1,000 or above is recommended.',
       },
       {
-        q: 'Can I cancel the signal subscription at any time?',
-        a: 'Yes. Signal subscriptions on MQL5 can be cancelled at any time directly from within your MT5 terminal without penalty or notice period.',
+        q: 'Can I stop the service at any time?',
+        a: 'Yes. You can request removal of the EA at any time. Open positions at the time of removal will not be automatically closed — you may manage them manually.',
       },
       {
-        q: 'What happens to open positions if I unsubscribe?',
-        a: 'Existing open positions are not automatically closed upon unsubscription. You may close them manually at your discretion.',
+        q: 'What happens to open positions if the EA is removed?',
+        a: 'Existing open positions remain on your account and are not automatically closed. You may close them manually at your discretion after the EA has been removed.',
       },
       {
-        q: 'Is this service available in my country?',
-        a: 'IC Markets is available to residents of most jurisdictions. Residents of the United States, Canada, and certain other jurisdictions may not be eligible due to regulatory restrictions. Please verify eligibility on the IC Markets website.',
+        q: 'Is this service publicly available?',
+        a: 'No. This service is not publicly offered. It is extended only to individuals I know personally, based on my own assessment. If you are viewing this page, I have shared this link with you directly.',
       },
     ],
     footer_note:
-      'This guide is provided for informational purposes. Trading in leveraged foreign exchange instruments carries significant risk of loss. Past performance of the TOL LANGIT strategies does not guarantee future results. Please ensure you understand the risks before subscribing.',
+      'This guide is provided for informational purposes. Trading in leveraged foreign exchange instruments carries significant risk of loss. Past performance does not guarantee future results. Please ensure you fully understand the risks involved.',
     footer_contact: 'For support: Telegram @tol_langit',
   },
   id: {
     nav_back: '← Kembali ke Dashboard',
-    ann: 'Panduan ini ditujukan bagi calon pelanggan sinyal trading algoritmik TOL LANGIT.',
-    hero_eyebrow: 'Panduan Koneksi',
+    ann: 'Layanan ini hanya tersedia berdasarkan undangan. Jika Anda melihat halaman ini, berarti Anda mengenal saya secara pribadi.',
+    hero_eyebrow: 'Panduan Instalasi Langsung',
     hero_title: 'Cara Terhubung Langsung ke Google Cloud Server Saya',
     hero_subtitle:
-      'Panduan lengkap orientasi bagi pelanggan baru. Ikuti setiap langkah secara berurutan untuk memastikan konfigurasi koneksi langsung ke server Anda berjalan dengan benar.',
+      'Panduan ini untuk menginstal akun MT5 Anda langsung di Google Cloud server saya. Ikuti setiap langkah secara berurutan untuk menyelesaikan konfigurasi.',
     hero_note:
-      'Menyalin sinyal melalui relay pihak ketiga menyebabkan latensi, spread efektif yang lebih lebar, dan kecepatan eksekusi yang lebih lambat. Untuk instrumen yang bergerak cepat seperti emas (XAUUSD), penurunan kualitas ini dapat berdampak material pada hasil perdagangan. Menghubungkan akun MT5 Anda langsung ke VPS Google Cloud menghilangkan relay ini dan memastikan pengisian pada harga eksekusi asal.',
+      'Halaman ini bukan untuk copy trading. Ini adalah panduan untuk menginstal akun MT5 Anda langsung di Google Cloud server saya dan menghubungkannya ke MQL5 VPS. Setup ini menjalankan EA Anda sendiri dengan kemampuan AI langsung di akun Anda. Ini tidak menyalin perdagangan dari akun master saya, dan bukan layanan copy sinyal. Saya menginstal EA langsung di akun Anda. Jika Anda melihat halaman ini, berarti Anda mengenal saya secara pribadi. Layanan ini tidak tersedia untuk umum dan hanya ditawarkan berdasarkan penilaian saya sendiri.',
     steps: [
       {
         n: '01',
         title: 'Buka Akun IC Markets MT5 RAW',
         subtitle: 'Daftar melalui tautan referral TOL LANGIT',
         body: [
-          'Sinyal TOL LANGIT diterbitkan eksklusif di IC Markets, broker berlisensi ASIC. Untuk berlangganan, Anda harus memiliki akun live MT5 Raw Spread di IC Markets.',
-          'Buka akun Anda menggunakan tautan referral di bawah ini. Hal ini memastikan akun Anda terdaftar dengan benar di bawah kemitraan IB kami, yang diperlukan untuk akses sinyal dan memberikan hak atas rabat komisi.',
+          'EA berjalan di IC Markets, broker berlisensi ASIC. Anda harus memiliki akun live MT5 Raw Spread di IC Markets agar instalasi dapat dilanjutkan.',
+          'Buka akun menggunakan tautan referral di bawah ini. Ini memastikan akun Anda terdaftar di bawah kemitraan IB kami, yang memberikan hak atas rabat komisi.',
         ],
         action_label: 'Buka Akun IC Markets',
         action_url: 'https://icmarkets.com/?camp=49934',
         action_note: 'Partner ID: 49934 · IC Markets (ASIC)',
         note_label: 'Penting',
-        note: 'Pilih MT5 sebagai platform trading dan Raw Spread sebagai tipe akun saat pendaftaran. Akun Standard dan cTrader tidak kompatibel dengan konfigurasi sinyal TOL LANGIT.',
+        note: 'Pilih MT5 sebagai platform trading dan Raw Spread sebagai tipe akun saat pendaftaran. Akun Standard dan cTrader tidak kompatibel dengan konfigurasi EA ini.',
         details: [
           { label: 'Broker', value: 'IC Markets (International Capital Markets Pty Ltd)' },
           { label: 'Regulasi', value: 'ASIC (Australian Securities & Investments Commission)' },
@@ -240,7 +237,7 @@ const CONTENT = {
         action_url: null,
         action_note: null,
         note_label: 'Struktur Komisi IB',
-        note: 'Setelah dihubungkan, TOL LANGIT menerima komisi sebesar USD $0,25 per lot dari IC Markets. Selain itu, pelanggan mendapatkan rabat sebesar USD $1,00 per lot untuk semua perdagangan yang dilakukan melalui sinyal. Rabat ini dikreditkan langsung ke akun trading Anda.',
+        note: 'Setelah dihubungkan, TOL LANGIT menerima komisi sebesar USD $0,25 per lot dari IC Markets. Selain itu, Anda mendapatkan rabat sebesar USD $1,00 per lot untuk semua perdagangan yang dieksekusi di akun Anda. Rabat ini dikreditkan langsung ke akun trading Anda.',
         email_block: {
           to: ['partners.apac@icmarkets.com', 'support@icmarkets.com'],
           cc: ['adithyo.wijaya@gmail.com'],
@@ -249,48 +246,42 @@ const CONTENT = {
         },
         details: [
           { label: 'Komisi IB (diterima TOL LANGIT)', value: 'USD $0,25 / lot' },
-          { label: 'Rabat Pelanggan', value: 'USD $1,00 / lot (dikreditkan ke akun Anda)' },
+          { label: 'Rabat Anda', value: 'USD $1,00 / lot (dikreditkan ke akun Anda)' },
           { label: 'Waktu Proses', value: '1–3 hari kerja' },
         ],
       },
       {
         n: '03',
         title: 'Kirimkan Kredensial MT5 Anda',
-        subtitle: 'Berikan login trading Anda untuk konfigurasi sinyal',
+        subtitle: 'Berikan login trading Anda untuk instalasi EA',
         body: [
-          'Untuk mengonfigurasi copy-trading, Anda harus memberikan nomor login MT5 dan Master Password Anda. Ini berbeda dari password portal klien IC Markets Anda.',
-          'Master Password Anda memberikan akses trading ke akun Anda. Ini digunakan oleh penyedia sinyal untuk mendaftarkan akun Anda ke sinyal MQL5. Jangan pernah memberikan Investor (read-only) password karena tidak dapat digunakan untuk mengonfigurasi langganan sinyal.',
+          'Untuk menginstal EA di akun Anda, Anda harus memberikan nomor login MT5 dan Master Password. Ini berbeda dari password portal klien IC Markets Anda.',
+          'Master Password memberikan akses trading ke akun Anda. Saya menggunakannya untuk menginstal dan mengonfigurasi EA langsung di akun MT5 Anda. Jangan berikan Investor (read-only) password karena tidak memberikan akses yang diperlukan untuk instalasi.',
         ],
         action_label: 'Hubungi via Telegram',
         action_url: 'https://t.me/tol_langit',
         action_note: 'Telegram: @tol_langit',
         note_label: 'Perhatian Keamanan',
-        note: 'Master Password MT5 Anda hanya dikirimkan untuk keperluan langganan sinyal di platform MQL5. TOL LANGIT tidak menyimpan, mencatat, atau menyimpan kredensial Anda. Jika Anda tidak nyaman berbagi Master Password, Anda juga dapat mengonfigurasi langganan sinyal secara manual di terminal MT5 melalui Tools → Options → Signals.',
+        note: 'Master Password MT5 Anda digunakan semata-mata untuk instalasi EA di akun Anda. Saya tidak menyimpan atau mencatat kredensial Anda di luar proses instalasi. Setelah EA terinstal dan berjalan, Anda dapat mengganti password kapan saja.',
         details: [
           { label: 'Diperlukan: Nomor Login MT5', value: 'ID akun numerik (mis. 12345678)' },
-          {
-            label: 'Diperlukan: Master Password',
-            value: 'Bukan password portal klien atau investor',
-          },
-          {
-            label: 'Server',
-            value: 'ICMarketsSC-MT5-2 (atau sesuai yang tertera di terminal MT5 Anda)',
-          },
+          { label: 'Diperlukan: Master Password', value: 'Bukan password portal klien atau investor' },
+          { label: 'Server', value: 'ICMarketsSC-MT5-2 (atau sesuai yang tertera di terminal MT5 Anda)' },
         ],
       },
       {
         n: '04',
-        title: 'Berlangganan MQL5 VPS (Disarankan)',
-        subtitle: 'Pastikan eksekusi sinyal tidak terputus',
+        title: 'Berlangganan MQL5 VPS',
+        subtitle: 'Diperlukan agar EA berjalan 24/7 di server saya',
         body: [
-          'Sinyal copy-trading memerlukan terminal MT5 Anda untuk selalu online. Jika terminal Anda offline, perdagangan terbuka tidak akan dicerminkan dan Anda mungkin melewatkan entri atau exit.',
-          'Layanan Virtual Private Server (VPS) MetaQuotes, yang dihosting di infrastruktur Google Cloud, memastikan terminal MT5 Anda berjalan 24 jam sehari, 7 hari seminggu — terlepas dari uptime komputer pribadi Anda.',
+          'EA harus berjalan secara terus-menerus tanpa gangguan. MQL5 VPS, yang dihosting di infrastruktur Google Cloud, adalah lingkungan tempat terminal MT5 Anda akan diinstal dan EA akan beroperasi — 24 jam sehari, 7 hari seminggu.',
+          'Ini bukan opsional. Tanpa VPS, EA tidak dapat berjalan saat komputer pribadi Anda offline, yang akan menyebabkan perdagangan terlewat dan eksekusi tidak lengkap.',
         ],
         action_label: 'Lihat Paket VPS di MQL5',
         action_url: 'https://www.mql5.com/en/vps',
         action_note: 'Dihosting di Google Cloud · MetaQuotes VPS',
-        note_label: 'Disarankan',
-        note: 'MQL5 VPS adalah lingkungan hosting yang didukung secara resmi untuk langganan sinyal MT5. Penyedia VPS pihak ketiga dapat digunakan tetapi memerlukan instalasi dan pemeliharaan terminal MT5 secara manual.',
+        note_label: 'Wajib',
+        note: 'MQL5 VPS adalah lingkungan hosting resmi yang digunakan untuk instalasi ini. Berjalan di Google Cloud dan menyediakan lingkungan stabil dengan latensi rendah untuk EA. Penyedia VPS pihak ketiga tidak disarankan karena memerlukan konfigurasi terpisah dan tidak dikelola oleh saya.',
         details: [
           { label: 'Paket Bulanan', value: 'USD $39 / bulan' },
           { label: 'Paket Semi-Tahunan', value: 'USD $65 / 6 bulan (sekitar $10,83/bln)' },
@@ -302,9 +293,9 @@ const CONTENT = {
       {
         n: '05',
         title: 'Dapatkan MetaQuotes ID Anda',
-        subtitle: 'Diperlukan untuk VPS dan manajemen sinyal',
+        subtitle: 'Diperlukan untuk aktivasi VPS dan manajemen akun',
         body: [
-          'MetaQuotes ID (MQID) Anda adalah pengenal unik yang terhubung ke instalasi MT5 Anda. Ini diperlukan saat mengaktifkan MQL5 VPS dan untuk menerima notifikasi sinyal melalui sistem pesan MetaQuotes.',
+          'MetaQuotes ID (MQID) Anda adalah pengenal unik yang terhubung ke instalasi MT5 Anda. Diperlukan saat mengaktifkan MQL5 VPS dan untuk menerima notifikasi akun melalui sistem MetaQuotes.',
           'Ambil MetaQuotes ID Anda langsung dari dalam terminal MT5 Anda.',
         ],
         action_label: null,
@@ -315,59 +306,56 @@ const CONTENT = {
         details: [
           { label: 'Lokasi', value: 'Terminal MT5 → Tools → Options → Messages' },
           { label: 'Format', value: 'Kode numerik 9 digit' },
-          { label: 'Kegunaan', value: 'Aktivasi VPS, notifikasi sinyal' },
+          { label: 'Kegunaan', value: 'Aktivasi VPS, notifikasi akun' },
         ],
       },
       {
         n: '06',
         title: 'Pantau Akun Anda',
-        subtitle: 'Transparansi penuh melalui verifikasi pihak ketiga yang bersifat publik',
+        subtitle: 'Transparansi penuh — akun Anda, perdagangan Anda',
         body: [
-          'Semua strategi TOL LANGIT diverifikasi secara independen di dua platform publik — MQL5 dan MyFXBook. Platform-platform ini menyediakan kurva ekuitas real-time, riwayat perdagangan yang terverifikasi, metrik drawdown, dan data profit factor.',
-          'Anda dapat memantau kinerja copy-trading Anda langsung di terminal MT5 atau portal klien IC Markets. Semua data kinerja yang ditampilkan di dashboard ini bersumber langsung dari API MyFXBook yang aktif.',
+          'Setelah EA terinstal, semua perdagangan dieksekusi langsung di akun IC Markets Anda sendiri. Anda memiliki visibilitas penuh setiap saat melalui terminal MT5 dan portal klien IC Markets.',
+          'Performa trading saya diverifikasi secara independen di MQL5 dan MyFXBook, menyediakan kurva ekuitas real-time, riwayat perdagangan terverifikasi, metrik drawdown, dan data profit factor. Ini mencerminkan bagaimana EA yang sama berjalan di akun saya sendiri.',
         ],
         action_label: null,
         action_url: null,
         action_note: null,
-        note_label: 'Operasi Pasif',
-        note: 'Setelah dikonfigurasi, sinyal beroperasi sepenuhnya secara otonom. Tidak diperlukan atau disarankan intervensi perdagangan manual. Ukuran posisi, level stop-loss, dan manajemen perdagangan ditentukan sepenuhnya oleh algoritma asal.',
+        note_label: 'Operasi Sepenuhnya Otonom',
+        note: 'Setelah terinstal, EA beroperasi tanpa intervensi manual apa pun. Ukuran posisi, level stop-loss, dan manajemen perdagangan sepenuhnya ditangani oleh algoritma. Anda tidak perlu memantau atau mengelola perdagangan secara aktif.',
         details: [
-          { label: 'Verifikasi Sinyal MQL5', value: 'mql5.com/en/signals/1083101' },
+          { label: 'Akun Live MQL5', value: 'mql5.com/en/signals/2360336' },
           { label: 'Verifikasi MyFXBook', value: 'myfxbook.com/members/adithyodw' },
-          {
-            label: 'Transparansi',
-            value: 'Riwayat perdagangan penuh, kurva ekuitas, drawdown langsung',
-          },
+          { label: 'Eksekusi Perdagangan', value: 'Langsung di akun IC Markets Anda sendiri' },
           { label: 'Intervensi Diperlukan', value: 'Tidak ada — operasi sepenuhnya otonom' },
         ],
       },
     ],
     faq_title: 'Pertanyaan yang Sering Diajukan',
-    faq_subtitle: 'Pertanyaan umum dari calon pelanggan',
+    faq_subtitle: 'Pertanyaan umum tentang layanan instalasi EA',
     faqs: [
       {
         q: 'Apakah saya tetap memiliki kendali penuh atas akun trading saya?',
-        a: 'Ya. Anda tetap memiliki kepemilikan dan kendali penuh atas akun IC Markets Anda setiap saat. Langganan sinyal memberikan akses baca untuk mencerminkan perdagangan; tidak memberikan akses penarikan atau kepemilikan akun.',
+        a: 'Ya. Anda tetap memiliki kepemilikan dan kendali penuh atas akun IC Markets Anda setiap saat. EA melakukan perdagangan di akun Anda tetapi tidak memiliki akses penarikan. Anda dapat menghapusnya kapan saja.',
       },
       {
         q: 'Apakah ada persyaratan deposit minimum?',
-        a: 'IC Markets memerlukan deposit minimum USD $200 untuk membuka akun Raw Spread. Namun, untuk ukuran posisi yang bermakna relatif terhadap strategi TOL LANGIT, saldo USD $1.000 ke atas disarankan.',
+        a: 'IC Markets memerlukan deposit minimum USD $200 untuk membuka akun Raw Spread. Namun, agar EA beroperasi dengan ukuran posisi yang tepat, saldo USD $1.000 ke atas disarankan.',
       },
       {
-        q: 'Bisakah saya membatalkan langganan sinyal kapan saja?',
-        a: 'Ya. Langganan sinyal di MQL5 dapat dibatalkan kapan saja langsung dari terminal MT5 Anda tanpa penalti atau periode pemberitahuan.',
+        q: 'Bisakah saya menghentikan layanan kapan saja?',
+        a: 'Ya. Anda dapat meminta penghapusan EA kapan saja. Posisi terbuka pada saat penghapusan tidak akan otomatis ditutup — Anda dapat mengelolanya secara manual.',
       },
       {
-        q: 'Apa yang terjadi pada posisi terbuka jika saya berhenti berlangganan?',
-        a: 'Posisi terbuka yang ada tidak otomatis ditutup saat berhenti berlangganan. Anda dapat menutupnya secara manual sesuai kebijaksanaan Anda.',
+        q: 'Apa yang terjadi pada posisi terbuka jika EA dihapus?',
+        a: 'Posisi terbuka yang ada tetap di akun Anda dan tidak otomatis ditutup. Anda dapat menutupnya secara manual sesuai kebijaksanaan Anda setelah EA dihapus.',
       },
       {
-        q: 'Apakah layanan ini tersedia di negara saya?',
-        a: 'IC Markets tersedia bagi penduduk sebagian besar yurisdiksi. Penduduk Amerika Serikat, Kanada, dan yurisdiksi tertentu lainnya mungkin tidak memenuhi syarat karena pembatasan regulasi. Harap verifikasi kelayakan di situs web IC Markets.',
+        q: 'Apakah layanan ini tersedia untuk umum?',
+        a: 'Tidak. Layanan ini tidak ditawarkan secara publik. Hanya diberikan kepada individu yang saya kenal secara pribadi, berdasarkan penilaian saya sendiri. Jika Anda melihat halaman ini, saya telah berbagi tautan ini langsung dengan Anda.',
       },
     ],
     footer_note:
-      'Panduan ini disediakan untuk tujuan informasi. Perdagangan instrumen valuta asing berleverage membawa risiko kerugian yang signifikan. Kinerja masa lalu strategi TOL LANGIT tidak menjamin hasil di masa depan. Pastikan Anda memahami risikonya sebelum berlangganan.',
+      'Panduan ini disediakan untuk tujuan informasi. Perdagangan instrumen valuta asing berleverage membawa risiko kerugian yang signifikan. Kinerja masa lalu tidak menjamin hasil di masa depan. Pastikan Anda sepenuhnya memahami risiko yang terlibat.',
     footer_contact: 'Untuk dukungan: Telegram @tol_langit',
   },
 };
@@ -943,7 +931,9 @@ export default function GuidePage() {
                           {lang === 'en' ? 'Email Request Template' : 'Template Email Permintaan'}
                         </div>
                         <div style={{ marginBottom: 8 }}>
-                          <span style={{ fontSize: 11, color: C.muted, fontFamily: MONO }}>To:</span>
+                          <span style={{ fontSize: 11, color: C.muted, fontFamily: MONO }}>
+                            To:
+                          </span>
                           <div className="tlg-email-addrs">
                             {step.email_block.to.map((addr, ai) => (
                               <a
@@ -965,7 +955,9 @@ export default function GuidePage() {
                         </div>
                         {step.email_block.cc && step.email_block.cc.length > 0 && (
                           <div style={{ marginBottom: 8 }}>
-                            <span style={{ fontSize: 11, color: C.muted, fontFamily: MONO }}>Cc:</span>
+                            <span style={{ fontSize: 11, color: C.muted, fontFamily: MONO }}>
+                              Cc:
+                            </span>
                             <div className="tlg-email-addrs">
                               {step.email_block.cc.map((addr, ai) => (
                                 <a
@@ -990,7 +982,15 @@ export default function GuidePage() {
                           <span style={{ fontSize: 11, color: C.muted, fontFamily: MONO }}>
                             Subject:{' '}
                           </span>
-                          <span style={{ fontSize: 12.5, color: C.body, fontFamily: MONO, wordBreak: 'break-word', overflowWrap: 'anywhere' }}>
+                          <span
+                            style={{
+                              fontSize: 12.5,
+                              color: C.body,
+                              fontFamily: MONO,
+                              wordBreak: 'break-word',
+                              overflowWrap: 'anywhere',
+                            }}
+                          >
                             {step.email_block.subject}
                           </span>
                         </div>
