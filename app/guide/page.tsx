@@ -78,7 +78,7 @@ const CONTENT = {
           to: ['partners.apac@icmarkets.com', 'support@icmarkets.com'],
           cc: ['adithyo.wijaya@gmail.com'],
           subject: 'Request to Link Account to IB Partner ID 49934',
-          body: 'Dear IC Markets Support,\n\nI would like to request the linking of my IC Markets trading account [YOUR ACCOUNT NUMBER] to Introducing Broker Partner ID 49934.\n\nPlease confirm once the linkage has been completed.\n\nThank you.',
+          body: 'Dear IC Markets Support,\n\nI would like to request the linking of my IC Markets trading account [your email / user login] to Introducing Broker Partner ID 49934.\n\nPlease confirm once the linkage has been completed.',
         },
         details: [
           { label: 'IB Commission (received by TOL LANGIT)', value: 'USD $0.25 / lot' },
@@ -162,7 +162,7 @@ const CONTENT = {
         note_label: 'Passive Operation',
         note: 'Once configured, the signal operates fully autonomously. No manual trade intervention is required or recommended. Position sizing, stop-loss levels, and trade management are determined exclusively by the originating algorithm.',
         details: [
-          { label: 'MQL5 Signal Verification', value: 'mql5.com/en/signals/1083101' },
+          { label: 'MQL5 Signal Verification', value: 'mql5.com/en/signals/2360336' },
           { label: 'MyFXBook Verification', value: 'myfxbook.com/members/adithyodw' },
           { label: 'Transparency', value: 'Full trade history, equity curve, live drawdown' },
           { label: 'Intervention Required', value: 'None — fully autonomous operation' },
@@ -245,7 +245,7 @@ const CONTENT = {
           to: ['partners.apac@icmarkets.com', 'support@icmarkets.com'],
           cc: ['adithyo.wijaya@gmail.com'],
           subject: 'Permohonan Penghubungan Akun ke IB Partner ID 49934',
-          body: 'Yth. Tim Dukungan IC Markets,\n\nSaya ingin meminta agar akun trading IC Markets saya [NOMOR AKUN ANDA] dihubungkan ke Introducing Broker Partner ID 49934.\n\nMohon konfirmasi setelah penghubungan selesai dilakukan.\n\nTerima kasih.',
+          body: 'Yth. Tim Dukungan IC Markets,\n\nSaya ingin meminta agar akun trading IC Markets saya [email / user login Anda] dihubungkan ke Introducing Broker Partner ID 49934.\n\nMohon konfirmasi setelah penghubungan selesai dilakukan.',
         },
         details: [
           { label: 'Komisi IB (diterima TOL LANGIT)', value: 'USD $0,25 / lot' },
