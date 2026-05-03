@@ -246,7 +246,7 @@ export const BASE = [
     bClass: 'rp-med',
     mql5: 'https://www.mql5.com/en/signals/2360336',
     myfx: 'https://www.myfxbook.com/members/adithyodw/tol-langit-etf-mr/12023120',
-    ss: null,
+    ss: 'https://icmarkets.signalstart.com/analysis/tol-langit-etf-gold/288423',
     platform: 'MT5',
     gain: '+206.02%',
     win: '78.93%',
