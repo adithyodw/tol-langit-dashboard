@@ -3048,9 +3048,8 @@ export default function TolLangitDashboard() {
       const ts: string = data.updatedAt ?? getDeviceDate();
       setApiDate(ts);
       setMsg(`Live data updated — ${ts}`);
-    } catch (err) {
-      const msg = err instanceof Error ? err.message : 'Unknown error';
-      setMsg(`Update failed: ${msg}`);
+    } catch {
+      // silent — do not surface API errors to the UI
     } finally {
       setLoading(false);
       setTimeout(() => setMsg(''), 6000);
