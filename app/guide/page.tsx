@@ -481,6 +481,36 @@ export default function GuidePage() {
 
   return (
     <div style={{ fontFamily: SANS, background: C.offWhite, minHeight: '100vh', color: C.body }}>
+      <style>{`
+        /* ─── TOL LANGIT Guide — Responsive Layout ─── */
+        .tlg-brand-subtitle { display: block; }
+        .tlg-nav-back-label { display: inline; }
+
+        @media (max-width: 767px) {
+          .tlg-nav         { padding: 0 16px !important; }
+          .tlg-nav-right   { gap: 10px !important; }
+          .tlg-hero        { padding: 36px 20px 44px !important; }
+          .tlg-steps       { padding: 36px 20px !important; }
+          .tlg-step-badge  { width: 44px !important; }
+          .tlg-step-body   { padding-left: 14px !important; }
+          .tlg-detail-row  {
+            flex-direction: column !important;
+            align-items: flex-start !important;
+            gap: 3px !important;
+            padding: 10px 14px !important;
+          }
+          .tlg-detail-label { min-width: unset !important; }
+          .tlg-faq         { padding: 40px 20px !important; }
+          .tlg-footer      { padding: 24px 16px !important; }
+        }
+
+        @media (max-width: 479px) {
+          .tlg-brand-subtitle { display: none; }
+          .tlg-nav-back-label { display: none; }
+          .tlg-step-badge     { width: 36px !important; }
+          .tlg-step-body      { padding-left: 10px !important; }
+        }
+      `}</style>
       {/* ─── Announcement Bar ────────────────────────────────────────────────── */}
       <div
         style={{
@@ -499,6 +529,7 @@ export default function GuidePage() {
 
       {/* ─── Navigation ──────────────────────────────────────────────────────── */}
       <nav
+        className="tlg-nav"
         style={{
           position: 'sticky',
           top: 0,
@@ -551,6 +582,7 @@ export default function GuidePage() {
                 TOL LANGIT
               </div>
               <div
+                className="tlg-brand-subtitle"
                 style={{
                   color: C.gold,
                   fontSize: 9.5,
@@ -566,7 +598,7 @@ export default function GuidePage() {
           </div>
 
           {/* Right side: language toggle + back link */}
-          <div style={{ display: 'flex', alignItems: 'center', gap: 20 }}>
+          <div className="tlg-nav-right" style={{ display: 'flex', alignItems: 'center', gap: 20 }}>
             {/* Language toggle */}
             <div
               style={{
@@ -616,7 +648,7 @@ export default function GuidePage() {
               }}
             >
               <Icon d={ICON_PATHS.arrow_left} size={14} />
-              {t.nav_back}
+              <span className="tlg-nav-back-label">{t.nav_back.replace('← ', '')}</span>
             </a>
           </div>
         </div>
@@ -624,6 +656,7 @@ export default function GuidePage() {
 
       {/* ─── Hero ────────────────────────────────────────────────────────────── */}
       <section
+        className="tlg-hero"
         style={{
           background: C.navy,
           padding: '72px 40px 80px',
@@ -670,27 +703,31 @@ export default function GuidePage() {
             {t.hero_subtitle}
           </p>
           {/* Latency / execution quality notice */}
-          <div style={{
-            marginTop: 28,
-            maxWidth: 640,
-            background: 'rgba(184,154,62,0.12)',
-            border: `1px solid ${C.gold}`,
-            borderLeft: `3px solid ${C.gold}`,
-            padding: '14px 18px',
-            display: 'flex',
-            gap: 10,
-            alignItems: 'flex-start',
-          }}>
+          <div
+            style={{
+              marginTop: 28,
+              maxWidth: 640,
+              background: 'rgba(184,154,62,0.12)',
+              border: `1px solid ${C.gold}`,
+              borderLeft: `3px solid ${C.gold}`,
+              padding: '14px 18px',
+              display: 'flex',
+              gap: 10,
+              alignItems: 'flex-start',
+            }}
+          >
             <div style={{ color: C.goldBright, flexShrink: 0, marginTop: 2 }}>
               <Icon d={ICON_PATHS.info} size={14} />
             </div>
-            <p style={{
-              fontSize: 13,
-              lineHeight: 1.7,
-              color: C.goldPale,
-              fontFamily: SANS,
-              margin: 0,
-            }}>
+            <p
+              style={{
+                fontSize: 13,
+                lineHeight: 1.7,
+                color: C.goldPale,
+                fontFamily: SANS,
+                margin: 0,
+              }}
+            >
               {t.hero_note}
             </p>
           </div>
@@ -698,13 +735,14 @@ export default function GuidePage() {
       </section>
 
       {/* ─── Steps ───────────────────────────────────────────────────────────── */}
-      <section style={{ padding: '64px 40px', background: C.offWhite }}>
+      <section className="tlg-steps" style={{ padding: '64px 40px', background: C.offWhite }}>
         <div style={{ maxWidth: 900, margin: '0 auto' }}>
           <div style={{ display: 'flex', flexDirection: 'column', gap: 0 }}>
             {t.steps.map((step, idx) => (
               <div key={idx} style={{ display: 'flex', gap: 0, position: 'relative' }}>
                 {/* Step number + connector line */}
                 <div
+                  className="tlg-step-badge"
                   style={{
                     display: 'flex',
                     flexDirection: 'column',
@@ -756,6 +794,7 @@ export default function GuidePage() {
 
                 {/* Step content */}
                 <div
+                  className="tlg-step-body"
                   style={{
                     flex: 1,
                     paddingBottom: idx < t.steps.length - 1 ? 56 : 0,
@@ -1043,6 +1082,7 @@ export default function GuidePage() {
                     {step.details.map((d, di) => (
                       <div
                         key={di}
+                        className="tlg-detail-row"
                         style={{
                           display: 'flex',
                           borderBottom:
@@ -1053,6 +1093,7 @@ export default function GuidePage() {
                         }}
                       >
                         <div
+                          className="tlg-detail-label"
                           style={{
                             fontSize: 11.5,
                             fontFamily: SANS,
@@ -1087,6 +1128,7 @@ export default function GuidePage() {
 
       {/* ─── FAQ ─────────────────────────────────────────────────────────────── */}
       <section
+        className="tlg-faq"
         style={{
           background: C.navy,
           padding: '64px 40px',
@@ -1200,6 +1242,7 @@ export default function GuidePage() {
 
       {/* ─── Footer ──────────────────────────────────────────────────────────── */}
       <footer
+        className="tlg-footer"
         style={{
           background: C.navy,
           borderTop: `1px solid ${C.ruleDark}`,
