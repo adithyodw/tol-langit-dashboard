@@ -101,7 +101,10 @@ const CONTENT = {
         note: 'Your MT5 Master Password is used solely for EA installation on your account. I do not retain, log, or store your credentials beyond the installation process. Once the EA is installed and running, you may change your password at any time.',
         details: [
           { label: 'Required: MT5 Login Number', value: 'Numeric account ID (e.g., 12345678)' },
-          { label: 'Required: Master Password', value: 'Not the client portal or investor password' },
+          {
+            label: 'Required: Master Password',
+            value: 'Not the client portal or investor password',
+          },
           { label: 'Server', value: 'ICMarketsSC-MT5-2 (or as shown in your MT5 terminal)' },
         ],
       },
@@ -119,9 +122,10 @@ const CONTENT = {
         note_label: 'Required',
         note: 'The MQL5 VPS is the official hosting environment used for this installation. It runs on Google Cloud and provides a stable, low-latency environment for the EA. Third-party VPS providers are not recommended as they require separate configuration and are not managed by me.',
         details: [
-          { label: 'Monthly Plan', value: 'USD $39 / month' },
-          { label: 'Semi-Annual Plan', value: 'USD $65 / 6 months (approx. $10.83/mo)' },
-          { label: 'Annual Plan', value: 'USD $120 / year (approx. $10.00/mo)' },
+          { label: 'Mini (1 month)', value: 'USD $15 / month' },
+          { label: 'Optimal (3 months)', value: 'USD $13 / month' },
+          { label: 'Long (6 months)', value: 'USD $10.83 / month' },
+          { label: 'Max (12 months)', value: 'USD $10 / month' },
           { label: 'Infrastructure', value: 'Google Cloud Platform' },
           { label: 'Availability', value: '99.9% uptime guarantee' },
         ],
@@ -265,8 +269,14 @@ const CONTENT = {
         note: 'Master Password MT5 Anda digunakan semata-mata untuk instalasi EA di akun Anda. Saya tidak menyimpan atau mencatat kredensial Anda di luar proses instalasi. Setelah EA terinstal dan berjalan, Anda dapat mengganti password kapan saja.',
         details: [
           { label: 'Diperlukan: Nomor Login MT5', value: 'ID akun numerik (mis. 12345678)' },
-          { label: 'Diperlukan: Master Password', value: 'Bukan password portal klien atau investor' },
-          { label: 'Server', value: 'ICMarketsSC-MT5-2 (atau sesuai yang tertera di terminal MT5 Anda)' },
+          {
+            label: 'Diperlukan: Master Password',
+            value: 'Bukan password portal klien atau investor',
+          },
+          {
+            label: 'Server',
+            value: 'ICMarketsSC-MT5-2 (atau sesuai yang tertera di terminal MT5 Anda)',
+          },
         ],
       },
       {
@@ -283,9 +293,10 @@ const CONTENT = {
         note_label: 'Wajib',
         note: 'MQL5 VPS adalah lingkungan hosting resmi yang digunakan untuk instalasi ini. Berjalan di Google Cloud dan menyediakan lingkungan stabil dengan latensi rendah untuk EA. Penyedia VPS pihak ketiga tidak disarankan karena memerlukan konfigurasi terpisah dan tidak dikelola oleh saya.',
         details: [
-          { label: 'Paket Bulanan', value: 'USD $39 / bulan' },
-          { label: 'Paket Semi-Tahunan', value: 'USD $65 / 6 bulan (sekitar $10,83/bln)' },
-          { label: 'Paket Tahunan', value: 'USD $120 / tahun (sekitar $10,00/bln)' },
+          { label: 'Mini (1 bulan)', value: 'USD $15 / bulan' },
+          { label: 'Optimal (3 bulan)', value: 'USD $13 / bulan' },
+          { label: 'Long (6 bulan)', value: 'USD $10,83 / bulan' },
+          { label: 'Max (12 bulan)', value: 'USD $10 / bulan' },
           { label: 'Infrastruktur', value: 'Google Cloud Platform' },
           { label: 'Ketersediaan', value: 'Jaminan uptime 99,9%' },
         ],
