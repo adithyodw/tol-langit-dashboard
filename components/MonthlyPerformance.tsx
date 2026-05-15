@@ -42,10 +42,7 @@ export default function MonthlyPerformance({ strategy, data }: MonthlyPerformanc
     const points = data
       .map((d, i) => {
         const x = padding.left + (i / (data.length - 1 || 1)) * plotWidth;
-        const y =
-          padding.top +
-          plotHeight -
-          (d.balance - metrics.minBalance) * balanceScale;
+        const y = padding.top + plotHeight - (d.balance - metrics.minBalance) * balanceScale;
         return [x, y];
       })
       .map(([x, y]) => `${x.toFixed(1)},${y.toFixed(1)}`)
@@ -59,13 +56,7 @@ export default function MonthlyPerformance({ strategy, data }: MonthlyPerformanc
         className="tl-monthly-svg"
       >
         <defs>
-          <linearGradient
-            id="balanceGradient"
-            x1="0%"
-            y1="0%"
-            x2="0%"
-            y2="100%"
-          >
+          <linearGradient id="balanceGradient" x1="0%" y1="0%" x2="0%" y2="100%">
             <stop offset="0%" stopColor={COLORS.blue} stopOpacity={0.3} />
             <stop offset="100%" stopColor={COLORS.blue} stopOpacity={0.05} />
           </linearGradient>
@@ -105,10 +96,7 @@ export default function MonthlyPerformance({ strategy, data }: MonthlyPerformanc
         {/* Data points */}
         {data.map((d, i) => {
           const x = padding.left + (i / (data.length - 1 || 1)) * plotWidth;
-          const y =
-            padding.top +
-            plotHeight -
-            (d.balance - metrics.minBalance) * balanceScale;
+          const y = padding.top + plotHeight - (d.balance - metrics.minBalance) * balanceScale;
           const growthValue = parseFloat(d.growth);
           const color = growthValue >= 0 ? COLORS.positive : COLORS.negative;
 
@@ -257,7 +245,9 @@ export default function MonthlyPerformance({ strategy, data }: MonthlyPerformanc
         }
 
         .tl-chart-point {
-          transition: r 0.2s ease, opacity 0.2s ease;
+          transition:
+            r 0.2s ease,
+            opacity 0.2s ease;
         }
 
         .tl-chart-point:hover {

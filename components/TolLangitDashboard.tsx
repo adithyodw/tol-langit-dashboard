@@ -4,6 +4,7 @@ import { useState, useEffect, useCallback, useRef } from 'react';
 import { BASE, MANAGER, IC_MARKETS } from '@/lib/utils/constants';
 import SimulationSection from './SimulationSection';
 import MonthlyPerformance from './MonthlyPerformance';
+import MonthlyAnalytics from './MonthlyAnalytics';
 
 /* ─── Design tokens ─────────────────────────────────────────────────────── */
 const C = {
@@ -920,8 +921,8 @@ const Hero = ({ loading, S }: { loading: boolean; S: Strategy[] }) => {
           }}
         >
           Two live, independently verified algorithmic strategies: a conservative forex system since
-          January 2021, and an institutional gold specialist — engineered for consistent risk-adjusted
-          returns across market regimes.
+          January 2021, and an institutional gold specialist — engineered for consistent
+          risk-adjusted returns across market regimes.
         </p>
         <div
           className="tl-hero-stats"
@@ -2193,20 +2194,80 @@ const CopyTrading = ({ S }: { S: Strategy[] }) => {
 };
 
 const MonthlyPerfSection = ({ S }: { S: Strategy[] }) => (
-  <div className="sp" style={{ padding: '72px 40px', background: C.white }} id="monthly-performance">
+  <div
+    className="sp"
+    style={{ padding: '72px 40px', background: C.white }}
+    id="monthly-performance"
+  >
     <div style={{ maxWidth: 1280, margin: '0 auto' }}>
       <div style={{ marginBottom: 48 }}>
-        <h2 style={{ margin: 0, fontSize: 24, fontWeight: 600, color: C.navy, marginBottom: 8, letterSpacing: '-0.01em' }}>
+        <h2
+          style={{
+            margin: 0,
+            fontSize: 24,
+            fontWeight: 600,
+            color: C.navy,
+            marginBottom: 8,
+            letterSpacing: '-0.01em',
+          }}
+        >
           Monthly Performance Breakdown
         </h2>
         <p style={{ margin: 0, fontSize: 14, color: C.muted, fontWeight: 500 }}>
           Growth percentage and balance trajectory across all live trading months
         </p>
       </div>
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(480px, 1fr))', gap: 32 }}>
+      <div
+        style={{
+          display: 'grid',
+          gridTemplateColumns: 'repeat(auto-fit, minmax(480px, 1fr))',
+          gap: 32,
+        }}
+      >
         {S.map((s) =>
           s.monthlyData && s.monthlyData.length > 0 ? (
             <MonthlyPerformance key={s.id} strategy={s.name} data={s.monthlyData} />
+          ) : null
+        )}
+      </div>
+    </div>
+  </div>
+);
+
+const MonthlyAnalyticsSection = ({ S }: { S: Strategy[] }) => (
+  <div
+    className="sp"
+    style={{ padding: '72px 40px', background: C.offWhite }}
+    id="monthly-analytics"
+  >
+    <div style={{ maxWidth: 1280, margin: '0 auto' }}>
+      <div style={{ marginBottom: 48 }}>
+        <h2
+          style={{
+            margin: 0,
+            fontSize: 24,
+            fontWeight: 600,
+            color: C.navy,
+            marginBottom: 8,
+            letterSpacing: '-0.01em',
+          }}
+        >
+          Monthly Analytics
+        </h2>
+        <p style={{ margin: 0, fontSize: 14, color: C.muted, fontWeight: 500 }}>
+          Distribution analysis and performance composition metrics
+        </p>
+      </div>
+      <div
+        style={{
+          display: 'grid',
+          gridTemplateColumns: 'repeat(auto-fit, minmax(520px, 1fr))',
+          gap: 32,
+        }}
+      >
+        {S.map((s) =>
+          s.monthlyData && s.monthlyData.length > 0 ? (
+            <MonthlyAnalytics key={`analytics-${s.id}`} strategy={s.name} data={s.monthlyData} />
           ) : null
         )}
       </div>
@@ -3097,6 +3158,7 @@ export default function TolLangitDashboard() {
       <About />
       <Cards S={S} />
       <MonthlyPerfSection S={S} />
+      <MonthlyAnalyticsSection S={S} />
       <Factsheets S={S} />
       <CopyTrading S={S} />
       <Comparison S={S} />
