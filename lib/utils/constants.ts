@@ -116,6 +116,13 @@ export const BASE = [
       { y: '2023', v: '+39.16%', n: 'Steady Compounding' },
       { y: '2024', v: '+57.74%', n: 'Strong Recovery' },
     ],
+    monthlyData: [
+      { month: 'Jan 2021', growth: '+110.41%', balance: 11041.00 },
+      { month: 'Feb 2021', growth: '+18.32%', balance: 13063.00 },
+      { month: 'Mar 2021', growth: '+12.15%', balance: 14654.00 },
+      { month: 'Apr 2021', growth: '+8.43%', balance: 15888.00 },
+      { month: 'May 2021', growth: '+6.12%', balance: 16860.00 },
+    ],
   },
   {
     id: 'etfgold',
@@ -173,7 +180,17 @@ export const BASE = [
     corrN:
       'XAU/USD-dominated exposure. Minimal correlation to V10 forex grid strategies. Moderate correlation with TOL LANGIT ETF — do not pair these as a diversification hedge for gold exposure.',
     annRet: [
-      { y: '2026', v: '+350.25% YTD', n: '3-month track record · Feb–May 2026 · Inception Feb 2026' },
+      {
+        y: '2026',
+        v: '+350.25% YTD',
+        n: '3-month track record · Feb–May 2026 · Inception Feb 2026',
+      },
+    ],
+    monthlyData: [
+      { month: 'Feb 2026', growth: '+23.87%', balance: 6210.86 },
+      { month: 'Mar 2026', growth: '-16.82%', balance: 5170.15 },
+      { month: 'Apr 2026', growth: '+180.33%', balance: 14492.52 },
+      { month: 'May 2026', growth: '+55.9%', balance: 25306.23 },
     ],
   },
 ];

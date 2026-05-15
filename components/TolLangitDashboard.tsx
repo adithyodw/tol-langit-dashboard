@@ -3,6 +3,7 @@
 import { useState, useEffect, useCallback, useRef } from 'react';
 import { BASE, MANAGER, IC_MARKETS } from '@/lib/utils/constants';
 import SimulationSection from './SimulationSection';
+import MonthlyPerformance from './MonthlyPerformance';
 
 /* ─── Design tokens ─────────────────────────────────────────────────────── */
 const C = {
@@ -2191,6 +2192,28 @@ const CopyTrading = ({ S }: { S: Strategy[] }) => {
   );
 };
 
+const MonthlyPerfSection = ({ S }: { S: Strategy[] }) => (
+  <div className="sp" style={{ padding: '72px 40px', background: C.white }} id="monthly-performance">
+    <div style={{ maxWidth: 1280, margin: '0 auto' }}>
+      <div style={{ marginBottom: 48 }}>
+        <h2 style={{ margin: 0, fontSize: 24, fontWeight: 600, color: C.navy, marginBottom: 8, letterSpacing: '-0.01em' }}>
+          Monthly Performance Breakdown
+        </h2>
+        <p style={{ margin: 0, fontSize: 14, color: C.muted, fontWeight: 500 }}>
+          Growth percentage and balance trajectory across all live trading months
+        </p>
+      </div>
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(480px, 1fr))', gap: 32 }}>
+        {S.map((s) =>
+          s.monthlyData && s.monthlyData.length > 0 ? (
+            <MonthlyPerformance key={s.id} strategy={s.name} data={s.monthlyData} />
+          ) : null
+        )}
+      </div>
+    </div>
+  </div>
+);
+
 const Comparison = ({ S }: { S: Strategy[] }) => (
   <div className="sp" style={{ padding: '72px 40px', background: C.offWhite }} id="comparison">
     <div style={{ maxWidth: 1280, margin: '0 auto' }}>
@@ -3073,6 +3096,7 @@ export default function TolLangitDashboard() {
       <VStrip lastUpd={lastUpd} loading={loading} />
       <About />
       <Cards S={S} />
+      <MonthlyPerfSection S={S} />
       <Factsheets S={S} />
       <CopyTrading S={S} />
       <Comparison S={S} />
