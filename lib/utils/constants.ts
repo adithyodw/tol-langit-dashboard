@@ -148,8 +148,8 @@ export const BASE = [
     pf: '2.55',
     mo: '+236.80%',
     ann: '+350% in 5 months (exceptionally strong YTD)',
-    ddBal: '13.46%',
-    ddBalC: 'green',
+    ddBal: '40.32%',
+    ddBalC: 'amber',
     ddEq: '39.64%',
     ddEqC: 'amber',
     trades: '430',
@@ -174,16 +174,16 @@ export const BASE = [
     gridT: 'green',
     rorLvl: 'MODERATE — STRONG EARLY SIGNALS',
     rorC: COLORS.amber,
-    rorD: 'A 13-week (3-month), 430-trade live track record delivering +350.25% total gain. Profit factor of 2.55 and 78.60% win rate across 430 trades are statistically compelling. April 2026 contributed exceptional month-over-month returns with May 2026 demonstrating consistent performance. Maximum balance drawdown of 13.46% is excellent for a gold-specialist strategy. Current equity drawdown of 39.64% reflects intra-period volatility typical of near-intraday XAU/USD scalping. Recovery factor of exceptional strength. Instrument breakdown: XAUUSD primary (292 trades), AUDCAD secondary (64 trades). The 3-month milestone has been exceeded with strong statistical evidence. Full-cycle characterisation requires 6+ months of verified track record.',
+    rorD: 'A 13-week (3-month), 430-trade live track record delivering +350.25% total gain. Profit factor of 2.55 and 78.60% win rate across 430 trades are statistically compelling. April 2026 contributed exceptional month-over-month returns with May 2026 demonstrating consistent performance. Maximum balance drawdown of 40.32% is elevated but commensurate with near-intraday XAU/USD scalping strategy intensity. Current equity drawdown of 39.64% reflects intra-period volatility typical of rapid gold-specialist execution. Recovery factor demonstrates strong rebound capability. Instrument breakdown: XAUUSD primary (355 trades), AUDCAD secondary (75 trades). The 3-month milestone has been exceeded with compelling returns offsetting volatility. Full-cycle characterisation requires 6+ months of verified track record.',
     useCase: 'Gold Specialist Growth Satellite',
     useCaseD:
-      'XAU/USD focused growth strategy delivering +350.25% in its first 3 months with no grid mechanics. Profit factor of 2.55 across 430 verified trades confirm a structurally sound institutional-grade risk profile. Monthly gain of +236.80% demonstrates exceptional return generation potential with near-intraday scalping efficiency. Balance drawdown of 13.46% is exceptional. Equity drawdown of 39.64% reflects concentrated gold exposure during volatile periods. The 3-month maturation milestone has been exceeded with compelling results — formal strategic allocation appropriate with disciplined position sizing.',
+      'XAU/USD focused growth strategy delivering +350.25% in its first 3 months with no grid mechanics. Profit factor of 2.55 across 430 verified trades confirm a structurally sound institutional-grade risk profile. Monthly gain of +236.80% demonstrates exceptional return generation potential with near-intraday scalping efficiency. Balance drawdown of 40.32% reflects the intensity of rapid gold-specialist execution. Equity drawdown of 39.64% is aligned with intra-period XAU/USD volatility. The 3-month maturation milestone has been exceeded with compelling returns — formal strategic allocation appropriate with disciplined position sizing and elevated leverage awareness.',
     inv: 'Growth-Oriented · Gold-Focused · Milestone Exceeded',
-    invN: 'Investors seeking systematic gold exposure with a verified 3-month track record exceeded. Growth-oriented investors may initiate formal allocation with disciplined position sizing. Balance drawdown of 13.46% demonstrates excellent capital preservation. Continue monthly statistical reviews. Full-cycle confidence matures at 6-month milestone (August 2026).',
+    invN: 'Investors seeking systematic gold exposure with a verified 3-month track record exceeded. Growth-oriented investors with elevated risk tolerance may initiate formal allocation with disciplined position sizing. Balance drawdown of 40.32% demands awareness of scalping volatility; appropriate for risk-conscious allocators. Continue monthly statistical reviews. Full-cycle confidence matures at 6-month milestone (August 2026).',
     alloc:
-      '5–15% growth satellite appropriate for risk-tolerant investors. The 3-month milestone has been exceeded with strong results. Full statistical review recommended before increasing allocation beyond 15%.',
+      '2–8% growth satellite for risk-tolerant investors with elevated leverage tolerance. The 3-month milestone has been exceeded with strong results offsetting elevated drawdown volatility. Full statistical review recommended before increasing allocation beyond 8% due to drawdown intensity.',
     volP: 'High (XAU/USD concentration)',
-    ddB: 'Maximum balance drawdown of 13.46% is excellent for a gold-specialist strategy. Current equity drawdown is 39.64% as of May 2, 2026 — reflecting intra-period XAU/USD volatility from near-intraday scalping. No grid mechanics means drawdown is structurally contained. Position sizing of 0.02 (XAU/USD specialist) with 60.49% activity ensures consistent capital management.',
+    ddB: 'Maximum balance drawdown of 40.32% reflects the intensity of near-intraday XAU/USD scalping strategy. Current equity drawdown is 39.64% as of May 2, 2026 — aligned with intra-period gold volatility typical of rapid execution models. No grid mechanics ensures clean position structure. Position sizing of 0.02 (XAU/USD specialist) with 60.49% activity ensures disciplined capital management despite elevated volatility exposure.',
     corrN:
       'XAU/USD-dominated exposure. Minimal correlation to V10 forex grid strategies. Moderate correlation with TOL LANGIT ETF — do not pair these as a diversification hedge for gold exposure.',
     annRet: [
