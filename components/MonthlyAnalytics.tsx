@@ -259,7 +259,11 @@ export default function MonthlyAnalytics({ strategy, data, year }: MonthlyAnalyt
         .tl-analytics {
           margin: 3rem 0;
           padding: 2.5rem;
-          background: linear-gradient(135deg, rgba(0, 12, 51, 0.02) 0%, rgba(184, 154, 62, 0.02) 100%);
+          background: linear-gradient(
+            135deg,
+            rgba(0, 12, 51, 0.02) 0%,
+            rgba(184, 154, 62, 0.02) 100%
+          );
           border: 1px solid ${COLORS.rule};
           border-radius: 14px;
           font-family: ${FONTS.sans};
