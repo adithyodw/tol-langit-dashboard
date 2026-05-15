@@ -918,8 +918,9 @@ const Hero = ({ loading, S }: { loading: boolean; S: Strategy[] }) => {
             letterSpacing: 0.2,
           }}
         >
-          Four live, independently verified algorithmic strategies spanning forex majors, cross
-          pairs, and gold — engineered for consistent risk-adjusted returns since January 2021.
+          Two live, independently verified algorithmic strategies: a conservative forex system since
+          January 2021, and an institutional gold specialist — engineered for consistent risk-adjusted
+          returns across market regimes.
         </p>
         <div
           className="tl-hero-stats"
@@ -939,7 +940,7 @@ const Hero = ({ loading, S }: { loading: boolean; S: Strategy[] }) => {
                 s: 'TOL LANGIT V10 · Since Jan 2021',
                 g: true,
               },
-              { l: 'Total Live Strategies', v: '4', s: 'Across All Risk Profiles' },
+              { l: 'Total Live Strategies', v: '2', s: 'Conservative · Gold Specialist' },
               { l: 'Verification Platforms', v: '2', s: 'MQL5 & MyFXBook' },
               { l: 'Flagship Balance DD', v: f.ddBal, s: 'Maximum Drawdown by Balance', g: true },
               {
