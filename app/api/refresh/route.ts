@@ -21,13 +21,15 @@ export async function POST() {
         tools: [{ type: 'web_search_20250305', name: 'web_search' }],
         system: `You are a financial data extraction specialist. Search the MQL5 signal pages and extract current statistics. Return ONLY a valid JSON object — no markdown, no code fences, no preamble. Required structure:
 {"strategies":{"v10":{"gain":"+X,XXX.XX%","win":"XX.XX%","pf":"X.XX","mo":"+X.XX%","ddBal":"XX.XX%","ddEq":"XX.XX%","trades":"X,XXX","wins":"X,XXX","losses":"XXX"},"etfgold":{"gain":"+XX.XX%","win":"XX.XX%","pf":"X.XX","mo":"+XX.XX%","ddBal":"XX.XX%","ddEq":"XX.XX%","trades":"XXX","wins":"XXX","losses":"XX"}},"updatedAt":"Month YYYY"}`,
-        messages: [{
-          role: 'user',
-          content: `Extract current statistics from these MQL5 signal pages:
+        messages: [
+          {
+            role: 'user',
+            content: `Extract current statistics from these MQL5 signal pages:
 1. TOL LANGIT V10: https://www.mql5.com/en/signals/1083101
 2. TOL LANGIT ETF GOLD: https://www.mql5.com/en/signals/2360336
 Return only the JSON object with current data.`,
-        }],
+          },
+        ],
       }),
     });
 
@@ -36,9 +38,9 @@ Return only the JSON object with current data.`,
     }
 
     const data = await res.json();
-    const text = (data.content as {type:string;text?:string}[])
-      .filter(b => b.type === 'text')
-      .map(b => b.text ?? '')
+    const text = (data.content as { type: string; text?: string }[])
+      .filter((b) => b.type === 'text')
+      .map((b) => b.text ?? '')
       .join('')
       .replace(/```json|```/g, '')
       .trim();

@@ -1397,17 +1397,17 @@ const Cards = ({ S }: { S: Strategy[] }) => {
         >
           <div>
             <SL c="Live Signal Suite" />
-            <ST c="Four Verified Algorithmic Strategies" />
+            <ST c="Two Verified Algorithmic Strategies" />
           </div>
           <SN c="All figures reflect verified real-money results from live MQL5 and MyFXBook accounts." />
         </div>
 
-        {/* Desktop: 4-column grid */}
+        {/* Desktop: 2-column grid */}
         <div
-          className="tl-4col"
+          className="tl-2col"
           style={{
             display: 'grid',
-            gridTemplateColumns: 'repeat(4,1fr)',
+            gridTemplateColumns: 'repeat(auto-fit, minmax(500px, 1fr))',
             gap: 1,
             background: C.rule,
             border: `1px solid ${C.rule}`,
