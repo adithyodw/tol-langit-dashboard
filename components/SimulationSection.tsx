@@ -64,15 +64,7 @@ const SERIES: Record<string, (number | null)[]> = (() => {
     1.0, // Jun 2026 terminal (new)
   ];
   const tlv10 = buildSeries(0, v10Rates);
-  // V10 HR: inception Mar 2025, +957.48% over 14 months to Apr 2026
-  const v10hr = buildSeries(monthIndex(2025, 2), [
-    ...Array(14).fill(mRate(Math.pow(10.5748, 12 / 13))),
-    1.0, // May 2026 terminal
-    1.0, // Jun 2026 terminal
-  ]);
-  // ETF: actual monthly returns Jan–May 2026 (Jan +105.59%, Feb +18.05%, Mar −78.06%, Apr +108.09%, May +1.88% partial)
-  const etf = buildSeries(monthIndex(2026, 0), [2.1059, 1.1805, 0.2194, 2.0809, 1.0188, 1.0]);
-  // ETF Gold MR: actual monthly returns Feb–May 2026 (Feb +24.87%, Mar −17.96%, Apr +191.15%, May +3.03% partial)
+  // ETF Gold: actual monthly returns Feb–May 2026 (Feb +24.87%, Mar −17.96%, Apr +191.15%, May +3.03% partial)
   const etfgold = buildSeries(monthIndex(2026, 1), [1.2487, 0.8204, 2.9115, 1.0303, 1.0]);
 
   function bench(af: Record<number, number>, tail: number): (number | null)[] {
@@ -92,7 +84,7 @@ const SERIES: Record<string, (number | null)[]> = (() => {
   const ndx = bench({ 2021: 1.212, 2022: 0.684, 2023: 1.538, 2024: 1.284 }, 0.889);
   const spx = bench({ 2021: 1.271, 2022: 0.806, 2023: 1.242, 2024: 1.233 }, 0.918);
 
-  return { tlv10, v10hr, etf, etfgold, btc, gold, silver, nvda, tsla, ndx, spx };
+  return { tlv10, etfgold, btc, gold, silver, nvda, tsla, ndx, spx };
 })();
 
 /* ─── Asset metadata ────────────────────────────────────────────────────── */
@@ -106,24 +98,8 @@ const TL_ASSETS = [
     note: 'Inception Jan 2021 · +1,447% verified',
   },
   {
-    key: 'v10hr',
-    label: 'V10 HR · High Risk',
-    short: 'V10 HR',
-    color: '#f87171',
-    group: 'tl',
-    note: 'Inception Mar 2025 · +958% verified',
-  },
-  {
-    key: 'etf',
-    label: 'ETF · High Risk',
-    short: 'TLETF',
-    color: '#60a5fa',
-    group: 'tl',
-    note: 'Inception Jan 2026 · +62.04% abs gain (May 2026)',
-  },
-  {
     key: 'etfgold',
-    label: 'ETF Gold MR · Med',
+    label: 'ETF Gold · Med',
     short: 'ETF Gold',
     color: '#34d399',
     group: 'tl',

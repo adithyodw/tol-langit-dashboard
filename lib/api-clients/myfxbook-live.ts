@@ -62,13 +62,13 @@ export interface LiveStrategyData {
 
 /*
  * Strategy classification:
- *   Grid strategies (V10, V10 HIGH RISK): MFB `drawdown` = max equity DD
- *   Non-grid strategies (ETF, ETF MR):    MFB `drawdown` = max balance DD
+ *   Grid strategies (V10): MFB `drawdown` = max equity DD
+ *   Non-grid strategies (ETF Gold):    MFB `drawdown` = max balance DD
  *
- * Only ETF uses absGain (per product spec); all others use gain.
+ * All strategies use gain (not absGain).
  */
-const GRID_IDS = new Set([8671765, 11424740]);
-const ABS_GAIN_IDS = new Set([11891377]);
+const GRID_IDS = new Set([8671765]);
+const ABS_GAIN_IDS: Set<number> = new Set([]);
 
 /* ─── Core API helper ────────────────────────────────────────────────────── */
 async function get<T>(path: string, params: Record<string, string>): Promise<T> {
@@ -141,7 +141,5 @@ export function mapAccount(acct: MyfxAccount): LiveStrategyData {
 /* ─── Account ID → strategy key ─────────────────────────────────────────── */
 export const ACCOUNT_MAP: Record<number, string> = {
   8671765: 'v10',
-  11424740: 'v10hr',
-  11891377: 'etf',
-  12023120: 'etfgold',
+  12042787: 'etfgold',
 };

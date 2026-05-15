@@ -3037,7 +3037,7 @@ export default function TolLangitDashboard() {
         throw new Error(data.error ?? `HTTP ${res.status}`);
       }
       if (data.strategies) {
-        const KEY_ORDER = ['v10', 'v10hr', 'etf', 'etfgold'];
+        const KEY_ORDER = ['v10', 'etfgold'];
         setS(
           BASE.map((s, idx) => {
             const lv = data.strategies[KEY_ORDER[idx]];
